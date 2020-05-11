@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Check files') { 
             steps {
-                bat 'python scripts\\check_files.py'
+                bat 'python ${workspace}\\scripts\\check_files.py'
                 // 
             }
         }
