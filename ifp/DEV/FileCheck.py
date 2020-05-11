@@ -27,7 +27,7 @@ def sendEmail(sendTo, user, password):
 
 #Read in configuration file
 cwd = os.getcwd()
-with open(os.path.join(cwd, 'FileCheck_config.json')) as f:
+with open(os.path.join(cwd, 'DEV\\FileCheck_config.json')) as f:
     config = json.load(f)
 
 sleepTime = config['SleepTime']
