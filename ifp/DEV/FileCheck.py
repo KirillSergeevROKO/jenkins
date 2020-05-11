@@ -43,11 +43,11 @@ informentDirectory = config['Informent']['Directory']
 #prepend directory to file names
 filelist = [f'{informentDirectory}\\{file}' for file in config['Informent']['FileNames']]
 # add ach file to list as name changes
-achdate = datetime.today() # - timedelta(days=1)
-achFileMask = f'ach618.{achdate:%Y%m%d}*.txt'
+#achdate = datetime.today() # - timedelta(days=1)
+#achFileMask = f'ach618.{achdate:%Y%m%d}*.txt'
 
 while True:
-    if all([os.path.isfile(f) for f in filelist]) and glob.glob(os.path.join(informentDirectory, achFileMask)):
+    if all([os.path.isfile(f) for f in filelist]) and glob.glob(os.path.join(informentDirectory)):
         print('All files are present')
         break
     else :
