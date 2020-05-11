@@ -10,9 +10,13 @@ pipeline {
         stage('Copy file for MSSQL folder') { 
             steps {
                 bat '''
-                %cd%\\ifp\\scripts\\copy_files_for_pos.cmd  \\\\vm-roko-appserver\\temp\\jenkins\\source \\\\vm-roko-appserver\\temp\\jenkins\\MSSQL
+                %cd%\\ifp\\scripts\\copy_files_for_pos.cmd \
+                \\\\vm-roko-appserver\\temp\\jenkins\\source \
+                \\\\vm-roko-appserver\\temp\\jenkins\\MSSQL
                 '''
-                // 
+                // Use additional / (slash) for use on WINDOWS slave
+                //first parameter is SOURCE folder
+                // second - is DESTINATION folder
             }
         }
         stage('Run IFP_proces_cusctom ') { 
