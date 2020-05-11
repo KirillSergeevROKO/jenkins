@@ -1,0 +1,23 @@
+pipeline {
+    agent vm-roko-jenkins 
+    stages {
+        stage('Build') { 
+            steps {
+                echo Step1
+                // 
+            }
+        }
+        stage('Test') { 
+            steps {
+                echo Step2
+                // 
+            }
+        }
+        stage('Deploy') { 
+            steps {
+                echo Step3
+                // 
+            }
+        }
+    }
+}
