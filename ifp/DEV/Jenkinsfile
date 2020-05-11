@@ -3,14 +3,14 @@ pipeline {
     stages {
         stage('Check files') { 
             steps {
-                bat 'python %cd%\\ifp\\DEV\\scripts\\FileCheck.py'
+                bat 'python %cd%\\ifp\\DEV\\FileCheck.py'
                 // 
             }
         }
         stage('Copy file for MSSQL folder') { 
             steps {
                 bat '''
-                %cd%\\ifp\\DEV\\scripts\\copy_files_for_pos.cmd \
+                %cd%\\ifp\\DEV\\copy_files_for_pos.cmd \
                \\\\vm-roko-appserver\\CascadeFinancials\\Cobol\\CobolTempDirectory\\MSSQL \
                 \\\\vm-roko-appserver\\temp\\jenkins\\MSSQL
                 '''
