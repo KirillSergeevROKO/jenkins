@@ -1,5 +1,5 @@
 pipeline {
-    agent vm-roko-jenkins 
+    agent {vm-roko-jenkins} 
     stages {
         stage('Build') { 
             steps {
