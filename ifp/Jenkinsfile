@@ -1,21 +1,33 @@
 pipeline {
     agent { label 'vm-roko-jenkins' }
     stages {
-        stage('Build') { 
+        stage('Check files') { 
             steps {
-                bat 'echo Step1'
+                bat 'python scripts/check_files.py'
                 // 
             }
         }
-        stage('Test') { 
+        stage('Copy file for MSSQL folder') { 
             steps {
                 bat 'echo Step2'
                 // 
             }
         }
-        stage('Deploy') { 
+        stage('Rename and delete files ') { 
             steps {
                 bat 'echo Step3'
+                // 
+            }
+        }
+        stage('Run IFP_proces_cusctom ') { 
+            steps {
+                bat 'echo Step4'
+                // 
+            }
+        }
+        stage('Generate and send report') { 
+            steps {
+                bat 'echo Step5'
                 // 
             }
         }
