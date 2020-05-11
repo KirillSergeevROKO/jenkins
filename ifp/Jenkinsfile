@@ -9,7 +9,9 @@ pipeline {
         }
         stage('Copy file for MSSQL folder') { 
             steps {
-                bat 'call %cd%\\ifp\\scripts\\copy_files_for_pos.cmd \\\vm-roko-appserver\\temp\\jenkins\\source \\\vm-roko-appserver\\temp\\jenkins\\MSSQL'
+                bat """
+                call %cd%\ifp\scripts\copy_files_for_pos.cmd  \\vm-roko-appserver\temp\jenkins\source \\vm-roko-appserver\temp\jenkins\MSSQL
+                """
                 // 
             }
         }
