@@ -11,7 +11,7 @@ pipeline {
             steps {
                 bat '''
                 %cd%\\ifp\\scripts\\copy_files_for_pos.cmd \
-                \\\\vm-roko-appserver\\temp\\jenkins\\source \
+               \\\\vm-roko-appserver\\CascadeFinancials\\Cobol\\CobolTempDirectory\\MSSQL \
                 \\\\vm-roko-appserver\\temp\\jenkins\\MSSQL
                 '''
                 // Use additional / (slash) for use on WINDOWS slave
