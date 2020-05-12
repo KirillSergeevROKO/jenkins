@@ -30,10 +30,10 @@ pipeline {
         }
         stage('Run IFP proces MSSQL ') { 
             steps {
-                bat '''
-                set IFP_PROCESS_START=%TIME:~0,2%:%TIME:~3,2%:%TIME:~6,2%
-                #python %cd%\\ifp\\DEV\\mssql\\RunIFP_mssql.py
-                '''
+ //               bat '''
+ //               set IFP_PROCESS_START=%TIME:~0,2%:%TIME:~3,2%:%TIME:~6,2%
+ //               #python %cd%\\ifp\\DEV\\mssql\\RunIFP_mssql.py
+ //               '''
                 script{
                     IFP_PROCESS_END = "${currentBuild.durationString}"
                 }
