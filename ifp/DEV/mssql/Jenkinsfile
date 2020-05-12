@@ -27,7 +27,7 @@ pipeline {
         stage('Run IFP proces MSSQL ') { 
             steps {
                 bat '''
-                    ::python %cd%\\ifp\\DEV\\mssql\\RunIFP_mssql.py
+                    python %cd%\\ifp\\DEV\\mssql\\RunIFP_mssql.py
                 '''
                 // 
             }
