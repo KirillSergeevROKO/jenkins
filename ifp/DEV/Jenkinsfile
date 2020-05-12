@@ -40,6 +40,7 @@ pipeline {
                 // 
             }
         }
+    }
     post {
         success {
             mail to: 'kirill.sergeev@rokolabs.com',
@@ -48,5 +49,5 @@ pipeline {
             
         }
     }
-    }
+    
 }
