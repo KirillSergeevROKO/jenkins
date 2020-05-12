@@ -55,9 +55,10 @@ pipeline {
                 </div>
                 <p><span style="color: #003366;">Duration:&nbsp;<strong>${currentBuild.durationString}&nbsp;</strong></span><br />
                 <span style="color: #003366;"> You can finde details on this </span><br /><span style="color: #003366;">link: ${env.BUILD_URL}</span>
-                <br /><span style="color: #003366;">===========================================</span></p>,
-                 mimeType: 'text/html'
-            """
+                <br /><span style="color: #003366;">===========================================</span></p>
+                 """,
+            mimeType: 'text/html'
+           
             
         }
     }
