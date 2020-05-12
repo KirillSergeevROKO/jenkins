@@ -42,7 +42,7 @@ pipeline {
         }
         stage('Generate and send report') { 
             steps {
-                echo ${CHECK_FILE_END}
+                echo "${CHECK_FILE_END}"
                 bat '''
                 echo %CHECK_FILE_END%
                 python %cd%\\ifp\\generate_report_IFP.py
