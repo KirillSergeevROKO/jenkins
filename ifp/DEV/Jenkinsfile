@@ -15,9 +15,9 @@ pipeline {
         stage('Copy file to MSSQL folder') { 
             steps {
                 bat '''
-                    ::%cd%\\ifp\\DEV\\copy_files_for_pos.cmd \
-                    ::\\\\vm-roko-appserver\\CascadeFinancials\\Cobol\\CobolTempDirectory\\MSSQL \
-                    ::\\\\vm-roko-appserver\\temp\\jenkins\\MSSQL
+                    %cd%\\ifp\\DEV\\copy_files_for_pos.cmd \
+                    \\\\vm-roko-appserver\\CascadeFinancials\\Cobol\\CobolTempDirectory\\MSSQL \
+                    \\\\vm-roko-appserver\\temp\\jenkins\\MSSQL
                 '''
                 // Use additional / (slash) for use on WINDOWS slave
                 //first parameter is SOURCE folder
@@ -47,9 +47,9 @@ pipeline {
             subject: "Status of pipeline: ${currentBuild.fullDisplayName}",
             body: """
                 <html>
-                <p><span style="color: #003366;"><strong>${currentBuild.projectName}&nbsp;</strong></span></p>
+                <p><span style="color: #003366;"><strong>DEV &nbsp;</strong></span></p>
                 <p><span style="color: #003366;">===========================================</span><br /><span style="color: #003366;">Build:&nbsp;<strong>${currentBuild.projectName}&nbsp;</strong></span></p>
-                <div><span style="color: #003366;">Number:&nbsp;<strong>${currentBuild.number}</strong></span></div>
+                <div><span style="color: #003366;">Build number:&nbsp;<strong>${currentBuild.number}</strong></span></div>
                 <p><span style="color: #003366;">Has result:</span></p>
                 <div>
                 <h3><span style="background-color: #99cc00; color: #003366;">${currentBuild.result}</span></h3>
