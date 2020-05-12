@@ -47,7 +47,6 @@ pipeline {
             subject: "Status of pipeline: ${currentBuild.fullDisplayName}",
             body: "Build ${currentBuild.projectName} has result ${currentBuild.result}<br>
                    You can finde details on this link ${env.BUILD_URL}<br> 
-                   
                    "
             
         }
