@@ -10,7 +10,7 @@ pipeline {
                     env.CHECK_FILE_END = "${currentBuild.durationString}"
                 }
                 bat '''
-                echo %CHECK_FILE_END%  test test
+                echo %CHECK_FILE_END%  Olo!
                 '''
                 // 
             }
