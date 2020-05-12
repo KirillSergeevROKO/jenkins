@@ -9,6 +9,9 @@ pipeline {
                 script{
                     CHECK_FILE_END = "${currentBuild.durationString}"
                 }
+                bat '''
+                echo %CHECK_FILE_END%
+                '''
                 // 
             }
         }
