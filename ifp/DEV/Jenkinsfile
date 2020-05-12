@@ -7,7 +7,7 @@ pipeline {
                 python %cd%\\ifp\\DEV\\FileCheck.py
                 '''
                 script{
-                    env.CHECK_FILE_END = "${currentBuild.durationString.split(" ")[0..1]}"
+                    env.CHECK_FILE_END = "${currentBuild.durationString.split(" ")[0..2]}"
                 }
                 bat '''
                 echo %CHECK_FILE_END%  Olo!
@@ -24,7 +24,7 @@ pipeline {
                 ::\\\\vm-roko-appserver\\temp\\jenkins\\MSSQL
                 '''
                 script{
-                    env.COPY_FILE_END = "${currentBuild.durationString.split(" ")[0..1]}"
+                    env.COPY_FILE_END = "${currentBuild.durationString.split(" ")[0..2]}"
                 }
                 // Use additional / (slash) for use on WINDOWS slave
                 //first parameter is SOURCE folder
@@ -38,7 +38,7 @@ pipeline {
                 ::python %cd%\\ifp\\DEV\\mssql\\RunIFP_mssql.py
                 '''
                 script{
-                    env.IFP_PROCESS_END = "${currentBuild.durationString.split(" ")[0..1]}"
+                    env.IFP_PROCESS_END = "${currentBuild.durationString.split(" ")[0..2]}"
                 }
                 // 
             }
