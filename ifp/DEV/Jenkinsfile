@@ -16,9 +16,9 @@ pipeline {
             steps {
                 bat '''
                 set COPY_FILE_START=%TIME:~0,2%:%TIME:~3,2%:%TIME:~6,2%
-                %cd%\\ifp\\DEV\\copy_files_for_pos.cmd \
-               \\\\vm-roko-appserver\\CascadeFinancials\\Cobol\\CobolTempDirectory\\MSSQL \
-                \\\\vm-roko-appserver\\temp\\jenkins\\MSSQL
+                ::%cd%\\ifp\\DEV\\copy_files_for_pos.cmd \
+               ::\\\\vm-roko-appserver\\CascadeFinancials\\Cobol\\CobolTempDirectory\\MSSQL \
+                ::\\\\vm-roko-appserver\\temp\\jenkins\\MSSQL
                 '''
                 script{
                     COPY_FILE_END = "${currentBuild.durationString}"
@@ -42,6 +42,7 @@ pipeline {
         }
         stage('Generate and send report') { 
             steps {
+                echo ${CHECK_FILE_END}
                 bat '''
                 echo %CHECK_FILE_END%
                 python %cd%\\ifp\\generate_report_IFP.py
