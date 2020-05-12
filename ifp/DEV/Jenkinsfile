@@ -4,24 +4,20 @@ pipeline {
         stage('Check files') { 
             steps {
                 bat '''
-                python %cd%\\ifp\\DEV\\FileCheck.py
+                    python %cd%\\ifp\\DEV\\FileCheck.py
                 '''
                 script{
                     env.CHECK_FILE_END = "${currentBuild.durationString.split(" ")[0..1]}"
                 }
-                bat '''
-                echo %CHECK_FILE_END%  Olo!
-                '''
                 // 
             }
         }
         stage('Copy file to MSSQL folder') { 
             steps {
                 bat '''
-                set COPY_FILE_START=%TIME:~0,2%:%TIME:~3,2%:%TIME:~6,2%
-                ::%cd%\\ifp\\DEV\\copy_files_for_pos.cmd \
-               ::\\\\vm-roko-appserver\\CascadeFinancials\\Cobol\\CobolTempDirectory\\MSSQL \
-                ::\\\\vm-roko-appserver\\temp\\jenkins\\MSSQL
+                    %cd%\\ifp\\DEV\\copy_files_for_pos.cmd \
+                    \\\\vm-roko-appserver\\CascadeFinancials\\Cobol\\CobolTempDirectory\\MSSQL \
+                    \\\\vm-roko-appserver\\temp\\jenkins\\MSSQL
                 '''
                 script{
                     env.COPY_FILE_END = "${currentBuild.durationString.split(" ")[0..1]}"
@@ -34,8 +30,7 @@ pipeline {
         stage('Run IFP proces MSSQL ') { 
             steps {
                 bat '''
-                set IFP_PROCESS_START=%TIME:~0,2%:%TIME:~3,2%:%TIME:~6,2%
-                ::python %cd%\\ifp\\DEV\\mssql\\RunIFP_mssql.py
+                    ::python %cd%\\ifp\\DEV\\mssql\\RunIFP_mssql.py
                 '''
                 script{
                     env.IFP_PROCESS_END = "${currentBuild.durationString.split(" ")[0..1]}"
@@ -45,10 +40,11 @@ pipeline {
         }
         stage('Generate and send report') { 
             steps {
-                echo "${CHECK_FILE_END}"
+                script{
+                    env.STATUS = "${currentBuild.result}"
+                }
                 bat '''
-                echo %CHECK_FILE_END%
-                python %cd%\\ifp\\generate_report_IFP.py
+                    python %cd%\\ifp\\generate_report_IFP.py
                 '''
                 // 
             }

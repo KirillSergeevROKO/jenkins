@@ -10,7 +10,7 @@ with open('ifp\\ifp_report.html.jinja2') as file:
 
 output_html = template.render(
     BUILD_NEMBER_VAR=os.getenv('BUILD_NUMBER'),
-    STATUS_VAR='STATUS',
+    STATUS_VAR=os.getenv('STATUS'),
     START_JOB_VAR=os.getenv('STARTJOB'),
     END_JOB_VAR=os.getenv('ENDJOB'),
     CHECK_FILE_END_VAR=os.getenv('CHECK_FILE_END'),
