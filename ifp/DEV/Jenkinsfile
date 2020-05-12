@@ -41,7 +41,8 @@ pipeline {
                 echo "$CHECK_FILE_START%"
                 bat '''
                 python %cd%\\ifp\\generate_report_IFP.py
-                                '''
+                echo %CHECK_FILE_START%
+                '''
                 // 
             }
         }
