@@ -31,10 +31,10 @@ with open(os.path.join(cwd, 'ifp\\DEV\\FileCheck_config.json')) as f:
     }
     response = requests.post(url = API_ENDPOINT, data = payload)
     if response.text == 'true':
-        # Remove all files
+       # Remove all files
         files = os.listdir(extractFileLocation)
-        for file in files:
-            if (file.startswith("FF")):
-                os.remove(os.path.join(extractFileLocation, file))
+#        for file in files:
+#           if (file.startswith("FF")):
+#                os.remove(os.path.join(extractFileLocation, file))
     else:
         sys.exit(13)
