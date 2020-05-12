@@ -5,7 +5,7 @@ from jinja2 import Template
 
 
 #open template j2 file
-with open('ifp_report.html.jinja2') as file:
+with open('ifp\\ifp_report.html.jinja2') as file:
     template = Template(file.read())
 
 output_html = template.render(
