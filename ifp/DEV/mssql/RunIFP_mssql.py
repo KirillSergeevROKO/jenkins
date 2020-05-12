@@ -11,7 +11,7 @@ print('Running RunIFP.py...')
 
 #Read in configuration file
 cwd = os.getcwd()
-extractFileLocation = r'D:\InformentFiles\DATA'
+extractFileLocation = r'\\vm-roko-appserver\CascadeFinancials\Cobol\CobolTempDirectory\MSSQL\'
 achdate = datetime.today() # - timedelta(days=1)
 
 with open(os.path.join(cwd, 'ifp\\DEV\\FileCheck_config.json')) as f:
