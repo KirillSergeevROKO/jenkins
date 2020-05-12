@@ -3,12 +3,12 @@ pipeline {
     stages {
         stage('Check files') { 
             steps {
-                script{
-                    def CHECK_FILE_START = bat(script: '%TIME:~0,2%:%TIME:~3,2%:%TIME:~6,2%', returnStdout: true)
-                    println(${CHECK_FILE_START})
+//                script{
+//                    def CHECK_FILE_START = bat(script: '%TIME:~0,2%:%TIME:~3,2%:%TIME:~6,2%', returnStdout: true)
+//                    println(${CHECK_FILE_START})
                 }
                 bat '''
-                #python %cd%\\ifp\\DEV\\FileCheck.py
+                python %cd%\\ifp\\DEV\\FileCheck.py
                 '''
                 // 
             }
