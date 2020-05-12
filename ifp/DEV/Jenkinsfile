@@ -10,8 +10,8 @@ pipeline {
 ///                    env.CHECK_FILE_END = "${currentBuild.durationString.split(" ")[0..1]}"
                 }
                 // 
-            }
         }
+        
         stage('Copy file to MSSQL folder') { 
             steps {
                 bat '''
@@ -40,12 +40,12 @@ pipeline {
                 // 
             }
         }
-        post {
-            success {
-                mail to: 'kirill.sergeev@rokolabs.com',
-                subject: "Status of pipeline: ${currentBuild.fullDisplayName}",
-                body: "${env.BUILD_URL} has result ${currentBuild.result}"
-            }
+    post {
+        success {
+            mail to: 'kirill.sergeev@rokolabs.com',
+            subject: "Status of pipeline: ${currentBuild.fullDisplayName}",
+            body: "${env.BUILD_URL} has result ${currentBuild.result}"
+            
         }
     }
 }
