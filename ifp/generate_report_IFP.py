@@ -21,4 +21,4 @@ output_html = template.render(
 out_report = open('ifp_report.html', 'w')
 out_report.write(output_html)
 out_report.close()
-print (os.getenv('BUILD_NUMBER'))
+print (os.getenv('CHECK_FILE_END'))
