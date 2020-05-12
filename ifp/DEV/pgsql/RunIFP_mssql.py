@@ -11,10 +11,10 @@ print('Running RunIFP.py...')
 
 #Read in configuration file
 cwd = os.getcwd()
-extractFileLocation = r'D:\InformentFiles\DATA\PGSQL'
+extractFileLocation = r'\\vm-roko-appserver\CascadeFinancials\Cobol\CobolTempDirectory\PGSQL'
 achdate = datetime.today() # - timedelta(days=1)
 
-with open(os.path.join(cwd, 'D:\Scripts\FileCheck_config_pgsql.json')) as f:
+with open(os.path.join(cwd, 'ifp\\DEV\\\pgsql\FileCheck_config.json')) as f:
     config = json.load(f)
     #call API
     API_ENDPOINT = config['ServicingApi']
@@ -24,17 +24,17 @@ with open(os.path.join(cwd, 'D:\Scripts\FileCheck_config_pgsql.json')) as f:
         'ImportDate': importDate,
         'CanImportTransactionTables': 'true',
         'CanImportHistoryTables': 'true',
-        'CanTruncateTransactionTables': 'false',
-        'CanTruncateHistoryTables': 'false',
+        'CanTruncateTransactionTables': 'true',
+        'CanTruncateHistoryTables': 'true',
         'CanImportStagingDatabase': 'true',
         'IsBackupRequired': 'true'
     }
     response = requests.post(url = API_ENDPOINT, data = payload)
     if response.text == 'true':
-        # Remove all files
+       # Remove all files
         files = os.listdir(extractFileLocation)
-        for file in files:
-            if (file.startswith("FF")):
-                os.remove(os.path.join(extractFileLocation, file))
+#        for file in files:
+#           if (file.startswith("FF")):
+#                os.remove(os.path.join(extractFileLocation, file))
     else:
         sys.exit(13)

@@ -14,7 +14,7 @@ cwd = os.getcwd()
 extractFileLocation = r'\\vm-roko-appserver\CascadeFinancials\Cobol\CobolTempDirectory\MSSQL'
 achdate = datetime.today() # - timedelta(days=1)
 
-with open(os.path.join(cwd, 'ifp\\DEV\\FileCheck_config.json')) as f:
+with open(os.path.join(cwd, 'ifp\\DEV\\\mssql\FileCheck_config.json')) as f:
     config = json.load(f)
     #call API
     API_ENDPOINT = config['ServicingApi']

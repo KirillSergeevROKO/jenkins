@@ -4,7 +4,7 @@ pipeline {
         stage('Check files') { 
             steps {
                 bat '''
-                    python %cd%\\ifp\\DEV\\FileCheck.py
+                    python %cd%\\ifp\\DEV\\mssql\\FileCheck.py
                 '''
 ///                script{
 ///                    env.CHECK_FILE_END = "${currentBuild.durationString.split(" ")[0..1]}"
@@ -15,7 +15,7 @@ pipeline {
         stage('Copy file to MSSQL folder') { 
             steps {
                 bat '''
-                    %cd%\\ifp\\DEV\\copy_files_for_pos.cmd \
+                    %cd%\\ifp\\DEV\\mssql\\copy_files_for_pos.cmd \
                     \\\\vm-roko-appserver\\CascadeFinancials\\Cobol\\CobolTempDirectory\\MSSQL \
                     \\\\vm-roko-appserver\\temp\\jenkins\\MSSQL
                 '''
