@@ -7,7 +7,7 @@ pipeline {
                 // 
             }
         }
-        stage('Copy file for MSSQL folder') { 
+        stage('Copy file to MSSQL folder') { 
             steps {
                 bat '''
                 %cd%\\ifp\\DEV\\copy_files_for_pos.cmd \
@@ -19,9 +19,9 @@ pipeline {
                 // second - is DESTINATION folder
             }
         }
-        stage('Run IFP_proces_cusctom ') { 
+        stage('Run IFP proces MSSQL ') { 
             steps {
-                bat 'echo Step4'
+                bat 'python %cd%\\ifp\\DEV\\mssql\\RunIFP_mssql.py'
                 // 
             }
         }

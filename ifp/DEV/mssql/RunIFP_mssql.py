@@ -14,7 +14,7 @@ cwd = os.getcwd()
 extractFileLocation = r'D:\InformentFiles\DATA'
 achdate = datetime.today() # - timedelta(days=1)
 
-with open(os.path.join(cwd, 'FileCheck_config_custom.json')) as f:
+with open(os.path.join(cwd, 'ifp\\DEV\\FileCheck_config.json')) as f:
     config = json.load(f)
     #call API
     API_ENDPOINT = config['ServicingApi']
