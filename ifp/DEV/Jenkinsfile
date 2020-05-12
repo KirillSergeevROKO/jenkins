@@ -7,10 +7,10 @@ pipeline {
                 python %cd%\\ifp\\DEV\\FileCheck.py
                 '''
                 script{
-                    env.CHECK_FILE_END = "${currentBuild.durationString}"
+                    env.test = "${currentBuild.durationString}"
                 }
                 bat '''
-                echo %CHECK_FILE_END%
+                echo %test%  test test test!
                 '''
                 // 
             }
