@@ -7,7 +7,7 @@ pipeline {
                     def CHECK_FILE_START = bat(script: '%TIME:~0,2%:%TIME:~3,2%:%TIME:~6,2%', returnStdout: true)
                 }
                 bat '''
-                #set CHECK_FILE_START=%TIME:~0,2%:%TIME:~3,2%:%TIME:~6,2%
+                set CHECK_FILE_START=%TIME:~0,2%:%TIME:~3,2%:%TIME:~6,2%
                 python %cd%\\ifp\\DEV\\FileCheck.py
                 set CHECK_FILE_END=%TIME:~0,2%:%TIME:~3,2%:%TIME:~6,2%
                 '''
