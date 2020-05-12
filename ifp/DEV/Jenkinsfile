@@ -3,16 +3,22 @@ pipeline {
     stages {
         stage('Check files') { 
             steps {
-                bat 'python %cd%\\ifp\\DEV\\FileCheck.py'
+                bat '''
+                set CHECK_FILE_START=%TIME:~0,2%:%TIME:~3,2%:%TIME:~6,2%
+                python %cd%\\ifp\\DEV\\FileCheck.py
+                set CHECK_FILE_END=%TIME:~0,2%:%TIME:~3,2%:%TIME:~6,2%
+                '''
                 // 
             }
         }
         stage('Copy file to MSSQL folder') { 
             steps {
                 bat '''
+                set COPY_FILE_START=%TIME:~0,2%:%TIME:~3,2%:%TIME:~6,2%
                 %cd%\\ifp\\DEV\\copy_files_for_pos.cmd \
                \\\\vm-roko-appserver\\CascadeFinancials\\Cobol\\CobolTempDirectory\\MSSQL \
                 \\\\vm-roko-appserver\\temp\\jenkins\\MSSQL
+                set COPY_FILE_END=%TIME:~0,2%:%TIME:~3,2%:%TIME:~6,2%
                 '''
                 // Use additional / (slash) for use on WINDOWS slave
                 //first parameter is SOURCE folder
@@ -21,13 +27,19 @@ pipeline {
         }
         stage('Run IFP proces MSSQL ') { 
             steps {
-                bat 'python %cd%\\ifp\\DEV\\mssql\\RunIFP_mssql.py'
+                bat '''
+                set IFP_PROCESS_START=%TIME:~0,2%:%TIME:~3,2%:%TIME:~6,2%
+                #python %cd%\\ifp\\DEV\\mssql\\RunIFP_mssql.py
+                set IFP_PROCESS_END=%TIME:~0,2%:%TIME:~3,2%:%TIME:~6,2%
+                '''
                 // 
             }
         }
         stage('Generate and send report') { 
             steps {
-                bat 'echo Step5'
+                bat '''
+                echo Step5
+                '''
                 // 
             }
         }
