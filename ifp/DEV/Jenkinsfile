@@ -3,13 +3,12 @@ pipeline {
     stages {
         stage('Check files') { 
             steps {
-//                script{
-//                    def CHECK_FILE_START = bat(script: '%TIME:~0,2%:%TIME:~3,2%:%TIME:~6,2%', returnStdout: true)
-//                    println(${CHECK_FILE_START})
-                }
                 bat '''
                 python %cd%\\ifp\\DEV\\FileCheck.py
                 '''
+                script{
+                    CHECK_FILE_END_VAR = "${currentBuild.durationString}"
+                }
                 // 
             }
         }
@@ -39,10 +38,9 @@ pipeline {
         }
         stage('Generate and send report') { 
             steps {
-                echo "$CHECK_FILE_START%"
                 bat '''
+                echo %CHECK_FILE_END_VAR%
                 python %cd%\\ifp\\generate_report_IFP.py
-                echo %CHECK_FILE_START%
                 '''
                 // 
             }

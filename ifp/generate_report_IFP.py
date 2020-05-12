@@ -13,11 +13,8 @@ output_html = template.render(
     STATUS_VAR='STATUS',
     START_JOB_VAR=os.getenv('STARTJOB'),
     END_JOB_VAR=os.getenv('ENDJOB'),
-    CHECK_FILE_START_VAR=os.getenv('CHECK_FILE_START'),
     CHECK_FILE_END_VAR=os.getenv('CHECK_FILE_END'),
-    COPY_FILE_START_VAR=os.getenv('COPY_FILE_START'),
     COPY_FILE_END_VAR=os.getenv('COPY_FILE_END'),
-    IFP_PROCESS_START_VAR=os.getenv('IFP_PROCESS_START'),
     IFP_PROCESS_END_VAR=os.getenv('IFP_PROCESS_END'),
 )
 
