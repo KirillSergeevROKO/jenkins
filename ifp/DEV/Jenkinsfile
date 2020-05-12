@@ -6,8 +6,8 @@ pipeline {
                 bat '''
                     python %cd%\\ifp\\DEV\\FileCheck.py
                 '''
-                script{
-                    env.CHECK_FILE_END = "${currentBuild.durationString.split(" ")[0..1]}"
+///                script{
+///                    env.CHECK_FILE_END = "${currentBuild.durationString.split(" ")[0..1]}"
                 }
                 // 
             }
@@ -19,9 +19,6 @@ pipeline {
                     \\\\vm-roko-appserver\\CascadeFinancials\\Cobol\\CobolTempDirectory\\MSSQL \
                     \\\\vm-roko-appserver\\temp\\jenkins\\MSSQL
                 '''
-                script{
-                    env.COPY_FILE_END = "${currentBuild.durationString.split(" ")[0..1]}"
-                }
                 // Use additional / (slash) for use on WINDOWS slave
                 //first parameter is SOURCE folder
                 // second - is DESTINATION folder
@@ -32,21 +29,22 @@ pipeline {
                 bat '''
                     ::python %cd%\\ifp\\DEV\\mssql\\RunIFP_mssql.py
                 '''
-                script{
-                    env.IFP_PROCESS_END = "${currentBuild.durationString.split(" ")[0..1]}"
-                }
                 // 
             }
         }
         stage('Generate and send report') { 
             steps {
-                script{
-                    env.STATUS = "${currentBuild.result}"
-                }
                 bat '''
                     python %cd%\\ifp\\generate_report_IFP.py
                 '''
                 // 
+            }
+        }
+        post {
+            success {
+                mail to: 'kirill.sergeev@rokolabs.com',
+                subject: "Status of pipeline: ${currentBuild.fullDisplayName}",
+                body: "${env.BUILD_URL} has result ${currentBuild.result}"
             }
         }
     }
