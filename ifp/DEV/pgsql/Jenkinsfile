@@ -69,6 +69,7 @@ pipeline {
             steps {
                 bat '''
                     python %cd%\\ifp\\generate_report_IFP.py
+                    echo error file: ${error_files}
                 '''
                 // 
             }
