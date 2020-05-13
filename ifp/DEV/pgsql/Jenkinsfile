@@ -95,7 +95,7 @@ pipeline {
                  """,
             mimeType: 'text/html'
          failure{
-            mail to: ${MAIL_TO},
+            mail to: "${MAIL_TO}",
             subject: "FAILED in pipeline: ${currentBuild.fullDisplayName} ${currentBuild.result} ",
             body: """
                 <html>
