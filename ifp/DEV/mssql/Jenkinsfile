@@ -64,7 +64,7 @@ pipeline {
             
         }
         failure{
-            mail to:
+            mail to: 'kirill.sergeev@rokolabs.com',
             subject: "FAILED in pipeline: ${currentBuild.fullDisplayName} ${currentBuild.result} ",
             body: """
                 <html>
