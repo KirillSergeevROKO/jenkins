@@ -47,7 +47,7 @@ pipeline {
     }
     post {
         success {
-            mail to: ${MAIL_TO},
+            mail to: "${MAIL_TO}",
             subject: "Status of pipeline: ${currentBuild.fullDisplayName}",
             body: """
                 <html>
