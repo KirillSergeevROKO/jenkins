@@ -1,3 +1,7 @@
+//Set variables
+def MAIL_TO = "kirill.sergeev@rokolabs.com"
+
+
 pipeline {
     agent { label 'vm-roko-jenkins' }
     stages {
@@ -43,7 +47,7 @@ pipeline {
     }
     post {
         success {
-            mail to: 'kirill.sergeev@rokolabs.com',
+            mail to: ${MAIL_TO},
             subject: "Status of pipeline: ${currentBuild.fullDisplayName}",
             body: """
                 <html>
@@ -64,7 +68,7 @@ pipeline {
             
         }
         failure{
-            mail to: 'kirill.sergeev@rokolabs.com',
+            mail to: ${MAIL_TO},
             subject: "FAILED in pipeline: ${currentBuild.fullDisplayName} ${currentBuild.result} ",
             body: """
                 <html>
