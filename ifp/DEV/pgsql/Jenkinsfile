@@ -54,11 +54,11 @@ pipeline {
                     //Check if folder exist and collect filenames
                     File error_folder = new File("${error_folder_path}")
                     if (error_folder.exists()){
-                        def env.error_files = bat(script: "dir /B ${error_folder_path}", returnStdout: true)
+                        env.error_files = bat(script: "dir /B ${error_folder_path}", returnStdout: true)
                         println("files_in_folder = ${env.error_files}")
                         
                     } else{
-                        def env.error_files = "None, all files were processed correctly"
+                        env.error_files = "None, all files were processed correctly"
                     println("files_in_folder = ${env.error_files}")
                     }
                 }
