@@ -54,12 +54,12 @@ pipeline {
                     //Check if folder exist and collect filenames
                     File error_folder = new File("${error_folder_path}")
                     if (error_folder.exists()){
-                        def error_files = bat(script: "dir /B ${error_folder_path}", returnStdout: true)
-                        println("files_in_folder = ${error_files}")
+                        def env.error_files = bat(script: "dir /B ${error_folder_path}", returnStdout: true)
+                        println("files_in_folder = ${env.error_files}")
                         
                     } else{
-                        def error_files = "None, all files were processed correctly"
-                    println("files_in_folder = ${error_files}")
+                        def env.error_files = "None, all files were processed correctly"
+                    println("files_in_folder = ${env.error_files}")
                     }
                 }
         
@@ -69,7 +69,7 @@ pipeline {
             steps {
                 bat '''
                     python %cd%\\ifp\\generate_report_IFP.py
-                    echo error file: ${error_files}
+                    echo error file: ${env.error_files}
                 '''
                 // 
             }
@@ -88,7 +88,7 @@ pipeline {
                 <div>
                 <h3><span style="background-color: #99cc00; color: #003366;">${currentBuild.result}</span></h3>
                 </div><br />
-                <p><span style="color: #003366;">Errors files: ${error_files};
+                <p><span style="color: #003366;">Errors files: ${env.error_files};
                 <p><span style="color: #003366;">Duration:&nbsp;<strong>${currentBuild.durationString}&nbsp;</strong></span><br />
                 <span style="color: #003366;"> You can finde details on this </span><br /><span style="color: #003366;">link: ${env.BUILD_URL}</span>
                 <br /><span style="color: #003366;">===========================================</span></p>
@@ -107,7 +107,7 @@ pipeline {
                 <div>
                 <h3><span style="background-color: #ff0000; color: #003366;">${currentBuild.result}</span></h3>
                 </div><br />
-                <p><span style="color: #003366;">Errors files: ${error_files};
+                <p><span style="color: #003366;">Errors files: ${env.error_files};
                 <p><span style="color: #003366;">Duration:&nbsp;<strong>${currentBuild.durationString}&nbsp;</strong></span><br />
                 <span style="color: #003366;"> This build failed, please check what is wrong!  </span><br /><span style="color: #003366;">link: ${env.BUILD_URL}</span>
                 <br /><span style="color: #003366;">===========================================</span></p>
