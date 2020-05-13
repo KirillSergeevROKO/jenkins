@@ -31,7 +31,7 @@ pipeline {
         stage('Run IFP proces PGSQL ') { 
             steps {
                 bat '''
-                    ::python %cd%\\ifp\\DEV\\pgsql\\RunIFP_pgsql.py
+                    python %cd%\\ifp\\DEV\\pgsql\\RunIFP_pgsql.py
                 '''
                 // 
             }
