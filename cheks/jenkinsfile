@@ -1,0 +1,134 @@
+//Set variables
+def MAIL_TO = "kirill.sergeev@rokolabs.com"
+def TODAY = new Date()
+def YESTERDAY = today.previous()
+def FORMATED_DATE = yesterday.format("yyyyMMdd")
+
+
+
+pipeline {
+    agent { label 'vm-roko-jenkins' }
+    stages {
+        stage('Check files on Cascade side') { 
+            steps {
+                script{
+                    ///check files in error folder
+                    println("date var = ${formated_date}")
+
+                    //Set path to error folder
+                    def error_folder_path = "\\\\iisods\\InformentFiles\\FTP\\Batch\\${formated_date}\\Backup\\errors"
+                    println("date var = ${error_folder_path}")
+
+                    //Check if folder exist and collect filenames
+                    File error_folder = new File("${error_folder_path}")
+                    if (error_folder.exists()){
+                        env.error_files = bat(script: "@dir /B ${error_folder_path}", returnStdout: true)
+                        println("files_in_folder = ${env.error_files}")
+                        env.status = "<p><span style=\"background-color: #ff0000;\"><strong>FAILED</strong></span></p>"
+                        
+                    } else{
+                        env.error_files = "None, all files were processed correctly"
+                        env.status = "<p><span style=\"background-color: #00ff00;\"><strong>SUCCESS</strong></span></p>"
+                    println("files_in_folder = ${env.error_files}")
+                    }
+                }
+            }
+                // 
+        }
+        
+        stage('Check files on ROKO MSSQL PROD') { 
+            steps {
+                 script{
+                    ///check files in error folder
+                    println("date var = ${formated_date}")
+
+                    //Set path to error folder
+                    def error_folder_path = "\\\\PROD-ROKO-APPSErver\\InformentFiles\\DATA\\Batch\\${formated_date}\\Backup\\errors"
+                    println("date var = ${error_folder_path}")
+
+                    //Check if folder exist and collect filenames
+                    File error_folder = new File("${error_folder_path}")
+                    if (error_folder.exists()){
+                        env.error_files = bat(script: "@dir /B ${error_folder_path}", returnStdout: true)
+                        println("files_in_folder = ${env.error_files}")
+                        env.status = "<p><span style=\"background-color: #ff0000;\"><strong>FAILED</strong></span></p>"
+                        
+                    } else{
+                        env.error_files = "None, all files were processed correctly"
+                        env.status = "<p><span style=\"background-color: #00ff00;\"><strong>SUCCESS</strong></span></p>"
+                    println("files_in_folder = ${env.error_files}")
+                    }
+                }
+            }
+        }
+        stage('Check files on ROKO PGSQL PROD ') { 
+            steps {
+                 script{
+                    ///check files in error folder
+                    println("date var = ${formated_date}")
+
+                    //Set path to error folder
+                    def error_folder_path = "\\\\PROD-ROKO-APPSErver\\InformentFiles\\DATA\\PGSQL\\Batch\\${formated_date}\\Backup\\errors"
+                    println("date var = ${error_folder_path}")
+
+                    //Check if folder exist and collect filenames
+                    File error_folder = new File("${error_folder_path}")
+                    if (error_folder.exists()){
+                        env.error_files = bat(script: "@dir /B ${error_folder_path}", returnStdout: true)
+                        println("files_in_folder = ${env.error_files}")
+                        env.status = "<p><span style=\"background-color: #ff0000;\"><strong>FAILED</strong></span></p>"
+                        
+                    } else{
+                        env.error_files = "None, all files were processed correctly"
+                        env.status = "<p><span style=\"background-color: #00ff00;\"><strong>SUCCESS</strong></span></p>"
+                    println("files_in_folder = ${env.error_files}")
+                    }
+                }
+            }
+        }
+        stage ("Checks") {
+            steps {
+ 
+        
+      }
+    }
+    
+    post {
+        success {
+            mail to: "${MAIL_TO}",
+            subject: "Status of pipeline: ${env.status}",
+            body: """
+                <html>
+                <p>IFP Check errors files&nbsp;<br /><br /><strong>STATUS:</strong>&nbsp; ${env.status}</p>
+                <p><br />======================================<br /><strong>Cascade side</strong> :<br />Errors files: ${env.error_files}<strong>
+                <br />======================================<br /><br />
+                <br />======================================<br />ROKO MSSQL</strong> <br />Errors files: ${env.error_files}<strong><br />
+                </strong><strong>======================================</strong></p>
+                <p><strong><br />======================================<br />ROKO PGSQL <br />Errors files: </strong>${env.error_files}<strong>
+                <br />======================================</strong></p>
+                </html>
+                 """,
+            mimeType: 'text/html'
+        }
+         failure {
+            mail to: "${MAIL_TO}",
+            subject: "FAILED in pipeline: ${currentBuild.fullDisplayName} ${env.status} ",
+            body: """
+                <html>
+                <html>
+                <p>IFP Check errors files&nbsp;<br /><br /><strong>STATUS:</strong>&nbsp; ${env.status}</p>
+                <p><br />======================================<br /><strong>Cascade side</strong> :<br />Errors files: ${env.error_files}<strong>
+                <br />======================================<br /><br />
+                <br />======================================<br />ROKO MSSQL</strong> <br />Errors files: ${env.error_files}<strong><br />
+                </strong><strong>======================================</strong></p>
+                <p><strong><br />======================================<br />ROKO PGSQL <br />Errors files: </strong>${env.error_files}<strong>
+                <br />======================================</strong></p>
+                </html>
+                </html>
+                 """,
+            mimeType: 'text/html'
+                    
+        }
+    }
+    
+}
