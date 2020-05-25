@@ -1,0 +1,122 @@
+//Set variables
+def MAIL_TO = "kirill.sergeev@rokolabs.com"
+
+
+pipeline {
+    agent { label 'vm-roko-jenkins' }
+    stages {
+        stage('Check files') { 
+            steps {
+                bat '''
+                    python %cd%\\ifp\\DEV\\pgsql\\FileCheck.py
+                '''
+///                script{
+///                    env.CHECK_FILE_END = "${currentBuild.durationString.split(" ")[0..1]}"
+                }
+                // 
+        }
+        
+        stage('Copy file to PGSQL folder') { 
+            steps {
+                bat '''
+                    %cd%\\ifp\\DEV\\pgsql\\copy_files_for_pos.cmd \
+                    \\\\vm-roko-appserver\\CascadeFinancials\\Cobol\\CobolTempDirectory\\PGSQL \
+                    \\\\vm-roko-appserver\\temp\\jenkins\\PGSQL
+                '''
+                // Use additional / (slash) for use on WINDOWS slave
+                //first parameter is SOURCE folder
+                // second - is DESTINATION folder
+            }
+        }
+        stage('Run IFP proces PGSQL ') { 
+            steps {
+                bat '''
+                    python %cd%\\ifp\\DEV\\pgsql\\RunIFP_pgsql.py
+                '''
+                // 
+            }
+        }
+        stage ("Checks") {
+            steps {
+                script{
+                    ///check files in error folder
+
+                    //set date current date - 1 day
+                    def today = new Date()
+                    def yesterday = today.previous()
+                    def formated_date = yesterday.format("yyyyMMdd")
+                    println("date var = ${formated_date}")
+
+                    //Set path to error folder
+                    def error_folder_path = "\\\\vm-roko-appserver\\CascadeFinancials\\Cobol\\CobolTempDirectory\\PGSQL\\Batch\\${formated_date}\\Backup\\errors"
+                    println("date var = ${error_folder_path}")
+
+                    //Check if folder exist and collect filenames
+                    File error_folder = new File("${error_folder_path}")
+                    if (error_folder.exists()){
+                        env.error_files = bat(script: "@dir /B ${error_folder_path}", returnStdout: true)
+                        println("files_in_folder = ${env.error_files}")
+                        
+                    } else{
+                        env.error_files = "None, all files were processed correctly"
+                    println("files_in_folder = ${env.error_files}")
+                    }
+                }
+        
+      }
+    }
+        stage('Generate and send report') { 
+            steps {
+                bat '''
+                    python %cd%\\ifp\\generate_report_IFP.py
+                    echo error file: ${env.error_files}
+                '''
+                // 
+            }
+        }
+    }
+    post {
+        success {
+            mail to: "${MAIL_TO}",
+            subject: "Status of pipeline: ${currentBuild.fullDisplayName}",
+            body: """
+                <html>
+                <p><span style="color: #003366;"><strong>DEV PGSQL;</strong></span></p>
+                <p><span style="color: #003366;">===========================================</span><br /><span style="color: #003366;">Build:&nbsp;<strong>${currentBuild.projectName}&nbsp;</strong></span></p>
+                <div><span style="color: #003366;">Build number:&nbsp;<strong>${currentBuild.number}</strong></span></div>
+                <p><span style="color: #003366;">Has result:</span></p>
+                <div>
+                <h3><span style="background-color: #99cc00; color: #003366;">${currentBuild.result}</span></h3>
+                </div><br />
+                <p><span style="color: #003366;">Errors files: <strong> ${env.error_files}</strong>;
+                <p><span style="color: #003366;">Duration:&nbsp;<strong>${currentBuild.durationString}&nbsp;</strong></span><br />
+                <span style="color: #003366;"> You can finde details on this </span><br /><span style="color: #003366;">link: ${env.BUILD_URL}</span>
+                <br /><span style="color: #003366;">===========================================</span></p>
+                </html>
+                 """,
+            mimeType: 'text/html'
+        }
+         failure {
+            mail to: "${MAIL_TO}",
+            subject: "FAILED in pipeline: ${currentBuild.fullDisplayName} ${currentBuild.result} ",
+            body: """
+                <html>
+                <p><span style="color: #003366;"><strong>DEV PGSQL &nbsp;</strong></span></p>
+                <p><span style="color: #003366;">===========================================</span><br /><span style="color: #003366;">Build:&nbsp;<strong>${currentBuild.projectName}&nbsp;</strong></span></p>
+                <div><span style="color: #003366;">Build number:&nbsp;<strong>${currentBuild.number}</strong></span></div>
+                <p><span style="color: #003366;">Has result:</span></p>
+                <div>
+                <h3><span style="background-color: #ff0000; color: #003366;">${currentBuild.result}</span></h3>
+                </div><br />
+                <p><span style="color: #003366;">Errors files:  <strong> ${env.error_files}</strong>;
+                <p><span style="color: #003366;">Duration:&nbsp;<strong>${currentBuild.durationString}&nbsp;</strong></span><br />
+                <span style="color: #003366;"> This build failed, please check what is wrong!  </span><br /><span style="color: #003366;">link: ${env.BUILD_URL}</span>
+                <br /><span style="color: #003366;">===========================================</span></p>
+                </html>
+                 """,
+            mimeType: 'text/html'
+                    
+        }
+    }
+    
+}
