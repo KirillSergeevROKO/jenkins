@@ -94,7 +94,7 @@ pipeline {
             body: """
                 <html>
                 <p>IFP Check errors files&nbsp;<br /><br /><strong>STATUS:</strong>&nbsp; ${env.status}</p>
-                <p><br />======================================<br /><strong>Cascade side</strong> :<br />Errors files: ${env.error_files}<strong>
+                <p><br /><strong>======================================<br /></strong><strong>Cascade side</strong> :<br />Errors files: ${env.error_files}<strong>
                 <br />======================================<br /><br />
                 <br />======================================<br />ROKO MSSQL</strong> <br />Errors files: ${env.error_files}<strong><br />
                 </strong><strong>======================================</strong></p>
@@ -111,7 +111,7 @@ pipeline {
                 <html>
                 <html>
                 <p>IFP Check errors files&nbsp;<br /><br /><strong>STATUS:</strong>&nbsp; ${env.status}</p>
-                <p><br />======================================<br /><strong>Cascade side</strong> :<br />Errors files: ${env.error_files}<strong>
+                <p><br /><strong>======================================</strong><br /><strong>Cascade side</strong> :<br />Errors files: ${env.error_files}<strong>
                 <br />======================================<br /><br />
                 <br />======================================<br />ROKO MSSQL</strong> <br />Errors files: ${env.error_files}<strong><br />
                 </strong><strong>======================================</strong></p>
