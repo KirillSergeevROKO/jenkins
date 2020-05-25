@@ -1,8 +1,8 @@
 //Set variables
 def MAIL_TO = "kirill.sergeev@rokolabs.com"
-def TODAY = new Date()
-def YESTERDAY = today.previous()
-def FORMATED_DATE = yesterday.format("yyyyMMdd")
+def today = new Date()
+def yesterday = today.previous()
+def formated_date = yesterday.format("yyyyMMdd")
 
 
 
@@ -86,17 +86,11 @@ pipeline {
                 }
             }
         }
-        stage ("Checks") {
-            steps {
- 
-        
-      }
-    }
-    
+    }        
     post {
         success {
             mail to: "${MAIL_TO}",
-            subject: "Status of pipeline: ${env.status}",
+            subject: "Status of pipeline: SUCCESS",
             body: """
                 <html>
                 <p>IFP Check errors files&nbsp;<br /><br /><strong>STATUS:</strong>&nbsp; ${env.status}</p>
@@ -112,7 +106,7 @@ pipeline {
         }
          failure {
             mail to: "${MAIL_TO}",
-            subject: "FAILED in pipeline: ${currentBuild.fullDisplayName} ${env.status} ",
+            subject: "FAILED in pipeline: ${currentBuild.fullDisplayName}",
             body: """
                 <html>
                 <html>
@@ -131,5 +125,4 @@ pipeline {
         }
     }
     
-}
 }
