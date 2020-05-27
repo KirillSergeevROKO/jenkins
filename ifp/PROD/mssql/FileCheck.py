@@ -40,7 +40,8 @@ accountPassword = base64.b64decode(accountPassword)
 accountPassword = accountPassword.decode('UTF-8')
 
 achdate = datetime.today() - timedelta(days=1)
-informentDirectory = config['Informent']['Directory'] + str(achdate) + '\\Backup'
+formated_date = achdate.strftime("%Y%m%d")
+informentDirectory = config['Informent']['Directory'] + formated_date + '\\Backup'
 print(informentDirectory)
 #prepend directory to file names
 filelist = [f'{informentDirectory}\\{file}' for file in config['Informent']['FileNames']]
