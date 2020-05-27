@@ -93,7 +93,7 @@
             "FFSI371A"
         ]
     },
-    "ServicingApi": "http://serviceapi.dev.mssql.odsservices.cascadeloans.local/api/ODS/RunImport",
+    "ServicingApi": "http://serviceapi.mssql.odsservices.cascadeloans.local/api/ODS/RunImport",
     "Email": {
         "SEND_TO": "sk@rokolabs.com",
         "USERNAME": "SVC_IFPNoReply@cascadeloans.com",

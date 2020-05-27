@@ -11,7 +11,7 @@ print('Running RunIFP.py...')
 
 #Read in configuration file
 cwd = os.getcwd()
-extractFileLocation = r'\\vm-roko-appserver\CascadeFinancials\Cobol\CobolTempDirectory\MSSQL'
+extractFileLocation = r'\\PROD-ROKO-APPSErver\InformentFiles\DATA'
 achdate = datetime.today() - timedelta(days=1)
 
 with open(os.path.join(cwd, 'ifp\\DEV\\\mssql\FileCheck_config.json')) as f:
@@ -33,8 +33,8 @@ with open(os.path.join(cwd, 'ifp\\DEV\\\mssql\FileCheck_config.json')) as f:
     if response.text == 'true':
        # Remove all files
         files = os.listdir(extractFileLocation)
-#        for file in files:
-#           if (file.startswith("FF")):
-#                os.remove(os.path.join(extractFileLocation, file))
+        for file in files:
+           if (file.startswith("FF")):
+                os.remove(os.path.join(extractFileLocation, file))
     else:
         sys.exit(13)
