@@ -39,11 +39,13 @@ accountPassword = config['Email']['PASSWORD']
 accountPassword = base64.b64decode(accountPassword)
 accountPassword = accountPassword.decode('UTF-8')
 
-informentDirectory = config['Informent']['Directory']
+achdate = datetime.today()  - timedelta(days=1)
+informentDirectory = config['Informent']['Directory'] + achdate + '\\Backup'
+print(informentDirectory)
 #prepend directory to file names
 filelist = [f'{informentDirectory}\\{file}' for file in config['Informent']['FileNames']]
 # add ach file to list as name changes
-#achdate = datetime.today() # - timedelta(days=1)
+
 #achFileMask = f'ach618.{achdate:%Y%m%d}*.txt'
 
 while True:
