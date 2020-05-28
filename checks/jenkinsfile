@@ -57,7 +57,7 @@ pipeline {
                     println("date var = ${formated_date}")
 
                     //Set path to error folder
-                    def error_folder_path = "\\\\PROD-ROKO-APPSERVER\\InformentFiles\\DATA\\Batch\\${formated_date}\\errors"
+                    def error_folder_path = "\\\\PROD-ROKO-APPSERVER\\InformentFiles\\DATA\\Batch\\${formated_date}\\Backup\\errors"
                     println("date var = ${error_folder_path}")
 
                     //
@@ -84,7 +84,7 @@ pipeline {
                     println("date var = ${formated_date}")
 
                     //Set path to error folder
-                    def error_folder_path = "\\\\PROD-ROKO-APPSERVER\\InformentFiles\\DATA\\PGSQL\\Batch\\${formated_date}\\errors"
+                    def error_folder_path = "\\\\PROD-ROKO-APPSERVER\\InformentFiles\\DATA\\PGSQL\\Batch\\${formated_date}\\Backup\\errors"
                     println("date var = ${error_folder_path}")
 
                     //Check if folder exist and collect filenames
