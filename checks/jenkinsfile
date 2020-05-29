@@ -29,9 +29,22 @@ pipeline {
 
                     //Set path to error folder
                     def error_folder_path = "\\\\iisods\\InformentFiles\\FTP\\Batch\\${formated_date}\\Backup\\errors"
+                    //Set path to folder
+                    def today_folder = "\\\\iisods\\InformentFiles\\FTP\\Batch\\${formated_date}\\Backup"
+                    env.status = "<p><span style=\"background-color: #00ff00;\"><strong>SUCCESS</strong></span></p>"
                     println("date var = ${error_folder_path}")
 
-                    env.status = "<p><span style=\"background-color: #00ff00;\"><strong>SUCCESS</strong></span></p>"
+                   //Check count of files
+                    def count = new File(today_folder).listFiles()
+                                  .findAll { it.name ==~ /FF.*/ }
+                                  .size()
+                    if (count !=  96){
+                        println("we have a problem")
+                        env.status = "<p><span style=\"background-color: #ff0000;\"><strong>FAILED</strong></span></p>"
+                        env.count_files_cascade = "Not all files in the folder !!! Please do a manual check !!!"
+                    } else{
+                        env.count_files_cascade = "Count: ${count}"
+                    }
 
                     //Check if folder exist and collect filenames
                     File error_folder = new File("${error_folder_path}")
@@ -45,6 +58,8 @@ pipeline {
                         
                     println("files_in_folder = ${env.error_files_cascade}")
                     }
+                                      
+
                 }
             }
                 // 
@@ -56,12 +71,27 @@ pipeline {
                     ///check files in error folder
                     println("date var = ${formated_date}")
 
+
                     //Set path to error folder
                     def error_folder_path = "\\\\PROD-ROKO-APPSERVER\\InformentFiles\\DATA\\Batch\\${formated_date}\\Backup\\errors"
                     println("date var = ${error_folder_path}")
 
-                    //
+                    //Set path to folder
+                    def today_folder = "\\\\PROD-ROKO-APPSERVER\\InformentFiles\\DATA\\Batch\\${formated_date}\\Backup"
                     
+
+                    //Check count of files
+                    def count = new File(today_folder).listFiles()
+                                  .findAll { it.name ==~ /FF.*/ }
+                                  .size()
+                    if (count !=  96){
+                        println("we have a problem")
+                        env.status = "<p><span style=\"background-color: #ff0000;\"><strong>FAILED</strong></span></p>"
+                        env.count_files_mssql = "Not all files in the folder !!! Please do a manual check !!!"
+                    } else{
+                        env.count_files_mssql = "Count: ${count}"
+                    }
+
                     //Check if folder exist and collect filenames
                     File error_folder = new File("${error_folder_path}")
                     if (error_folder.exists()){
@@ -87,6 +117,21 @@ pipeline {
                     def error_folder_path = "\\\\PROD-ROKO-APPSERVER\\InformentFiles\\DATA\\PGSQL\\Batch\\${formated_date}\\Backup\\errors"
                     println("date var = ${error_folder_path}")
 
+                    //Set path to folder
+                    def today_folder = "\\\\PROD-ROKO-APPSERVER\\InformentFiles\\DATA\\PGSQL\\Batch\\${formated_date}\\Backup"
+
+                    //Check count of files
+                    def count = new File(today_folder).listFiles()
+                                  .findAll { it.name ==~ /FF.*/ }
+                                  .size()
+                    if (count !=  96){
+                        println("we have a problem")
+                        env.status = "<p><span style=\"background-color: #ff0000;\"><strong>FAILED</strong></span></p>"
+                        env.count_files_pgsql = "Not all files in the folder !!! Please do a manual check !!!"
+                    } else{
+                        env.count_files_pgsql = "Count: ${count}"
+                    }
+
                     //Check if folder exist and collect filenames
                     File error_folder = new File("${error_folder_path}")
                     if (error_folder.exists()){
@@ -110,12 +155,12 @@ pipeline {
             body: """
                 <html>
                 <p>IFP Check errors files&nbsp;<br /><br /><strong>STATUS:</strong>&nbsp; ${env.status}</p>
-                <p><br /><strong>======================================<br /></strong><strong>Cascade side</strong> :<br />Errors files: ${env.error_files_cascade}<strong>
-                <br />======================================<br /><br />
-                <br />======================================<br />ROKO MSSQL</strong> <br />Errors files: ${env.error_files_mssql}<strong><br />
-                </strong><strong>======================================</strong></p>
-                <p><strong><br />======================================<br />ROKO PGSQL <br />Errors files: </strong>${env.error_files_pgsql}<strong>
-                <br />======================================</strong></p>
+                <p><br /><strong>======================================<br /></strong><strong>Cascade side</strong> :<br />Errors files: ${env.error_files_cascade}<strong>&nbsp;<br /></strong>${env.count_files_cascade}<strong><br />
+                ======================================<br /><br />
+                <br />======================================<br />ROKO MSSQL</strong> <br />Errors files: ${env.error_files_mssql}<strong>&nbsp;<br /></strong>${env.count_files_mssql}<strong><br />
+                ======================================</strong></p>
+                <p><strong><br />======================================<br />ROKO PGSQL <br />Errors files: </strong>${env.error_files_pgsql}<strong>&nbsp;<br /></strong>${env.count_files_pgsql}<strong><br />
+                ======================================</strong></p>
                 </html>
                  """,
             mimeType: 'text/html'
