@@ -36,7 +36,7 @@ IF '%2'=='' (
 )
 
 ::Set folders path -  parameter+date
-set "SOURCE_PATH=%SOURCE%\%DATE_FORMAT%"
+set "SOURCE_PATH=%SOURCE%\%DATE_FORMAT%\Backup"
 set "DEST_PSSQL=%DEST%\"
 
 
