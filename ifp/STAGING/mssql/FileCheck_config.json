@@ -1,6 +1,6 @@
 {
     "Informent":{
-        "Directory":"\\\\prod-roko-appserver\\CascadeFinancials\\Cobol\\CobolTempDirectory\\PGSQL",
+        "Directory":"\\\\IISODS.cascadeloans.local\\InformentFiles\\FTP\\Batch\\",
         "FileNames":[
             "FFSI377A",
             "FFSI380A",
@@ -93,7 +93,7 @@
             "FFSI371A"
         ]
     },
-    "ServicingApi": "http://serviceapi.dev.pgsql.odsservices.cascadeloans.local/api/ODS/RunImport",
+    "ServicingApi": "http://serviceapi.staging.pgsql.odsservices.cascadeloans.local/api/ODS/RunImport",
     "Email": {
         "SEND_TO": "sk@rokolabs.com",
         "USERNAME": "SVC_IFPNoReply@cascadeloans.com",

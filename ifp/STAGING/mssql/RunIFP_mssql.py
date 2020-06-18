@@ -11,10 +11,10 @@ print('Running RunIFP.py...')
 
 #Read in configuration file
 cwd = os.getcwd()
-extractFileLocation = r'\\PROD-ROKO-APPSErver\InformentFiles\DATA'
+extractFileLocation = r'\\STAGING-ROKO-APPSERVER\InformentFiles\DATA'
 achdate = datetime.today() - timedelta(days=1)
 
-with open(os.path.join(cwd, 'ifp\\PROD\\\mssql\FileCheck_config.json')) as f:
+with open(os.path.join(cwd, 'ifp\\STAGING\\\mssql\FileCheck_config.json')) as f:
     config = json.load(f)
     #call API
     API_ENDPOINT = config['ServicingApi']
