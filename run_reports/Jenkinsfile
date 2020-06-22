@@ -1,11 +1,143 @@
+//Set variables
+def MAIL_TO = "kirill.sergeev@rokolabs.com"
 
 pipeline {
-   agent { label 'vm-roko-jenkins' }
-   stages {
-      stage('Hello') {
-         steps {
-            echo 'Hello World'
-         }
-      }
-   }
+    agent { label 'vm-roko-jenkins' }
+    environment {
+        HOST_NAME = 'Prod-Roko-Dwpgsql'
+        USER = 'user_cascade'
+        PASSWORD = credentials('dtwh_PROD_pass')
+
+    }
+    stages {
+        stage('Run First part of Reports') {
+            parallel {
+                stage('REP_503') { 
+                    steps {
+                        bat '''
+                            echo %PASSWORD%
+                            echo %HOST_NAME%
+                            set PGPASSWORD=%PASSWORD%
+                            "C:\\Program Files\\PostgreSQL\\12\\bin\\psql.exe" -h %HOST_NAME% -p 5432 -d datawarehouse -U %USER% ^
+                            -c "SELECT * FROM config;"
+                        '''
+                        }
+                }
+            
+        
+                stage('Collection_Daily') { 
+                    steps {
+                        bat '''
+                            set PGPASSWORD=%PASSWORD%
+                            "C:\\Program Files\\PostgreSQL\\12\\bin\\psql.exe" -h %HOST_NAME% -p 5432 -d datawarehouse -U %USER% ^
+                            -c "SELECT * FROM config;"
+                            '''
+                    }
+                }
+            }
+        }
+        stage('Run Reports') {
+            parallel {
+                stage('REP_512') {
+                    steps {
+                        bat '''
+                            set PGPASSWORD=%PASSWORD%
+                            "C:\\Program Files\\PostgreSQL\\12\\bin\\psql.exe" -h %HOST_NAME% -p 5432 -d datawarehouse -U %USER% ^
+                            -c "SELECT * FROM config;"
+                        '''
+                    }
+                }
+                stage('REP_525') {
+                    steps {
+                        bat '''
+                            set PGPASSWORD=%PASSWORD%
+                            "C:\\Program Files\\PostgreSQL\\12\\bin\\psql.exe" -h %HOST_NAME% -p 5432 -d datawarehouse -U %USER% ^
+                            -c "SELECT * FROM config;"
+                        '''
+                    }
+                    
+                }
+                stage('REP_537') {
+                    steps {
+                        bat '''
+                            set PGPASSWORD=%PASSWORD%
+                            "C:\\Program Files\\PostgreSQL\\12\\bin\\psql.exe" -h %HOST_NAME% -p 5432 -d datawarehouse -U %USER% ^
+                            -c "SELECT * FROM config;"
+                        '''
+                    }
+                    
+                }
+                stage('REP_545') {
+                    steps {
+                        bat '''
+                            set PGPASSWORD=%PASSWORD%
+                            "C:\\Program Files\\PostgreSQL\\12\\bin\\psql.exe" -h %HOST_NAME% -p 5432 -d datawarehouse -U %USER% ^
+                            -c "SELECT * FROM config;"
+                        '''
+                    }
+                    
+                }
+                stage('REP_600') {
+                    steps {
+                        bat '''
+                            set PGPASSWORD=%PASSWORD%
+                            "C:\\Program Files\\PostgreSQL\\12\\bin\\psql.exe" -h %HOST_NAME% -p 5432 -d datawarehouse -U %USER% ^
+                            -c "SELECT * FROM config;"
+                        '''
+                    }
+                    
+                }
+                stage('REP_646') {
+                    steps {
+                        bat '''
+                            set PGPASSWORD=%PASSWORD%
+                            "C:\\Program Files\\PostgreSQL\\12\\bin\\psql.exe" -h %HOST_NAME% -p 5432 -d datawarehouse -U %USER% ^
+                            -c "SELECT * FROM config;"
+                        '''
+                    }
+                    
+                }
+            }
+        }
+    }
+    post {
+        success {
+            mail to: "${MAIL_TO}",
+            subject: "Status of pipeline: Tableu reports",
+            body: """
+                <p><span style="color: #003366;"><strong>Generate Tableau Reports -&nbsp;</strong></span>${currentBuild.result}</p>
+                <div>
+                <p><span style="color: #003366;">===========================================</span><br /><span style="color: #003366;">Build:&nbsp;<strong>${currentBuild.projectName}&nbsp;</strong></span></p></div><div>
+                <div><span style="color: #003366;">Build number:&nbsp;<strong>${currentBuild.number}</strong></span></div>
+                </div><div><p><span style="color: #003366;">Has result:</span></p></div><div><div>
+                <h3><span style="background-color: #00ff00; color: #003366;">${currentBuild.result}</span></h3></div></div>
+                <div><span style="color: #003366;">Duration:&nbsp;</span><strong style="color: #003366;">${currentBuild.durationString}&nbsp;</strong></div>
+                <div>
+                <p>All reports was generated<br /><br /><span style="color: #003366;">link: ${env.BUILD_URL}</span> <br /><span style="color: #003366;">===========================================</span></p>
+                </div>
+                <p></p>
+                 """,
+            mimeType: 'text/html'
+        }
+         failure {
+            mail to: "${MAIL_TO}",
+            subject: "FAILED in pipeline: Tableu reports ",
+            body: """
+                <p>&nbsp;</p>
+                    <div>
+                    <p><span style="color: #003366;"><strong>Generate Tableau Reports -&nbsp;</strong></span>${currentBuild.result}</p>
+                    </div> <div> <p><span style="color: #003366;">===========================================</span><br /><span style="color: #003366;">Build:&nbsp;<strong>${currentBuild.projectName}&nbsp;</strong></span></p></div><div>
+                     <div><span style="color: #003366;">Build number:&nbsp;<strong>${currentBuild.number}</strong></span></div>
+                    </div><div><p><span style="color: #003366;">Has result:</span></p> </div> <div> <div> <h3><span style="background-color: #ff0000; color: #003366;">${currentBuild.result}</span></h3> </div> </div>
+                    <div><span style="color: #003366;">Duration:&nbsp;</span><strong style="color: #003366;">${currentBuild.durationString}&nbsp;</strong></div>
+                    <div>
+                    <p>We have a problem, please see details on link :&nbsp;<br /><br /><span style="color: #003366;">link: ${env.BUILD_URL}</span> <br /><span style="color: #003366;">===========================================</span></p>
+                    </div>
+                    <p></p>
+                 """,
+            mimeType: 'text/html'
+                    
+        }
+    }
+    
 }
