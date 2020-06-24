@@ -10,27 +10,24 @@ pipeline {
 
     }
     stages {
-        stage('Run CIF') {
-
-                stage('Run CIF') { 
-                    steps {
-                        bat '''
-                            set PGPASSWORD=%PASSWORD%
-                            "C:\\Program Files\\PostgreSQL\\12\\bin\\psql.exe" -h %HOST_NAME% -p 5432 -d servicing_core -U %USER% ^
-                            -c "SELECT * FROM config;"
-                        '''
+        stage('Run CIF') { 
+            steps {
+                bat '''
+                set PGPASSWORD=%PASSWORD%
+                "C:\\Program Files\\PostgreSQL\\12\\bin\\psql.exe" -h %HOST_NAME% -p 5432 -d servicing_core -U %USER% ^
+                -c "SELECT * FROM config;"
+                '''
                         }
                 }
-            
+           
         
-                stage('Collection_Daily') { 
-                    steps {
-                        bat '''
-                            PAExec \\STAGING-ROKO-APPSERVER cmd /c "cd C:\temp & dir & systeminfo "
-                            '''
-                    }
-                }
-            
+        stage('Collection_Daily') { 
+            steps {
+                bat '''
+                    PAExec \\STAGING-ROKO-APPSERVER cmd /c "cd C:\temp & dir & systeminfo "
+                '''
+            }
         }
     }
+    
 }
