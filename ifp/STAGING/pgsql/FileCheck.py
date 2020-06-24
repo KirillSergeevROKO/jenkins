@@ -39,7 +39,10 @@ accountPassword = config['Email']['PASSWORD']
 accountPassword = base64.b64decode(accountPassword)
 accountPassword = accountPassword.decode('UTF-8')
 
+achdate = datetime.today() - timedelta(days=1)
+formated_date = achdate.strftime("%Y%m%d")
 informentDirectory = config['Informent']['Directory']
+print(informentDirectory)
 #prepend directory to file names
 filelist = [f'{informentDirectory}\\{file}' for file in config['Informent']['FileNames']]
 # add ach file to list as name changes

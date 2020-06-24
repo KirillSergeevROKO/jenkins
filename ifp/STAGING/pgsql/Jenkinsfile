@@ -20,7 +20,7 @@ pipeline {
             steps {
                 bat '''
                     %cd%\\ifp\\STAGING\\pgsql\\copy_files_for_pos.cmd \
-                    \\\\IISODS.cascadeloans.local\\InformentFiles\\FTP\\Batch \
+                    \\\\staging-roko-appserver\\InformentFiles\\SOURCE \
                     \\\\STAGING-ROKO-APPSErver\\InformentFiles\\DATA
                 '''
                 // Use additional / (slash) for use on WINDOWS slave
