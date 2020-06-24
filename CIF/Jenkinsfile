@@ -24,7 +24,7 @@ pipeline {
         stage('Collection_Daily') { 
             steps {
                 bat '''
-                    PAExec \\STAGING-ROKO-APPSERVER cmd /c "cd C:\\temp & dir & systeminfo "
+                    PAExec \\\STAGING-ROKO-APPSERVER cmd /c "cd C:\\\temp & dir & systeminfo "
                 '''
             }
         }
