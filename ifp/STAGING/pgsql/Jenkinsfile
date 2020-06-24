@@ -21,7 +21,7 @@ pipeline {
                 bat '''
                     %cd%\\ifp\\STAGING\\pgsql\\copy_files_for_pos.cmd \
                     \\\\staging-roko-appserver\\InformentFiles\\SOURCE \
-                    \\\\STAGING-ROKO-APPSErver\\InformentFiles\\DATA\PGSQL
+                    \\\\STAGING-ROKO-APPSErver\\InformentFiles\\DATA\\PGSQL
                 '''
                 // Use additional / (slash) for use on WINDOWS slave
                 //first parameter is SOURCE folder
