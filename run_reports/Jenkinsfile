@@ -19,7 +19,7 @@ pipeline {
                             echo %HOST_NAME%
                             set PGPASSWORD=%PASSWORD%
                             "C:\\Program Files\\PostgreSQL\\12\\bin\\psql.exe" -h %HOST_NAME% -p 5432 -d datawarehouse -U %USER% ^
-                            -c "SELECT * FROM config;"
+                            -c "SELECT rpt.SP_REP_503_Originations_Daily ();"
                         '''
                         }
                 }
@@ -30,7 +30,7 @@ pipeline {
                         bat '''
                             set PGPASSWORD=%PASSWORD%
                             "C:\\Program Files\\PostgreSQL\\12\\bin\\psql.exe" -h %HOST_NAME% -p 5432 -d datawarehouse -U %USER% ^
-                            -c "SELECT * FROM config;"
+                            -c "SELECT rpt.Servicing_Collection_Daily_sp ('null', 0);"
                             '''
                     }
                 }
@@ -43,7 +43,7 @@ pipeline {
                         bat '''
                             set PGPASSWORD=%PASSWORD%
                             "C:\\Program Files\\PostgreSQL\\12\\bin\\psql.exe" -h %HOST_NAME% -p 5432 -d datawarehouse -U %USER% ^
-                            -c "SELECT * FROM config;"
+                            -c "SELECT rpt.SP_REP_512_Daily_Default_Task_Tracking();"
                         '''
                     }
                 }
@@ -52,7 +52,7 @@ pipeline {
                         bat '''
                             set PGPASSWORD=%PASSWORD%
                             "C:\\Program Files\\PostgreSQL\\12\\bin\\psql.exe" -h %HOST_NAME% -p 5432 -d datawarehouse -U %USER% ^
-                            -c "SELECT * FROM config;"
+                            -c "SELECT rpt.SP_REP_525_Collections_Daily_Compare();"
                         '''
                     }
                     
@@ -62,7 +62,7 @@ pipeline {
                         bat '''
                             set PGPASSWORD=%PASSWORD%
                             "C:\\Program Files\\PostgreSQL\\12\\bin\\psql.exe" -h %HOST_NAME% -p 5432 -d datawarehouse -U %USER% ^
-                            -c "SELECT * FROM config;"
+                            -c "SELECT rpt.sp_REP_537_construction_draw_report();"
                         '''
                     }
                     
@@ -72,7 +72,7 @@ pipeline {
                         bat '''
                             set PGPASSWORD=%PASSWORD%
                             "C:\\Program Files\\PostgreSQL\\12\\bin\\psql.exe" -h %HOST_NAME% -p 5432 -d datawarehouse -U %USER% ^
-                            -c "SELECT * FROM config;"
+                            -c "SELECT rpt.SP_REP_545_Post_Close_Exception_Report();"
                         '''
                     }
                     
@@ -82,7 +82,7 @@ pipeline {
                         bat '''
                             set PGPASSWORD=%PASSWORD%
                             "C:\\Program Files\\PostgreSQL\\12\\bin\\psql.exe" -h %HOST_NAME% -p 5432 -d datawarehouse -U %USER% ^
-                            -c "SELECT * FROM config;"
+                            -c "SELECT rpt.SP_REP_600_EOM_Delinquency_by_Portfolio();"
                         '''
                     }
                     
@@ -92,7 +92,7 @@ pipeline {
                         bat '''
                             set PGPASSWORD=%PASSWORD%
                             "C:\\Program Files\\PostgreSQL\\12\\bin\\psql.exe" -h %HOST_NAME% -p 5432 -d datawarehouse -U %USER% ^
-                            -c "SELECT * FROM config;"
+                            -c "SELECT rpt.SP_REP_646_Origination_Volume_and_Units ();"
                         '''
                     }
                     
