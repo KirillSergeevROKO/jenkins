@@ -4,7 +4,7 @@ def MAIL_TO = "kirill.sergeev@rokolabs.com"
 pipeline {
     agent { label 'vm-roko-jenkins' }
     environment {
-        HOST_NAME = 'Staging-Roko-Pgsql'
+        HOST_NAME = 'Staging-Roko-Postgres'
         USER = 'staging_user_cascade'
         PASSWORD = credentials('srvc_STAGING_pass')
 
