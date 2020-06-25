@@ -15,7 +15,7 @@ pipeline {
         
             stage('Run CIF') { 
                 steps {
-                    build job: "/CIF/job/Run_CIF_PGSQLL_STAGING", wait: true
+                    build job: "/JAMS/CIF/job/Run_CIF_PGSQLL_STAGING", wait: true
                 }
             }
             
