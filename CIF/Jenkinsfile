@@ -15,7 +15,7 @@ pipeline {
                 bat '''
                 set PGPASSWORD=%PASSWORD%
                 "C:\\Program Files\\PostgreSQL\\12\\bin\\psql.exe" -h %HOST_NAME% -p 5432 -d staging_servicing_core -U %USER% ^
-                -c "SELECT * FROM config;"
+                -c "SELECT cif.sp_CIF_FileCreation ();"
                 '''
                         }
                 }
@@ -24,7 +24,7 @@ pipeline {
         stage('Upload CIF') { 
             steps {
                 bat '''
-                    PAExec \\VM-ROKO-APPSERVER cmd /c "cd C:\CascadeFinancials\PGSQL\CIFFilesUploadPaymentUS\ & CIF-FilesUploadPaymentUS.exe" "
+                    PAExec \\STAGING-ROKO-APPSERVER cmd /c "cd D:\CascadeFinancials\PGSQL\CIFFilesUploadPaymentUS\ & CIF-FilesUploadPaymentUS.exe"
                 '''
             }
         }
