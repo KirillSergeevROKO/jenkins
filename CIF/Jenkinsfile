@@ -24,7 +24,7 @@ pipeline {
         stage('Upload CIF') { 
             steps {
                 bat '''
-                    PAExec \\\\STAGING-ROKO-APPSERVER cmd /c "cd D:\CascadeFinancials\PGSQL\CIFFilesUploadPaymentUS\ & CIF-FilesUploadPaymentUS.exe"
+                    PAExec \\\\STAGING-ROKO-APPSERVER cmd /c "D: & cd D:\\CascadeFinancials\\PGSQL\\CIFFilesUploadPaymentUS\\ & CIF-FilesUploadPaymentUS.exe"
                 '''
             }
         }
