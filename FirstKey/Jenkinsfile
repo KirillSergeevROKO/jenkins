@@ -89,7 +89,7 @@ pipeline {
         stage('Run Python Script') { 
             steps {
                 bat '''
-                    PAExec \\\\STAGING-ROKO-APPSERVER cmd /c "D: & cd D:\\CascadeFinancials\\FirstKey\\ & test.py"
+                    PAExec \\\\STAGING-ROKO-APPSERVER cmd /c "D: & cd D:\\CascadeFinancials\\FirstKey\\ & python test.py"
                 '''
             }
         }
