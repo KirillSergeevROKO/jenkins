@@ -12,143 +12,143 @@ pipeline {
     stages {
         stage('Run reports') { 
             parallel {
-                stage("Run 1"){
+                stage("REP_237"){
                     steps {
                         bat '''
                         set PGPASSWORD=%PASSWORD%
                         "C:\\Program Files\\PostgreSQL\\12\\bin\\psql.exe" -h %HOST_NAME% -p 5432 -d staging_servicing_core -U %USER% ^
-                        -c "SELECT * from config"
+                        -c "SELECT firstkey.REP_237_BankruptcyDailyReport_Automation();"
                         '''
                     }
                 }
 
-                stage("Run 2"){
+                stage("CommentsHistory"){
                     steps {
                         bat '''
                         set PGPASSWORD=%PASSWORD%
                         "C:\\Program Files\\PostgreSQL\\12\\bin\\psql.exe" -h %HOST_NAME% -p 5432 -d staging_servicing_core -U %USER% ^
-                        -c "SELECT * from config"
+                        -c "SELECT firstkey.Report_FirstKeyServicer_CommentsHistory();"
                         '''
                     }
                 }
 
-                stage("Run 3"){
+                stage("CRWDaily"){
                     steps {
                         bat '''
                         set PGPASSWORD=%PASSWORD%
                         "C:\\Program Files\\PostgreSQL\\12\\bin\\psql.exe" -h %HOST_NAME% -p 5432 -d staging_servicing_core -U %USER% ^
-                        -c "SELECT * from config"
+                        -c "SELECT firstkey.Report_FirstKeyServicer_CRWDaily()"
                         '''
                     }
                 }
 
-                stage("Run 4"){
+                stage("REP_246"){
                     steps {
                         bat '''
                         set PGPASSWORD=%PASSWORD%
                         "C:\\Program Files\\PostgreSQL\\12\\bin\\psql.exe" -h %HOST_NAME% -p 5432 -d staging_servicing_core -U %USER% ^
-                        -c "SELECT * from config"
+                        -c "SELECT firstkey.REP_246_ForeclosureDailyReport_Automation();"
                         '''
                     }
                 }
 
-                stage("Run 5"){
+                stage("LMDaily"){
                     steps {
                         bat '''
                         set PGPASSWORD=%PASSWORD%
                         "C:\\Program Files\\PostgreSQL\\12\\bin\\psql.exe" -h %HOST_NAME% -p 5432 -d staging_servicing_core -U %USER% ^
-                        -c "SELECT * from config"
+                        -c "SELECT firstkey.Report_FirstKeyServicer_LMDaily();"
                         '''
                     }
                 }
 
-                stage("Run 6"){
+                stage("LMPayPlans"){
                     steps {
                         bat '''
                         set PGPASSWORD=%PASSWORD%
                         "C:\\Program Files\\PostgreSQL\\12\\bin\\psql.exe" -h %HOST_NAME% -p 5432 -d staging_servicing_core -U %USER% ^
-                        -c "SELECT * from config"
+                        -c "SELECT firstkey.Report_FirstKeyServicer_LMPayPlans();"
                         '''
                     }
                 }
 
-                stage("Run 7"){
+                stage("LMSInsightDaily"){
                     steps {
                         bat '''
                         set PGPASSWORD=%PASSWORD%
                         "C:\\Program Files\\PostgreSQL\\12\\bin\\psql.exe" -h %HOST_NAME% -p 5432 -d staging_servicing_core -U %USER% ^
-                        -c "SELECT * from config"
+                        -c "SELECT firstkey.Report_FirstKeyServicer_LMSInsightDaily();"
                         '''
                     }
                 }
 
-                stage("Run 8"){
+                stage("LMSOpsDaily"){
                     steps {
                         bat '''
                         set PGPASSWORD=%PASSWORD%
                         "C:\\Program Files\\PostgreSQL\\12\\bin\\psql.exe" -h %HOST_NAME% -p 5432 -d staging_servicing_core -U %USER% ^
-                        -c "SELECT * from config"
+                        -c "SELECT firstkey.Report_FirstKeyServicer_LMSOpsDaily();"
                         '''
                     }
                 }
 
-                stage("Run 9"){
+                stage("LossMitMilestones"){
                     steps {
                         bat '''
                         set PGPASSWORD=%PASSWORD%
                         "C:\\Program Files\\PostgreSQL\\12\\bin\\psql.exe" -h %HOST_NAME% -p 5432 -d staging_servicing_core -U %USER% ^
-                        -c "SELECT * from config"
+                        -c "SELECT firstkey.Report_FirstKeyServicer_LossMitMilestones();"
                         '''
                     }
                 }
 
-                stage("Run 10"){
+                stage("PaymentPlanDaily"){
                     steps {
                         bat '''
                         set PGPASSWORD=%PASSWORD%
                         "C:\\Program Files\\PostgreSQL\\12\\bin\\psql.exe" -h %HOST_NAME% -p 5432 -d staging_servicing_core -U %USER% ^
-                        -c "SELECT * from config"
+                        -c "SELECT firstkey.Report_FirstKeyServicer_PaymentPlanDaily();"
                         '''
                     }
                 }
 
 
-                stage("Run 11"){
+                stage("REODaily"){
                     steps {
                         bat '''
                         set PGPASSWORD=%PASSWORD%
                         "C:\\Program Files\\PostgreSQL\\12\\bin\\psql.exe" -h %HOST_NAME% -p 5432 -d staging_servicing_core -U %USER% ^
-                        -c "SELECT * from config"
+                        -c "SELECT firstkey.Report_FirstKeyServicer_REODaily();"
                         '''
                     }
                 }
 
-                stage("Run 12"){
+                stage("StandardDaily"){
                     steps {
                         bat '''
                         set PGPASSWORD=%PASSWORD%
                         "C:\\Program Files\\PostgreSQL\\12\\bin\\psql.exe" -h %HOST_NAME% -p 5432 -d staging_servicing_core -U %USER% ^
-                        -c "SELECT * from config"
+                        -c "SELECT firstkey.Report_FirstKeyServicer_StandardDaily();"
                         '''
                     }
                 }
 
-                stage("Run 13"){
+                stage("SupplementalDaily"){
                     steps {
                         bat '''
                         set PGPASSWORD=%PASSWORD%
                         "C:\\Program Files\\PostgreSQL\\12\\bin\\psql.exe" -h %HOST_NAME% -p 5432 -d staging_servicing_core -U %USER% ^
-                        -c "SELECT * from config"
+                        -c "SELECT firstkey.Report_FirstKeyServicer_SupplementalDaily();"
                         '''
                     }
                 }
 
-                stage("Run 14"){
+                stage("TransactionHistory"){
                     steps {
                         bat '''
                         set PGPASSWORD=%PASSWORD%
                         "C:\\Program Files\\PostgreSQL\\12\\bin\\psql.exe" -h %HOST_NAME% -p 5432 -d staging_servicing_core -U %USER% ^
-                        -c "SELECT * from config"
+                        -c "SELECT firstkey.Report_FirstKeyServicer_TransactionHistory();"
                         '''
                     }
                 }
@@ -159,7 +159,7 @@ pipeline {
         stage('Run Python Script') { 
             steps {
                 bat '''
-                    PAExec \\\\STAGING-ROKO-APPSERVER cmd /c "D: & cd D:\\CascadeFinancials\\FirstKey\\ & python test.py"
+                    PAExec \\\\STAGING-ROKO-APPSERVER cmd /c "D: & cd D:\\CascadeFinancials\\PGSQL\\FirstKeyDailyFileUploader\\ & python FirstKeyDailyFileUploader.py"
                 '''
             }
         }
