@@ -10,23 +10,88 @@ pipeline {
 
     }
     stages {
-        stage('Copy python script and config.json') { 
-            steps {
-                bat '''
-                ROBOCOPY "Servicing\\Build\\GitVersion.yml" "\\\\STAGING-ROKO-APPSERVER\\firstkey"
-                
-                '''
-                        }
+        stage('Run reports') { 
+            parallel {
+                stage("Run 1"){
+                    steps {
+                        bat '''
+                        set PGPASSWORD=%PASSWORD%
+                        "C:\\Program Files\\PostgreSQL\\12\\bin\\psql.exe" -h %HOST_NAME% -p 5432 -d staging_servicing_core -U %USER% ^
+                        -c "SELECT * from config"
+                        '''
+                    }
                 }
-           
-        
-        stage('Upload CIF') { 
+
+                stage("Run 2"){
+                    steps {
+                        bat '''
+                        set PGPASSWORD=%PASSWORD%
+                        "C:\\Program Files\\PostgreSQL\\12\\bin\\psql.exe" -h %HOST_NAME% -p 5432 -d staging_servicing_core -U %USER% ^
+                        -c "SELECT * from config"
+                        '''
+                    }
+                }
+
+                stage("Run 3"){
+                    steps {
+                        bat '''
+                        set PGPASSWORD=%PASSWORD%
+                        "C:\\Program Files\\PostgreSQL\\12\\bin\\psql.exe" -h %HOST_NAME% -p 5432 -d staging_servicing_core -U %USER% ^
+                        -c "SELECT * from config"
+                        '''
+                    }
+                }
+
+                stage("Run 4"){
+                    steps {
+                        bat '''
+                        set PGPASSWORD=%PASSWORD%
+                        "C:\\Program Files\\PostgreSQL\\12\\bin\\psql.exe" -h %HOST_NAME% -p 5432 -d staging_servicing_core -U %USER% ^
+                        -c "SELECT * from config"
+                        '''
+                    }
+                }
+
+                stage("Run 5"){
+                    steps {
+                        bat '''
+                        set PGPASSWORD=%PASSWORD%
+                        "C:\\Program Files\\PostgreSQL\\12\\bin\\psql.exe" -h %HOST_NAME% -p 5432 -d staging_servicing_core -U %USER% ^
+                        -c "SELECT * from config"
+                        '''
+                    }
+                }
+
+                stage("Run 6"){
+                    steps {
+                        bat '''
+                        set PGPASSWORD=%PASSWORD%
+                        "C:\\Program Files\\PostgreSQL\\12\\bin\\psql.exe" -h %HOST_NAME% -p 5432 -d staging_servicing_core -U %USER% ^
+                        -c "SELECT * from config"
+                        '''
+                    }
+                }
+
+                stage("Run 7"){
+                    steps {
+                        bat '''
+                        set PGPASSWORD=%PASSWORD%
+                        "C:\\Program Files\\PostgreSQL\\12\\bin\\psql.exe" -h %HOST_NAME% -p 5432 -d staging_servicing_core -U %USER% ^
+                        -c "SELECT * from config"
+                        '''
+                    }
+                }
+
+
+            }
+        }
+
+        stage('Run Python Script') { 
             steps {
                 bat '''
-                    ifconfig
+                    PAExec \\\\STAGING-ROKO-APPSERVER cmd /c "D: & cd D:\\CascadeFinancials\\FirstKey\\ & python test.py"
                 '''
             }
         }
-    }
-    
+    }       
 }
