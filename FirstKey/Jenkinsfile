@@ -82,6 +82,76 @@ pipeline {
                     }
                 }
 
+                stage("Run 8"){
+                    steps {
+                        bat '''
+                        set PGPASSWORD=%PASSWORD%
+                        "C:\\Program Files\\PostgreSQL\\12\\bin\\psql.exe" -h %HOST_NAME% -p 5432 -d staging_servicing_core -U %USER% ^
+                        -c "SELECT * from config"
+                        '''
+                    }
+                }
+
+                stage("Run 9"){
+                    steps {
+                        bat '''
+                        set PGPASSWORD=%PASSWORD%
+                        "C:\\Program Files\\PostgreSQL\\12\\bin\\psql.exe" -h %HOST_NAME% -p 5432 -d staging_servicing_core -U %USER% ^
+                        -c "SELECT * from config"
+                        '''
+                    }
+                }
+
+                stage("Run 10"){
+                    steps {
+                        bat '''
+                        set PGPASSWORD=%PASSWORD%
+                        "C:\\Program Files\\PostgreSQL\\12\\bin\\psql.exe" -h %HOST_NAME% -p 5432 -d staging_servicing_core -U %USER% ^
+                        -c "SELECT * from config"
+                        '''
+                    }
+                }
+
+
+                stage("Run 11"){
+                    steps {
+                        bat '''
+                        set PGPASSWORD=%PASSWORD%
+                        "C:\\Program Files\\PostgreSQL\\12\\bin\\psql.exe" -h %HOST_NAME% -p 5432 -d staging_servicing_core -U %USER% ^
+                        -c "SELECT * from config"
+                        '''
+                    }
+                }
+
+                stage("Run 12"){
+                    steps {
+                        bat '''
+                        set PGPASSWORD=%PASSWORD%
+                        "C:\\Program Files\\PostgreSQL\\12\\bin\\psql.exe" -h %HOST_NAME% -p 5432 -d staging_servicing_core -U %USER% ^
+                        -c "SELECT * from config"
+                        '''
+                    }
+                }
+
+                stage("Run 13"){
+                    steps {
+                        bat '''
+                        set PGPASSWORD=%PASSWORD%
+                        "C:\\Program Files\\PostgreSQL\\12\\bin\\psql.exe" -h %HOST_NAME% -p 5432 -d staging_servicing_core -U %USER% ^
+                        -c "SELECT * from config"
+                        '''
+                    }
+                }
+
+                stage("Run 14"){
+                    steps {
+                        bat '''
+                        set PGPASSWORD=%PASSWORD%
+                        "C:\\Program Files\\PostgreSQL\\12\\bin\\psql.exe" -h %HOST_NAME% -p 5432 -d staging_servicing_core -U %USER% ^
+                        -c "SELECT * from config"
+                        '''
+                    }
+                }
 
             }
         }
