@@ -37,7 +37,7 @@ pipeline {
                         bat '''
                         set PGPASSWORD=%PASSWORD%
                         "C:\\Program Files\\PostgreSQL\\12\\bin\\psql.exe" -h %HOST_NAME% -p 5432 -d staging_servicing_core -U %USER% ^
-                        -c "SELECT * from config333"
+                        -c "SELECT * from config"
                         '''
                     }
                 }
