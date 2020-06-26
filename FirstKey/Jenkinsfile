@@ -1,0 +1,32 @@
+//Set variables
+def MAIL_TO = "kirill.sergeev@rokolabs.com"
+
+pipeline {
+    agent { label 'vm-roko-jenkins' }
+    environment {
+        HOST_NAME = 'Staging-Roko-Postgres'
+        USER = 'staging_user_cascade'
+        PASSWORD = credentials('srvc_STAGING_pass')
+
+    }
+    stages {
+        stage('Copy python script and config.json') { 
+            steps {
+                bat '''
+                ROBOCOPY "Servicing\\Build\\GitVersion.yml" "\\\\STAGING-ROKO-APPSERVER\\firstkey"
+                
+                '''
+                        }
+                }
+           
+        
+        stage('Upload CIF') { 
+            steps {
+                bat '''
+                    ifconfig
+                '''
+            }
+        }
+    }
+    
+}
