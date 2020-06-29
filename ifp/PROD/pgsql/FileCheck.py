@@ -27,7 +27,7 @@ def sendEmail(sendTo, user, password):
 
 #Read in configuration file
 cwd = os.getcwd()
-with open(os.path.join(cwd, 'ifp\\DEV\\pgsql\\FileCheck_config.json')) as f:
+with open(os.path.join(cwd, 'ifp\\PROD\\pgsql\\FileCheck_config.json')) as f:
     config = json.load(f)
 
 sleepTime = config['SleepTime']
@@ -39,11 +39,14 @@ accountPassword = config['Email']['PASSWORD']
 accountPassword = base64.b64decode(accountPassword)
 accountPassword = accountPassword.decode('UTF-8')
 
-informentDirectory = config['Informent']['Directory']
+achdate = datetime.today() - timedelta(days=1)
+formated_date = achdate.strftime("%Y%m%d")
+informentDirectory = config['Informent']['Directory'] + formated_date + '\\Backup'
+print(informentDirectory)
 #prepend directory to file names
 filelist = [f'{informentDirectory}\\{file}' for file in config['Informent']['FileNames']]
 # add ach file to list as name changes
-#achdate = datetime.today() # - timedelta(days=1)
+
 #achFileMask = f'ach618.{achdate:%Y%m%d}*.txt'
 
 while True:

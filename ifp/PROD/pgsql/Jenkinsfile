@@ -8,7 +8,7 @@ pipeline {
         stage('Check files') { 
             steps {
                 bat '''
-                    python %cd%\\ifp\\DEV\\pgsql\\FileCheck.py
+                    python %cd%\\ifp\\PROD\\pgsql\\FileCheck.py
                 '''
 ///                script{
 ///                    env.CHECK_FILE_END = "${currentBuild.durationString.split(" ")[0..1]}"
@@ -19,9 +19,9 @@ pipeline {
         stage('Copy file to PGSQL folder') { 
             steps {
                 bat '''
-                    %cd%\\ifp\\DEV\\pgsql\\copy_files_for_pos.cmd \
-                    \\\\vm-roko-appserver\\CascadeFinancials\\Cobol\\CobolTempDirectory\\PGSQL \
-                    \\\\vm-roko-appserver\\temp\\jenkins\\PGSQL
+                    %cd%\\ifp\\PROD\\pgsql\\copy_files_for_pos.cmd \
+                    \\\\IISODS.cascadeloans.local\\InformentFiles\\FTP\\Batch \
+                    \\\\PROD-ROKO-APPSErver\\InformentFiles\\DATA\\PGSQL
                 '''
                 // Use additional / (slash) for use on WINDOWS slave
                 //first parameter is SOURCE folder
@@ -31,7 +31,7 @@ pipeline {
         stage('Run IFP proces PGSQL ') { 
             steps {
                 bat '''
-                    python %cd%\\ifp\\DEV\\pgsql\\RunIFP_pgsql.py
+                  ::  python %cd%\\ifp\\PROD\\pgsql\\RunIFP_pgsql.py
                 '''
                 // 
             }
@@ -48,7 +48,7 @@ pipeline {
                     println("date var = ${formated_date}")
 
                     //Set path to error folder
-                    def error_folder_path = "\\\\vm-roko-appserver\\CascadeFinancials\\Cobol\\CobolTempDirectory\\PGSQL\\Batch\\${formated_date}\\Backup\\errors"
+                    def error_folder_path = "\\\\PROD-ROKO-APPSErver\\InformentFiles\\DATA\\PGSQL\\Batch\\${formated_date}\\Backup\\errors"
                     println("date var = ${error_folder_path}")
 
                     //Check if folder exist and collect filenames
@@ -81,7 +81,7 @@ pipeline {
             subject: "Status of pipeline: ${currentBuild.fullDisplayName}",
             body: """
                 <html>
-                <p><span style="color: #003366;"><strong>DEV PGSQL;</strong></span></p>
+                <p><span style="color: #003366;"><strong>PROD PGSQL;</strong></span></p>
                 <p><span style="color: #003366;">===========================================</span><br /><span style="color: #003366;">Build:&nbsp;<strong>${currentBuild.projectName}&nbsp;</strong></span></p>
                 <div><span style="color: #003366;">Build number:&nbsp;<strong>${currentBuild.number}</strong></span></div>
                 <p><span style="color: #003366;">Has result:</span></p>
@@ -101,7 +101,7 @@ pipeline {
             subject: "FAILED in pipeline: ${currentBuild.fullDisplayName} ${currentBuild.result} ",
             body: """
                 <html>
-                <p><span style="color: #003366;"><strong>DEV PGSQL &nbsp;</strong></span></p>
+                <p><span style="color: #003366;"><strong>PROD PGSQL &nbsp;</strong></span></p>
                 <p><span style="color: #003366;">===========================================</span><br /><span style="color: #003366;">Build:&nbsp;<strong>${currentBuild.projectName}&nbsp;</strong></span></p>
                 <div><span style="color: #003366;">Build number:&nbsp;<strong>${currentBuild.number}</strong></span></div>
                 <p><span style="color: #003366;">Has result:</span></p>
