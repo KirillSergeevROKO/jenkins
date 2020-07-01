@@ -21,7 +21,7 @@ with open(os.path.join(cwd, 'ifp\\STAGING\\\pgsql\FileCheck_config.json')) as f:
     importDate = achdate.strftime("%Y-%m-%d")
     payload = {
         'IsManual': 'false',
-        'ImportDate': importDate,
+        'ImportDate': '2020-06-25',
         'CanImportTransactionTables': 'true',
         'CanImportHistoryTables': 'true',
         'CanTruncateTransactionTables': 'true',
