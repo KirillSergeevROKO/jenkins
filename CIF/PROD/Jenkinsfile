@@ -27,7 +27,7 @@ pipeline {
        //             PAExec \\\\STAGING-ROKO-APPSERVER cmd /c "D: & cd D:\\CascadeFinancials\\PGSQL\\CIFFilesUploadPaymentUS\\ & CIF-FilesUploadPaymentUS.exe"
        //         '''
        //     }
-        }
+       // }
     }
     
 }
