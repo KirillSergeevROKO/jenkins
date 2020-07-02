@@ -1,0 +1,33 @@
+//Set variables
+def MAIL_TO = "kirill.sergeev@rokolabs.com"
+
+pipeline {
+    agent { label 'vm-roko-jenkins' }
+    environment {
+        HOST_NAME = 'Prod-Roko-Pgsql'
+        USER = 'user_cascade'
+        PASSWORD = credentials('srvc_PROD_pass')
+
+    }
+    stages {
+        stage('Run CIF') { 
+            steps {
+                bat '''
+                set PGPASSWORD=%PASSWORD%
+                "C:\\Program Files\\PostgreSQL\\12\\bin\\psql.exe" -h %HOST_NAME% -p 5432 -d servicing_core -U %USER% ^
+                -c "SELECT cif.sp_CIF_FileCreation ();"
+                '''
+                        }
+                }
+           
+        
+       // stage('Upload CIF') { 
+       //     steps {
+       //         bat '''
+       //             PAExec \\\\STAGING-ROKO-APPSERVER cmd /c "D: & cd D:\\CascadeFinancials\\PGSQL\\CIFFilesUploadPaymentUS\\ & CIF-FilesUploadPaymentUS.exe"
+       //         '''
+       //     }
+        }
+    }
+    
+}
