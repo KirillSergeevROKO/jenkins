@@ -24,8 +24,8 @@ with open(os.path.join(cwd, 'ifp\\PROD\\\mssql\FileCheck_config.json')) as f:
         'ImportDate': importDate,
         'CanImportTransactionTables': 'true',
         'CanImportHistoryTables': 'true',
-        'CanTruncateTransactionTables': 'true',
-        'CanTruncateHistoryTables': 'true',
+        'CanTruncateTransactionTables': 'false',
+        'CanTruncateHistoryTables': 'false',
         'CanImportStagingDatabase': 'true',
         'IsBackupRequired': 'true'
     }
