@@ -1,6 +1,6 @@
 {
     "Informent":{
-        "Directory":"\\\\IISODS.cascadeloans.local\\InformentFiles\\FTP\\Batch\\",
+        "Directory":"\\\\prod-roko-appserver\\InformentFiles\\DATA\\",
         "FileNames":[
             "FFSI377A",
             "FFSI380A",
