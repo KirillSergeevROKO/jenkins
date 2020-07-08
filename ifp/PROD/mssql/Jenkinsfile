@@ -5,17 +5,7 @@ def MAIL_TO = "kirill.sergeev@rokolabs.com"
 pipeline {
     agent { label 'vm-roko-jenkins' }
     stages {
-        stage('Check files') { 
-            steps {
-                bat '''
-                    python %cd%\\ifp\\PROD\\mssql\\FileCheck.py
-                '''
-///                script{
-///                    env.CHECK_FILE_END = "${currentBuild.durationString.split(" ")[0..1]}"
-                }
-                // 
-        }
-        
+      
         stage('Copy file to MSSQL folder') { 
             steps {
                 bat '''
@@ -28,6 +18,19 @@ pipeline {
                 // second - is DESTINATION folder
             }
         }
+
+        stage('Check files') { 
+            steps {
+                bat '''
+                    python %cd%\\ifp\\PROD\\mssql\\FileCheck.py
+                '''
+///                script{
+///                    env.CHECK_FILE_END = "${currentBuild.durationString.split(" ")[0..1]}"
+                }
+                // 
+        }
+
+        
         stage('Run IFP proces mssql ') { 
             steps {
                 bat '''
