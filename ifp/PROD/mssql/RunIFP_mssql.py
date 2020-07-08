@@ -21,7 +21,7 @@ with open(os.path.join(cwd, 'ifp\\PROD\\\mssql\FileCheck_config.json')) as f:
     importDate = achdate.strftime("%Y-%m-%d")
     payload = {
         'IsManual': 'false',
-        'ImportDate': importDate,
+        'ImportDate': '2020-07-07',
         'CanImportTransactionTables': 'true',
         'CanImportHistoryTables': 'true',
         'CanTruncateTransactionTables': 'false',
