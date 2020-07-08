@@ -1,6 +1,6 @@
 {
     "Informent":{
-        "Directory":"\\\\prod-roko-appserver\\InformentFiles\\DATA\\",
+        "Directory":"\\\\prod-roko-appserver\\InformentFiles\\DATA",
         "FileNames":[
             "FFSI377A",
             "FFSI380A",
