@@ -22,7 +22,7 @@ pipeline {
         stage('Check files') { 
             steps {
                 bat '''
-                    C:\Python3\python.exe %cd%\\ifp\\PROD\\mssql\\FileCheck.py
+                    C:\\Python3\\python.exe %cd%\\ifp\\PROD\\mssql\\FileCheck.py
                 '''
 ///                script{
 ///                    env.CHECK_FILE_END = "${currentBuild.durationString.split(" ")[0..1]}"
@@ -34,7 +34,7 @@ pipeline {
         stage('Run IFP proces mssql ') { 
             steps {
                 bat '''
-                     C:\Python3\python.exe %cd%\\ifp\\PROD\\mssql\\RunIFP_mssql.py
+                     C:\\Python3\\python.exe %cd%\\ifp\\PROD\\mssql\\RunIFP_mssql.py
                 '''
                 // 
             }
