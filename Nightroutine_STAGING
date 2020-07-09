@@ -23,14 +23,14 @@ pipeline {
             parallel {
                 stage('Run IFP MSSQL'){
                     steps{
-                        build job: "/job/IFP/job/Run_IFP_process_MSSQL_${ENV}", wait: true
+                        build job: "/job/IFP/job/Run_IFP_process_MSSQL_STAGING", wait: true
                     }
 
                 }
 
                 stage('Run IFP PGSQL'){
                     steps{
-                       build job: "/job/IFP/job/Run_IFP_process_PGSQL_${ENV}", wait: true 
+                       build job: "/job/IFP/job/Run_IFP_process_PGSQL_STAGING", wait: true 
                     }             
 
                 }
@@ -42,7 +42,7 @@ pipeline {
 
         stage('IFP validation'){
                 steps{
-                    build job: "/job/IFP/job/Run_IFP_validation_${ENV}", wait: true
+                    build job: "/job/IFP/job/Run_IFP_validation_STAGING", wait: true
                
                 }
 
@@ -53,13 +53,13 @@ pipeline {
             parallel{
                 stage('Run CIF'){
                     steps{
-                        build job: "/job/REPORTS/job/CIF/job/Run_CIF_PGSQL_${ENV}", wait: true
+                        build job: "/job/REPORTS/job/CIF/job/Run_CIF_PGSQL_STAGING", wait: true
                     }
                 }
 
                 stage('Run FirstKey'){
                     steps{
-                        build job: "/job/REPORTS/job/FirstKey/job/Run_FirstKey_PGSQL_${ENV}", wait: true
+                        build job: "/job/REPORTS/job/FirstKey/job/Run_FirstKey_PGSQL_STAGING", wait: true
                     }
                 }
             }
