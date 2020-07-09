@@ -10,6 +10,7 @@ pipeline {
         stage('Clear and create config file') {
             steps {
                     bat '''
+                    echo %CONFIG_FILE%
                     del "%CONFIG_FILE%"
                     echo. 2> "%CONFIG_FILE%"
                     '''
