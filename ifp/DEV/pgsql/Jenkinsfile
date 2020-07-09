@@ -56,6 +56,7 @@ pipeline {
                     if (error_folder.exists()){
                         env.error_files = bat(script: "@dir /B ${error_folder_path}", returnStdout: true)
                         println("files_in_folder = ${env.error_files}")
+                        currentBuild.result = 'FAILURE'
                         
                     } else{
                         env.error_files = "None, all files were processed correctly"
