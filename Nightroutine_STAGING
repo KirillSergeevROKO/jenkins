@@ -73,7 +73,7 @@ pipeline {
                     echo "${env.FIRSTKEY_REPORTS}"
                     def today = new Date()
                     def yesterday = today.previous()
-                    def env.formated_date = today.format("yyyy-MM-dd")
+                    def env.formated_date = today.format("yyyyMMdd")
 
             }
         }
