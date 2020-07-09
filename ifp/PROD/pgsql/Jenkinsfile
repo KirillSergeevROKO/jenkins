@@ -9,7 +9,7 @@ pipeline {
         stage('Copy file to PGSQL folder') { 
             steps {
                 bat '''
-                    %cd%\\ifp\\PROD\\pgsql\\copy_files_for_pos.cmd \
+                    "%cd%\\ifp\\PROD\\pgsql\\copy_files_for_pos.cmd" \
                     \\\\IISODS.cascadeloans.local\\InformentFiles\\FTP\\Batch \
                     \\\\PROD-ROKO-APPSErver\\InformentFiles\\DATA\\PGSQL
                 '''
@@ -22,7 +22,7 @@ pipeline {
         stage('Check files') { 
             steps {
                 bat '''
-                    python %cd%\\ifp\\PROD\\pgsql\\FileCheck.py
+                    C:\\Python3\\python.exe "%cd%\\ifp\\PROD\\pgsql\\FileCheck.py"
                 '''
 ///                script{
 ///                    env.CHECK_FILE_END = "${currentBuild.durationString.split(" ")[0..1]}"
@@ -33,7 +33,7 @@ pipeline {
         stage('Run IFP proces PGSQL ') { 
             steps {
                 bat '''
-                  ::  python %cd%\\ifp\\PROD\\pgsql\\RunIFP_pgsql.py
+                    C:\\Python3\\python.exe "%cd%\\ifp\\PROD\\pgsql\\RunIFP_pgsql.py"
                 '''
                 // 
             }
