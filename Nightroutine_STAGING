@@ -62,19 +62,21 @@ pipeline {
         }
 
         stage('Read config file'){
-            script{
-                    load "${CONFIG_FILE}"
+            steps('Read config file'){
+                script{
+                        load "${CONFIG_FILE}"
 
-                    echo "From Config File"
-                    echo "${env.IFP_MSSQL}"
-                    echo "${env.IFP_PGSQL}"
-                    echo "${env.IFP_VALIDATION}"
-                    echo "${env.CIF_REPORTS}"
-                    echo "${env.FIRSTKEY_REPORTS}"
-                    def today = new Date()
-                    def yesterday = today.previous()
-                    def formated_date = today.format("yyyy-MM-dd")
+                        echo "From Config File"
+                        echo "${env.IFP_MSSQL}"
+                        echo "${env.IFP_PGSQL}"
+                        echo "${env.IFP_VALIDATION}"
+                        echo "${env.CIF_REPORTS}"
+                        echo "${env.FIRSTKEY_REPORTS}"
+                        def today = new Date()
+                        def yesterday = today.previous()
+                        def formated_date = today.format("yyyy-MM-dd")
 
+                }
             }
         }
 
