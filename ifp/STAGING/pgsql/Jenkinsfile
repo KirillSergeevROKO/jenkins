@@ -1,10 +1,13 @@
 //Set variables
 def MAIL_TO = "kirill.sergeev@rokolabs.com"
-def CONFIG_FILE = "\\\\vm-roko-jenkins\\JENKINS\\STAGING_conf.groovy"
 
 
 pipeline {
     agent { label 'vm-roko-jenkins' }
+    environment {
+        CONFIG_FILE = '\\\\vm-roko-jenkins\\JENKINS\\STAGING_conf.groovy'
+              
+    }
     stages {
         stage('Check files') { 
             steps {

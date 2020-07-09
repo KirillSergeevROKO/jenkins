@@ -1,6 +1,5 @@
 //Set variables
 def MAIL_TO = "kirill.sergeev@rokolabs.com"
-def CONFIG_FILE = "\\\\vm-roko-jenkins\\JENKINS\\STAGING_conf.groovy"
 
 pipeline {
     agent { label 'vm-roko-jenkins' }
@@ -8,6 +7,7 @@ pipeline {
         HOST_NAME = 'Staging-Roko-Postgres'
         USER = 'staging_user_cascade'
         PASSWORD = credentials('srvc_STAGING_pass')
+        CONFIG_FILE = '\\\\vm-roko-jenkins\\JENKINS\\STAGING_conf.groovy'
 
     }
     stages {
