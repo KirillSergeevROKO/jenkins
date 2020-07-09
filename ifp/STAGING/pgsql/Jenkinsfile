@@ -1,5 +1,6 @@
 //Set variables
 def MAIL_TO = "kirill.sergeev@rokolabs.com"
+def CONFIG_FILE = "\\\\vm-roko-jenkins\\JENKINS\\STAGING_conf.groovy"
 
 
 pipeline {
@@ -66,11 +67,14 @@ pipeline {
         
       }
     }
-        stage('Generate and send report') { 
+        stage('Send duration to config file') { 
             steps {
+                script{
+                    env.IFP_PGSQL = "${currentBuild.durationString.minus(' and counting')}"
+                }
                 bat '''
-                    python %cd%\\ifp\\generate_report_IFP.py
-                    echo error file: ${env.error_files}
+                    echo %IFP_PGSQL%
+                    echo env.IFP_PGSQL="%IFP_PGSQL%" >> %CONFIG_FILE%
                 '''
                 // 
             }

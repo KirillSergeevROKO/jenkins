@@ -1,5 +1,6 @@
 //Set variables
 def MAIL_TO = "kirill.sergeev@rokolabs.com"
+def CONFIG_FILE = "\\\\vm-roko-jenkins\\JENKINS\\STAGING_conf.groovy"
 
 pipeline {
     agent { label 'vm-roko-jenkins' }
@@ -163,5 +164,19 @@ pipeline {
                 '''
             }
         }
+
+        stage('Send duration to config file'){
+            steps {
+                script{
+                    env.FIRSTKEY_REPORTS = "${currentBuild.durationString.minus(' and counting')}"
+                }
+                bat '''
+                    echo %FIRSTKEY_REPORTS%
+                    echo env.FIRSTKEY_REPORTS="%FIRSTKEY_REPORTS%" >> %CONFIG_FILE%
+                '''
+                // 
+            }
+        }
+
     }       
 }

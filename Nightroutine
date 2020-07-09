@@ -1,6 +1,6 @@
 //Set variables
 def MAIL_TO = "kirill.sergeev@rokolabs.com"
-def CONFIG_PATH = "\\\\vm-roko-jenkins\\JENKINS\\STAGING_conf.groovy"
+def CONFIG_FILE = "\\\\vm-roko-jenkins\\JENKINS\\STAGING_conf.groovy"
 def ENV = STAGING // PROD or DEV
 
 pipeline {
@@ -10,8 +10,8 @@ pipeline {
         stage('Clear and create config file') {
             steps {
                     bat '''
-                    del "%CONFIG_PATH"
-                    echo. 2> "%CONFIG_PATH"
+                    del "%CONFIG_FILE"
+                    echo. 2> "%CONFIG_FILE"
                     '''
             }
         }
@@ -63,7 +63,7 @@ pipeline {
 
         stage('Read config file'){
             script{
-                    load "${CONFIG_PATH}"
+                    load "${CONFIG_FILE}"
 
                     echo "From Config File"
                     echo "${env.IFP_MSSQL}"
