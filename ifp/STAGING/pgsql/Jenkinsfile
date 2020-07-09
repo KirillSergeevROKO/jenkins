@@ -44,7 +44,7 @@ pipeline {
                     //set date current date - 1 day
                     def today = new Date()
                     def yesterday = today.previous()
-                    def formated_date = yesterday.format("yyyyMMdd")
+                    def formated_date = today.format("yyyyMMdd")
                     println("date var = ${formated_date}")
 
                     //Set path to error folder

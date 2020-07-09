@@ -1,0 +1,37 @@
+//Set variables
+def MAIL_TO = "kirill.sergeev@rokolabs.com"
+
+pipeline {
+    agent { label 'vm-roko-jenkins' }
+    environment {
+        HOST_NAME = 'Staging-Roko-Postgres'
+        USER = 'staging_user_cascade'
+        PASSWORD = credentials('srvc_STAGING_pass')
+
+    }
+    stages {
+        stage('Run validation') { 
+            parallel {
+                stage('MSSQL validation'){
+                    steps {
+                        bat '''
+                        set PGPASSWORD=%PASSWORD%
+                        "C:\\Program Files\\PostgreSQL\\12\\bin\\psql.exe" -h %HOST_NAME% -p 5432 -d staging_servicing_odssettings -U %USER% ^
+                        -c "SELECT * FROM config;"
+                        '''
+                    }
+                }
+
+                stage('PGSQL validation'){
+                    steps {
+                        bat '''
+                        set PGPASSWORD=%PASSWORD%
+                        "C:\\Program Files\\PostgreSQL\\12\\bin\\psql.exe" -h %HOST_NAME% -p 5432 -d staging_servicing_odssettings -U %USER% ^
+                        -c "SELECT * FROM config;"
+                        '''
+                    }
+                }
+            }
+        }
+    }
+}
