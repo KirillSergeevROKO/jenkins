@@ -91,7 +91,7 @@ pipeline {
                 <h3><span style="background-color: #99cc00; color: #003366;">${currentBuild.result}</span></h3>
                 </div><br />
                 <p><span style="color: #003366;">Errors files: <strong> ${env.error_files}</strong>;
-                <p><span style="color: #003366;">Duration:&nbsp;<strong>${currentBuild.durationString}&nbsp;</strong></span><br />
+                <p><span style="color: #003366;">Duration:&nbsp;<strong>${currentBuild.durationString.minus(' and counting')}&nbsp;</strong></span><br />
                 <span style="color: #003366;"> You can finde details on this </span><br /><span style="color: #003366;">link: ${env.BUILD_URL}</span>
                 <br /><span style="color: #003366;">===========================================</span></p>
                 </html>
@@ -111,7 +111,7 @@ pipeline {
                 <h3><span style="background-color: #ff0000; color: #003366;">${currentBuild.result}</span></h3>
                 </div><br />
                 <p><span style="color: #003366;">Errors files:  <strong> ${env.error_files}</strong>;
-                <p><span style="color: #003366;">Duration:&nbsp;<strong>${currentBuild.durationString}&nbsp;</strong></span><br />
+                <p><span style="color: #003366;">Duration:&nbsp;<strong>${currentBuild.durationString.minus(' and counting')}&nbsp;</strong></span><br />
                 <span style="color: #003366;"> This build failed, please check what is wrong!  </span><br /><span style="color: #003366;">link: ${env.BUILD_URL}</span>
                 <br /><span style="color: #003366;">===========================================</span></p>
                 </html>
