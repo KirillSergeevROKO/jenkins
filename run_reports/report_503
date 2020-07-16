@@ -1,0 +1,27 @@
+//Set variables
+def MAIL_TO = "kirill.sergeev@rokolabs.com"
+
+pipeline {
+    agent { label 'vm-roko-jenkins' }
+    environment {
+        HOST_NAME = 'Prod-Roko-Dwpgsql'
+        USER = 'user_cascade'
+        PASSWORD = credentials('dtwh_PROD_pass')
+
+    }
+
+    stages {
+        stage('REP_503') { 
+                    steps {
+                        bat '''
+                            echo %PASSWORD%
+                            echo %HOST_NAME%
+                            set PGPASSWORD=%PASSWORD%
+                            "C:\\Program Files\\PostgreSQL\\12\\bin\\psql.exe" -h %HOST_NAME% -p 5432 -d datawarehouse -U %USER% ^
+                            -c "SELECT rpt.SP_REP_503_Originations_Daily ();"
+                        '''
+                        }
+        }
+    }
+}
+

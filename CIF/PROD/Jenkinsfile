@@ -28,6 +28,20 @@ pipeline {
        //         '''
        //     }
        // }
+       
+        stage('Send duration to config file'){
+            steps {
+                script{
+                    env.CIF_REPORTS = "${currentBuild.durationString.minus(' and counting')}"
+                }
+                bat '''
+                    echo %CIF_REPORTS%
+                    echo env.CIF_REPORTS="%CIF_REPORTS%" >> %CONFIG_FILE%
+                '''
+                // 
+            }
+        }
+
     }
     
 }

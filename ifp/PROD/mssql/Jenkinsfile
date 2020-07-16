@@ -4,6 +4,10 @@ def MAIL_TO = "kirill.sergeev@rokolabs.com,cascade@rokolabs.com"
 
 pipeline {
     agent { label 'master' }
+    environment {
+        CONFIG_FILE = '\\\\vm-roko-jenkins\\JENKINS\\PROD_conf.groovy'
+              
+    }    
     stages {
       
         stage('Copy file to MSSQL folder') { 
@@ -68,11 +72,14 @@ pipeline {
         
       }
     }
-        stage('Generate and send report') { 
+        stage('Send duration to config file') { 
             steps {
+                script{
+                    env.IFP_MSSQL = "${currentBuild.durationString.minus(' and counting')}"
+                }
                 bat '''
-                    python %cd%\\ifp\\generate_report_IFP.py
-                    echo error file: ${env.error_files}
+                    echo %IFP_MSSQL%
+                    echo env.IFP_MSSQL="%IFP_MSSQL%" >> %CONFIG_FILE%
                 '''
                 // 
             }
