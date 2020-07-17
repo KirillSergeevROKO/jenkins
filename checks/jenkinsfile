@@ -117,7 +117,7 @@ pipeline {
                     def error_folder_path = "\\\\PROD-ROKO-APPSERVER\\InformentFiles\\DATA\\PGSQL\\Batch\\${formated_date}\\Backup\\errors"
                     println("error path = ${error_folder_path}")
 
-                    def csv_error_folder_path = "\\\\PROD-ROKO-APPSERVER\\InformentFiles\\DATA\\PGSQL\\Batch\\${formated_date}\\TempCsvForBulkCopy"
+                    def csv_error_folder_path = "\\\\PROD-ROKO-APPSERVER\\InformentFiles\\DATA\\PGSQL\\Batch\\${formated_date}\\TempCsvForBulkCopy*"
 
                     //Set path to folder
                     def today_folder = "\\\\PROD-ROKO-APPSERVER\\InformentFiles\\DATA\\PGSQL\\Batch\\${formated_date}\\Backup"
@@ -149,10 +149,10 @@ pipeline {
                     }
 
                     //Check if  CSV error folder exist and collect filenames
-                    println("csv_files_path = ${csv_error_folder_path}")
-                    File error_csv_folder = new File("${csv_error_folder_path}")
+                    error_folder_name_pgsql = bat(script: "@dir /B ${csv_error_folder_path}", returnStdout: true)
+                    File error_csv_folder = new File("${error_folder_name_pgsql}")
                     if (error_csv_folder.exists()){
-                        env.error_csv_files_pgsql = bat(script: "@dir /B ${csv_error_folder_path}*", returnStdout: true)
+                        env.error_csv_files_pgsql = bat(script: "@dir /B ${error_folder_name_pgsql}", returnStdout: true)
                         println("files_in_folder_csv = ${env.error_csv_files_pgsql}")
                         env.status = "<p><span style=\"background-color: #ff0000;\"><strong>FAILED</strong></span></p>"
                         
@@ -179,7 +179,7 @@ pipeline {
                 <br />======================================<br />ROKO MSSQL</strong> <br />Errors files: ${env.error_files_mssql}<strong>&nbsp;<br /></strong>${env.count_files_mssql}<strong><br />
                 ======================================</strong></p>
                 <p><strong><br />======================================<br />ROKO PGSQL <br />Errors files: </strong>${env.error_files_pgsql}<strong>&nbsp;<br /></strong>${env.count_files_pgsql}<strong><br />
-                Errors CSV files: </strong>${env.error_csv_files_pgsql}<strong>&nbsp;<br /></strong>${env.count_files_pgsql}<strong><br />
+                Errors CSV files: </strong>${env.error_csv_files_pgsql}
                 ======================================</strong></p>
                 </html>
                  """,
