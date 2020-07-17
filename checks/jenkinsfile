@@ -136,7 +136,7 @@ pipeline {
 
                     //Check if  error folder exist and collect filenames
                     
-                    File error_folder = new File("${error_folder_path}")
+                    File error_folder = new File("'\' + ${error_folder_path}")
                     if (error_folder.exists()){
                         env.error_files_pgsql = bat(script: "@dir /B ${error_folder_path}", returnStdout: true)
                         println("files_in_folder = ${env.error_files_pgsql}")
@@ -158,7 +158,6 @@ pipeline {
 
                     string = csv_error_folder_full_path.trim()
                     File error_csv_folder = new File("${string}")
-                    println("AAAAAAA = ${string}")
                     if (error_csv_folder.exists()){
                         env.error_csv_files_pgsql = bat(script: "@dir /B ${csv_error_folder_full_path.trim()} ", returnStdout: true)
                         println("files_in_folder_csv = ${env.error_csv_files_pgsql}")
