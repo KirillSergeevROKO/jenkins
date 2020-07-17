@@ -29,7 +29,7 @@ pipeline {
                         bat '''
                         set PGPASSWORD=%PASSWORD%
                         "C:\\Program Files\\PostgreSQL\\12\\bin\\psql.exe" -h %HOST_NAME_PGSQL% -p 5432 -d servicing_odssettings -U %USER% ^
-                        -c "SELECT * FROM config;"
+                        -c "SELECT public.InformEnt_Process_Validation()"
                         '''
                     }
                 }
