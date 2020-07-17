@@ -136,7 +136,7 @@ pipeline {
 
                     //Check if  error folder exist and collect filenames
                     
-                    File error_folder = new File("'\' + ${error_folder_path}")
+                    File error_folder = new File("${error_folder_path}")
                     if (error_folder.exists()){
                         env.error_files_pgsql = bat(script: "@dir /B ${error_folder_path}", returnStdout: true)
                         println("files_in_folder = ${env.error_files_pgsql}")
@@ -148,10 +148,12 @@ pipeline {
                     println("files_in_folder = ${env.error_files_pgsql}")
                     }
 
+
+
                     //Check if  CSV error folder exist and collect filenames
                     
                     error_folder_name_pgsql = bat(script: "@dir /B ${csv_error_folder_path}\\Temp*", returnStdout: true)
-                    csv_error_folder_full_path =  '"' + csv_error_folder_path + error_folder_name_pgsql.trim() + '"'
+                    csv_error_folder_full_path =  "\\\\PROD-ROKO-APPSERVER\\InformentFiles\\DATA\\PGSQL\\Batch\\20200716\\TempCsvForBulkCopy - errors 303735a2-78bd-471f-8826-1767e2fd2e56" //'"' + csv_error_folder_path + error_folder_name_pgsql.trim() + '"'
 
                     //println("csv_error_full_path = ${csv_error_folder_full_path.trim()}")
 
