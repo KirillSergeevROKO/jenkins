@@ -4,7 +4,8 @@ def MAIL_TO = "kirill.sergeev@rokolabs.com"
 pipeline {
     agent { label 'vm-roko-jenkins' }
     environment {
-        HOST_NAME = 'Prod-Roko-Postgres'
+        HOST_NAME_MSSQL = 'Prod-Roko-Mssql'
+        HOST_NAME_PGSQL = 'Prod-Roko-Pgsql'
         USER = 'user_cascade'
         PASSWORD = credentials('srvc_PROD_pass')
         CONFIG_FILE = '\\\\vm-roko-jenkins\\JENKINS\\PROD_conf.groovy'
@@ -17,7 +18,7 @@ pipeline {
                     steps {
                         bat '''
                         set PGPASSWORD=%PASSWORD%
-                        "C:\\Program Files\\PostgreSQL\\12\\bin\\psql.exe" -h %HOST_NAME% -p 5432 -d servicing_odssettings -U %USER% ^
+                        :: "C:\\Program Files\\PostgreSQL\\12\\bin\\psql.exe" -h %HOST_NAME_MSSQL% -p 5432 -d servicing_odssettings -U %USER% ^
                         -c "SELECT * FROM config;"
                         '''
                     }
@@ -27,7 +28,7 @@ pipeline {
                     steps {
                         bat '''
                         set PGPASSWORD=%PASSWORD%
-                        "C:\\Program Files\\PostgreSQL\\12\\bin\\psql.exe" -h %HOST_NAME% -p 5432 -d servicing_odssettings -U %USER% ^
+                        "C:\\Program Files\\PostgreSQL\\12\\bin\\psql.exe" -h %HOST_NAME_PGSQL% -p 5432 -d servicing_odssettings -U %USER% ^
                         -c "SELECT * FROM config;"
                         '''
                     }
