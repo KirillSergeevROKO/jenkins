@@ -1,7 +1,7 @@
 //Set variables
 import java.text.*
 
-def MAIL_TO = "kirill.sergeev@rokolabs.com,alexander.babansky@rokolabs.com,cascade@rokolabs.com"
+def MAIL_TO = "kirill.sergeev@rokolabs.com" //,alexander.babansky@rokolabs.com,cascade@rokolabs.com
 def today = new Date()
 def yesterday = today.previous()
 def formated_date = yesterday.format("yyyyMMdd")
