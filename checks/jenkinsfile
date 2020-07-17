@@ -13,7 +13,7 @@ if (day_of_week == day_off){
     formated_date = new_date.format("yyyyMMdd")
     println(new_date)
 }
-def NORMAL_FILES_COUNT = 96  //Set count of COBOL files
+def NORMAL_FILES_COUNT = 97  //Set count of COBOL files
 println(day_of_week)
 
 
