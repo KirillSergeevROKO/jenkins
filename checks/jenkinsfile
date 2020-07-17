@@ -152,9 +152,9 @@ pipeline {
                     
                     error_folder_name_pgsql = bat(script: "@dir /B ${csv_error_folder_path}\\Temp*", returnStdout: true)
                     env.csv_error_folder_full_path =  '"' + csv_error_folder_path + error_folder_name_pgsql + '"'
-                    String env.csv_error_folder_full_path_finish = env.csv_error_folder_full_path.strip()
+                    env.csv_error_folder_full_path_finish = env.csv_error_folder_full_path.replaceAll("[\n\r]", "");
                     println("csv_error_full_path = ${env.csv_error_folder_full_path}")
-                    println("csv_error_full_path_FINISH = ${env.csv_error_folder_full_path_finish}")
+                    println("csv_error_full_path_FINISH = ${env.csv_error_folder_full_path}")
 
                     
                     File error_csv_folder = new File("${env.csv_error_folder_full_path}")
