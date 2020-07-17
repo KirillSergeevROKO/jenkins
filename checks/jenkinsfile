@@ -135,6 +135,7 @@ pipeline {
                     }
 
                     //Check if  error folder exist and collect filenames
+                    
                     File error_folder = new File("${error_folder_path}")
                     if (error_folder.exists()){
                         env.error_files_pgsql = bat(script: "@dir /B ${error_folder_path}", returnStdout: true)
@@ -148,6 +149,7 @@ pipeline {
                     }
 
                     //Check if  CSV error folder exist and collect filenames
+                    println("csv_files_path = ${csv_error_folder_path}")
                     File error_csv_folder = new File("${csv_error_folder_path}")
                     if (error_csv_folder.exists()){
                         env.error_csv_files_pgsql = bat(script: "@dir /B ${csv_error_folder_path}", returnStdout: true)
@@ -194,7 +196,7 @@ pipeline {
                 <br />======================================<br />ROKO MSSQL</strong> <br />Errors files: ${env.error_files_mssql}<strong>&nbsp;<br /></strong>${env.count_files_mssql}<strong><br />
                 ======================================</strong></p>
                 <p><strong><br />======================================<br />ROKO PGSQL <br />Errors files: </strong>${env.error_files_pgsql}<strong>&nbsp;<br /></strong>${env.count_files_pgsql}<strong><br />
-                Errors CSV files: </strong>${env.error_csv_files_pgsql}<strong>&nbsp;<br /></strong>${env.count_files_pgsql}<strong><br />
+                Errors CSV files: </strong>${env.error_csv_files_pgsql}
                 ======================================</strong></p>
                 </html>
                  """,
