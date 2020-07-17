@@ -156,8 +156,8 @@ pipeline {
                     //println("csv_error_full_path = ${csv_error_folder_full_path.trim()}")
 
 
-                    
-                    File error_csv_folder = new File("${csv_error_folder_full_path.trim()}")
+                    string = csv_error_folder_full_path.trim()
+                    File error_csv_folder = new File("${string}")
                     if (error_csv_folder.exists()){
                         env.error_csv_files_pgsql = bat(script: "@dir /B ${csv_error_folder_full_path.trim()} ", returnStdout: true)
                         println("files_in_folder_csv = ${env.error_csv_files_pgsql}")
@@ -167,7 +167,7 @@ pipeline {
                         env.error_csv_folder = "None, all files were processed correctly"
                         
                     //println("csv_files_in_folder = ${env.error_csv_files_pgsql}")
-                    println("csv_error_folder_name = ${csv_error_folder_full_path.trim()}")
+                    println("csv_error_folder_name = ${string}")
                     }
 
 
