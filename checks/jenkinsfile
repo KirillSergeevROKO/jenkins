@@ -158,7 +158,7 @@ pipeline {
 
                     string = csv_error_folder_full_path.trim()
                     File error_csv_folder = new File("${string}")
-                    println("AAAAAAA = ${error_csv_folder}")
+                    println("AAAAAAA = ${string}")
                     if (error_csv_folder.exists()){
                         env.error_csv_files_pgsql = bat(script: "@dir /B ${csv_error_folder_full_path.trim()} ", returnStdout: true)
                         println("files_in_folder_csv = ${env.error_csv_files_pgsql}")
