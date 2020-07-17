@@ -116,7 +116,7 @@ pipeline {
                     //Set path to error folder
                     def error_folder_path = "\\\\PROD-ROKO-APPSERVER\\InformentFiles\\DATA\\PGSQL\\Batch\\${formated_date}\\Backup\\errors"
                     println("error path = ${error_folder_path}")
-
+                    //Set path to CSV PGSQL error folder
                     def csv_error_folder_path = "\\\\PROD-ROKO-APPSERVER\\InformentFiles\\DATA\\PGSQL\\Batch\\${formated_date}\\"
 
                     //Set path to folder
@@ -149,7 +149,7 @@ pipeline {
                     }
 
                     //Check if  CSV error folder exist and collect filenames
-                    error_folder_name_pgsql = bat(script: "@dir /B ${csv_error_folder_path}", returnStdout: true)
+                    error_folder_name_pgsql = bat(script: "@dir /B ${csv_error_folder_path}\Temp*", returnStdout: true)
                     env.csv_error_folder_full_path =  '"' + csv_error_folder_path + error_folder_name_pgsql + '"'
                     println("csv_error_full_path = ${env.csv_error_folder_full_path}")
                     
