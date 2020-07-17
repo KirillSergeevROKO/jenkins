@@ -152,7 +152,7 @@ pipeline {
                     env.error_folder_name_pgsql = bat(script: "@dir /B ${csv_error_folder_path}", returnStdout: true)
                     File error_csv_folder = new File("${env.error_folder_name_pgsql}")
                     if (error_csv_folder.exists()){
-                        env.error_csv_files_pgsql = bat(script: "@dir /B ${env.error_folder_name_pgsql}", returnStdout: true)
+                        env.error_csv_files_pgsql = bat(script: "@dir /B \"${env.error_folder_name_pgsql}\" ", returnStdout: true)
                         println("files_in_folder_csv = ${env.error_csv_files_pgsql}")
                         env.status = "<p><span style=\"background-color: #ff0000;\"><strong>FAILED</strong></span></p>"
                         
