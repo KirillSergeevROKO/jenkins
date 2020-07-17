@@ -18,7 +18,7 @@ pipeline {
                     steps {
                         bat '''
                         set PGPASSWORD=%PASSWORD%
-                        :: "C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn\SQLCMD.EXE"  -S %HOST_NAME_MSSQL% -d ODSSettings ^
+                        "C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn\SQLCMD.EXE"  -S %HOST_NAME_MSSQL% -d ODSSettings ^
                          -Q "Select * from settings"                        
                         '''
                     }
