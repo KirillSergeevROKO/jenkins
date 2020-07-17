@@ -4,7 +4,8 @@ def MAIL_TO = "kirill.sergeev@rokolabs.com"
 pipeline {
     agent { label 'vm-roko-jenkins' }
     environment {
-        HOST_NAME = 'Staging-Roko-Postgres'
+        HOST_NAME_PGSQL = 'Staging-Roko-Postgres'
+        HOST_NAME_MSSQL= 'Staging-Roko-Mssql'
         USER = 'staging_user_cascade'
         PASSWORD = credentials('srvc_STAGING_pass')
         CONFIG_FILE = '\\\\vm-roko-jenkins\\JENKINS\\STAGING_conf.groovy'
@@ -17,8 +18,8 @@ pipeline {
                     steps {
                         bat '''
                         set PGPASSWORD=%PASSWORD%
-                        "C:\\Program Files\\PostgreSQL\\12\\bin\\psql.exe" -h %HOST_NAME% -p 5432 -d staging_servicing_odssettings -U %USER% ^
-                        -c "SELECT * FROM config;"
+                        "C:\\Program Files\\Microsoft SQL Server\\Client SDK\\ODBC\\170\\Tools\\Binn\\SQLCMD.EXE"  -S %HOST_NAME_MSSQL% -d ODSSettings ^
+                         -Q "exec InformEnt_Process_Validation" 
                         '''
                     }
                 }
@@ -27,8 +28,8 @@ pipeline {
                     steps {
                         bat '''
                         set PGPASSWORD=%PASSWORD%
-                        "C:\\Program Files\\PostgreSQL\\12\\bin\\psql.exe" -h %HOST_NAME% -p 5432 -d staging_servicing_odssettings -U %USER% ^
-                        -c "SELECT * FROM config;"
+                        "C:\\Program Files\\PostgreSQL\\12\\bin\\psql.exe" -h %HOST_NAME_PGSQL% -p 5432 -d staging_servicing_odssettings -U %USER% ^
+                        -c "SELECT public.InformEnt_Process_Validation();"
                         '''
                     }
                 }
