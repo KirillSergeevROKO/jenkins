@@ -149,10 +149,13 @@ pipeline {
                     }
 
                     //Check if  CSV error folder exist and collect filenames
-                    env.error_folder_name_pgsql = bat(script: "@dir /B ${csv_error_folder_path}", returnStdout: true)
-                    File error_csv_folder = new File("${env.error_folder_name_pgsql}")
+                    error_folder_name_pgsql = bat(script: "@dir /B ${csv_error_folder_path}", returnStdout: true)
+                    env.csv_error_folder_full_path =  '"' + csv_error_folder_path + error_folder_name_pgsql + '"'
+                    println("csv_error_full_path = ${env.csv_error_folder_full_path}")
+                    
+                    File error_csv_folder = new File("${env.csv_error_folder_full_path}")
                     if (error_csv_folder.exists()){
-                        env.error_csv_files_pgsql = bat(script: "@dir /B \"${env.error_folder_name_pgsql}\" ", returnStdout: true)
+                        env.error_csv_files_pgsql = bat(script: "@dir /B \"${env.csv_error_folder_full_path}\" ", returnStdout: true)
                         println("files_in_folder_csv = ${env.error_csv_files_pgsql}")
                         env.status = "<p><span style=\"background-color: #ff0000;\"><strong>FAILED</strong></span></p>"
                         
