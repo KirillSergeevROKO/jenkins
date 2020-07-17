@@ -129,7 +129,7 @@ pipeline {
                     if (count !=  96){
                         println("we have a problem")
                         env.status = "<p><span style=\"background-color: #ff0000;\"><strong>FAILED</strong></span></p>"
-                        env.count_files_pgsql = "" Problem with files in folder: ${count}  !!! Please do a manual check !!!""
+                        env.count_files_pgsql = " Problem with files in folder: ${count}  !!! Please do a manual check !!!
                     } else{
                         env.count_files_pgsql = "Count: ${count}"
                     }
