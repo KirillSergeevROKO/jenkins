@@ -169,7 +169,7 @@ pipeline {
                         env.error_csv_folder = "None, all files were processed correctly"
                         
                     //println("csv_files_in_folder = ${env.error_csv_files_pgsql}")
-                    println("csv_error_folder_name = ${string}")
+                    println("csv_error_folder_name = ${csv_error_folder_full_path}")
                     }
 
 
