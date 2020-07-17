@@ -18,8 +18,8 @@ pipeline {
                     steps {
                         bat '''
                         set PGPASSWORD=%PASSWORD%
-                        :: "C:\\Program Files\\PostgreSQL\\12\\bin\\psql.exe" -h %HOST_NAME_MSSQL% -p 5432 -d servicing_odssettings -U %USER% ^
-                        -c "SELECT * FROM config;"
+                        :: "C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn\SQLCMD.EXE"  -S VM-ROKO-MSSQL -d ODSSettings ^
+                         -Q "Select * from settings"                        
                         '''
                     }
                 }
