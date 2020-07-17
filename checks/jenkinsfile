@@ -41,7 +41,7 @@ pipeline {
                     if (count !=  96){
                         println("we have a problem")
                         env.status = "<p><span style=\"background-color: #ff0000;\"><strong>FAILED</strong></span></p>"
-                        env.count_files_cascade = "Not all files in the folder !!! Please do a manual check !!!"
+                        env.count_files_cascade = "Normal count: 96 Current files in folder: ${count}  !!! Please do a manual check !!!"
                     } else{
                         env.count_files_cascade = "Count: ${count}"
                     }
@@ -87,7 +87,7 @@ pipeline {
                     if (count !=  96){
                         println("we have a problem")
                         env.status = "<p><span style=\"background-color: #ff0000;\"><strong>FAILED</strong></span></p>"
-                        env.count_files_mssql = "Not all files in the folder !!! Please do a manual check !!!"
+                        env.count_files_mssql = " Problem with files in folder: ${count}  !!! Please do a manual check !!!"
                     } else{
                         env.count_files_mssql = "Count: ${count}"
                     }
@@ -115,7 +115,9 @@ pipeline {
 
                     //Set path to error folder
                     def error_folder_path = "\\\\PROD-ROKO-APPSERVER\\InformentFiles\\DATA\\PGSQL\\Batch\\${formated_date}\\Backup\\errors"
-                    println("date var = ${error_folder_path}")
+                    println("error path = ${error_folder_path}")
+
+                    def csv_error_folder_path = "\\\\PROD-ROKO-APPSERVER\\InformentFiles\\DATA\\PGSQL\\Batch\\${formated_date}\\Backup\\TempCsvForBulkCopy*"
 
                     //Set path to folder
                     def today_folder = "\\\\PROD-ROKO-APPSERVER\\InformentFiles\\DATA\\PGSQL\\Batch\\${formated_date}\\Backup"
@@ -127,12 +129,12 @@ pipeline {
                     if (count !=  96){
                         println("we have a problem")
                         env.status = "<p><span style=\"background-color: #ff0000;\"><strong>FAILED</strong></span></p>"
-                        env.count_files_pgsql = "Not all files in the folder !!! Please do a manual check !!!"
+                        env.count_files_pgsql = "" Problem with files in folder: ${count}  !!! Please do a manual check !!!""
                     } else{
                         env.count_files_pgsql = "Count: ${count}"
                     }
 
-                    //Check if folder exist and collect filenames
+                    //Check if  error folder exist and collect filenames
                     File error_folder = new File("${error_folder_path}")
                     if (error_folder.exists()){
                         env.error_files_pgsql = bat(script: "@dir /B ${error_folder_path}", returnStdout: true)
@@ -144,6 +146,21 @@ pipeline {
                         
                     println("files_in_folder = ${env.error_files_pgsql}")
                     }
+
+                    //Check if  CSV error folder exist and collect filenames
+                    File error_csv_folder = new File("${csv_error_folder_path}")
+                    if (error_csv_folder.exists()){
+                        env.error_csv_files_pgsql = bat(script: "@dir /B ${csv_error_folder_path}", returnStdout: true)
+                        println("files_in_folder_csv = ${env.error_csv_files_pgsql}")
+                        env.status = "<p><span style=\"background-color: #ff0000;\"><strong>FAILED</strong></span></p>"
+                        
+                    } else{
+                        env.error_files_pgsql = "None, all files were processed correctly"
+                        
+                    println("files_in_folder = ${env.error_csv_files_pgsql}")
+                    }
+
+
                 }
             }
         }
@@ -154,12 +171,13 @@ pipeline {
             subject: "IFP check result",
             body: """
                 <html>
-                <p>IFP Check errors files&nbsp;<br /><br /><strong>STATUS:</strong>&nbsp; ${env.status}</p>
+                <p>IFP Check errors files &nbsp;<br /><br /><strong>STATUS:</strong>&nbsp; ${env.status}</p>
                 <p><br /><strong>======================================<br /></strong><strong>Cascade side</strong> :<br />Errors files: ${env.error_files_cascade}<strong>&nbsp;<br /></strong>${env.count_files_cascade}<strong><br />
                 ======================================<br /><br />
                 <br />======================================<br />ROKO MSSQL</strong> <br />Errors files: ${env.error_files_mssql}<strong>&nbsp;<br /></strong>${env.count_files_mssql}<strong><br />
                 ======================================</strong></p>
                 <p><strong><br />======================================<br />ROKO PGSQL <br />Errors files: </strong>${env.error_files_pgsql}<strong>&nbsp;<br /></strong>${env.count_files_pgsql}<strong><br />
+                Errors CSV files: </strong>${env.error_csv_files_pgsql}<strong>&nbsp;<br /></strong>${env.count_files_pgsql}<strong><br />
                 ======================================</strong></p>
                 </html>
                  """,
@@ -170,15 +188,14 @@ pipeline {
             subject: "FAILED in pipeline: ${currentBuild.fullDisplayName}",
             body: """
                 <html>
-                <html>
-                <p>IFP Check errors files&nbsp;<br /><br /><strong>STATUS:</strong>&nbsp; ${env.status}</p>
-                <p><br /><strong>======================================</strong><br /><strong>Cascade side</strong> :<br />Errors files: ${env.error_files_cascade}<strong>
-                <br />======================================<br /><br />
-                <br />======================================<br />ROKO MSSQL</strong> <br />Errors files: ${env.error_files_mssql}<strong><br />
-                </strong><strong>======================================</strong></p>
-                <p><strong><br />======================================<br />ROKO PGSQL <br />Errors files: </strong>${env.error_files_pgsql}<strong>
-                <br />======================================</strong></p>
-                </html>
+                <p>IFP Check errors files &nbsp;<br /><br /><strong>STATUS:</strong>&nbsp; ${env.status}</p>
+                <p><br /><strong>======================================<br /></strong><strong>Cascade side</strong> :<br />Errors files: ${env.error_files_cascade}<strong>&nbsp;<br /></strong>${env.count_files_cascade}<strong><br />
+                ======================================<br /><br />
+                <br />======================================<br />ROKO MSSQL</strong> <br />Errors files: ${env.error_files_mssql}<strong>&nbsp;<br /></strong>${env.count_files_mssql}<strong><br />
+                ======================================</strong></p>
+                <p><strong><br />======================================<br />ROKO PGSQL <br />Errors files: </strong>${env.error_files_pgsql}<strong>&nbsp;<br /></strong>${env.count_files_pgsql}<strong><br />
+                Errors CSV files: </strong>${env.error_csv_files_pgsql}<strong>&nbsp;<br /></strong>${env.count_files_pgsql}<strong><br />
+                ======================================</strong></p>
                 </html>
                  """,
             mimeType: 'text/html'
