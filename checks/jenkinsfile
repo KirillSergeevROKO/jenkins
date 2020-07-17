@@ -117,7 +117,7 @@ pipeline {
                     def error_folder_path = "\\\\PROD-ROKO-APPSERVER\\InformentFiles\\DATA\\PGSQL\\Batch\\${formated_date}\\Backup\\errors"
                     println("error path = ${error_folder_path}")
 
-                    def csv_error_folder_path = "\\\\PROD-ROKO-APPSERVER\\InformentFiles\\DATA\\PGSQL\\Batch\\${formated_date}\\TempCsvForBulkCopy*"
+                    def csv_error_folder_path = "\\\\PROD-ROKO-APPSERVER\\InformentFiles\\DATA\\PGSQL\\Batch\\${formated_date}\\"
 
                     //Set path to folder
                     def today_folder = "\\\\PROD-ROKO-APPSERVER\\InformentFiles\\DATA\\PGSQL\\Batch\\${formated_date}\\Backup"
