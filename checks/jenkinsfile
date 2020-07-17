@@ -164,9 +164,9 @@ pipeline {
                         env.status = "<p><span style=\"background-color: #ff0000;\"><strong>FAILED</strong></span></p>"
                         
                     } else{
-                        env.error_files_pgsql = "None, all files were processed correctly"
+                        env.error_csv_folder = "None, all files were processed correctly"
                         
-                    println("csv_files_in_folder = ${env.error_csv_files_pgsql}")
+                    //println("csv_files_in_folder = ${env.error_csv_files_pgsql}")
                     println("csv_error_folder_name = ${csv_error_folder_full_path.trim()}")
                     }
 
