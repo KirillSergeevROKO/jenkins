@@ -7,6 +7,7 @@ pipeline {
         HOST_NAME = 'Prod-Roko-Pgsql'
         USER = 'user_cascade'
         PASSWORD = credentials('srvc_PROD_pass')
+        CONFIG_FILE = '\\\\vm-roko-jenkins\\JENKINS\\PROD_conf.groovy'
 
     }
     stages {
