@@ -72,3 +72,6 @@ IF EXIST %SOURCE_PATH%\errors (
 del "%DEST_PSSQL%\FFSI000A2"
 ren "%DEST_PSSQL%\FFSI000A1" "FFSI000A"
 
+:: Delete specific files
+
+del "%DEST_PSSQL%\FFSI055A"
