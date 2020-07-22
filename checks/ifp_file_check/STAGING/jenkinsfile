@@ -1,0 +1,35 @@
+//Set variables
+def MAIL_TO = "kirill.sergeev@rokolabs.com"
+
+pipeline {
+    agent { label 'vm-roko-jenkins' }
+    environment {
+        CONFIG_FILE = '\\\\vm-roko-jenkins\\JENKINS\\STAGING_conf.groovy'
+        ENV = "STAGING" // PROD or DEV
+        
+    }
+
+    stages {
+        stage('Check files') { 
+            steps {
+                bat '''
+                    python -u %cd%\\checks\\\ifp_file_check\\%ENV%\\FileCheck.py
+                '''
+            }
+
+        }
+
+        stage('Send duration to config file') { 
+            steps {
+                script{
+                    env.FILE_CHECK = "${currentBuild.durationString.minus(' and counting')}"
+                }
+                bat '''
+                    echo %FILE_CHECK%
+                    echo env.FILE_CHECK="%FILE_CHECK%" >> %CONFIG_FILE%
+                '''
+                // 
+            }
+        }
+    }
+}
