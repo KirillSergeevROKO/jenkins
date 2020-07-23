@@ -1,0 +1,58 @@
+//Set variables
+def MAIL_TO = "kirill.sergeev@rokolabs.com"
+
+pipeline {
+    agent { label 'vm-roko-jenkins' }
+    environment {
+        HOST_NAME = 'Prod-Roko-Pgsql'
+        DB_NAME = "servicing_core"
+        USER = 'user_cascade'
+        PASSWORD = credentials('srvc_PROD_pass')
+        CONFIG_FILE = '\\\\vm-roko-jenkins\\JENKINS\\PROD_conf.groovy'
+        DATA_PATH = 'D:\\FilesToTransfer\\Paymentus\\output'
+        PAY_PASSWORD = credentials('paymentus_pass')
+
+    }
+
+    stages{
+        stage('Run Selenium Python Script') { 
+            steps {
+                bat '''
+                    PAExec \\\\PROD-ROKO-APPSERVER cmd /c "D: & cd D:\\CascadeFinancials\\PaymentusProcess\\ & python PaymentusProcess.py %PAY_PASSWORD%"
+                '''
+            }
+        }
+
+        stage('Run PaymentusSinglePayment ') { 
+            steps {
+                bat '''
+                    PAExec \\\\PROD-ROKO-APPSERVER cmd /c "D: & cd D:\\CascadeFinancials\\PaymentusProcess\\ & PaymentusSinglePayments.cmd %DATA_PATH% %HOST_NAME% %DB_NAME% %USER% %PASSWORD%"
+                '''
+            }
+        }
+
+        stage('Run PaymentusRecurringPayments ') { 
+            steps {
+                bat '''
+                    PAExec \\\\PROD-ROKO-APPSERVER cmd /c "D: & cd D:\\CascadeFinancials\\PaymentusProcess\\ & PaymentusRecurringPayments.cmd %DATA_PATH% %HOST_NAME% %DB_NAME% %USER% %PASSWORD%   "
+                '''
+            }
+        }
+
+        stage('Send duration to config file'){
+            steps {
+                script{
+                    env.PAYMENTUS_REPORTS = "${currentBuild.durationString.minus(' and counting')}"
+                }
+                bat '''
+                    echo %PAYMENTUS_REPORTS%
+                    echo env.PAYMENTUS_REPORTS="%PAYMENTUS_REPORTS%" >> %CONFIG_FILE%
+                '''
+                // 
+            }
+        }
+
+    }
+
+}
+    
