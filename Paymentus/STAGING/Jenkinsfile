@@ -10,6 +10,7 @@ pipeline {
         PASSWORD = credentials('srvc_STAGING_pass')
         CONFIG_FILE = '\\\\vm-roko-jenkins\\JENKINS\\STAGING_conf.groovy'
         DATA_PATH = 'D:\\FilesToTransfer\\Paymentus\\output'
+        PAY_PASSWORD = credentials('paymentus_pass')
 
     }
 
@@ -17,7 +18,7 @@ pipeline {
         stage('Run Selenium Python Script') { 
             steps {
                 bat '''
-                    PAExec \\\\STAGING-ROKO-APPSERVER cmd /c "D: & cd D:\\CascadeFinancials\\PaymentusProcess\\ & python PaymentusProcess.py"
+                    PAExec \\\\STAGING-ROKO-APPSERVER cmd /c "D: & cd D:\\CascadeFinancials\\PaymentusProcess\\ & python PaymentusProcess.py %PAY_PASSWORD%"
                 '''
             }
         }
