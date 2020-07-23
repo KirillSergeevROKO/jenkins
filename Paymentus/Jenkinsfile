@@ -9,6 +9,7 @@ pipeline {
         USER = 'staging_user_cascade'
         PASSWORD = credentials('srvc_STAGING_pass')
         CONFIG_FILE = '\\\\vm-roko-jenkins\\JENKINS\\STAGING_conf.groovy'
+        DATA_PATH = 'D:\\FilesToTransfer\\Paymentus\\output'
 
     }
 
@@ -24,7 +25,7 @@ pipeline {
         stage('Run PaymentusSinglePayment ') { 
             steps {
                 bat '''
-                    PAExec \\\\STAGING-ROKO-APPSERVER cmd /c "D: & cd D:\\CascadeFinancials\\PaymentusProcess\\ & PaymentusSinglePayments.cmd %HOST_NAME% %DB_NAME% %USER% %PASSWORD%"
+                    PAExec \\\\STAGING-ROKO-APPSERVER cmd /c "D: & cd D:\\CascadeFinancials\\PaymentusProcess\\ & PaymentusSinglePayments.cmd %DATA_PATH% %HOST_NAME% %DB_NAME% %USER% %PASSWORD%"
                 '''
             }
         }
@@ -32,7 +33,7 @@ pipeline {
         stage('Run PaymentusRecurringPayments ') { 
             steps {
                 bat '''
-                    PAExec \\\\STAGING-ROKO-APPSERVER cmd /c "D: & cd D:\\CascadeFinancials\\PaymentusProcess\\ & PaymentusRecurringPayments.cmd %HOST_NAME% %DB_NAME% %USER% %PASSWORD%   "
+                    PAExec \\\\STAGING-ROKO-APPSERVER cmd /c "D: & cd D:\\CascadeFinancials\\PaymentusProcess\\ & PaymentusRecurringPayments.cmd %DATA_PATH% %HOST_NAME% %DB_NAME% %USER% %PASSWORD%   "
                 '''
             }
         }
