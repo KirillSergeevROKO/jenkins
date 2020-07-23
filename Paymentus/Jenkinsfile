@@ -5,6 +5,7 @@ pipeline {
     agent { label 'vm-roko-jenkins' }
     environment {
         HOST_NAME = 'Staging-Roko-Postgres'
+        DB_NAME = "staging_servicing_core"
         USER = 'staging_user_cascade'
         PASSWORD = credentials('srvc_STAGING_pass')
         CONFIG_FILE = '\\\\vm-roko-jenkins\\JENKINS\\STAGING_conf.groovy'
@@ -23,7 +24,7 @@ pipeline {
         stage('Run PaymentusSinglePayment ') { 
             steps {
                 bat '''
-                    PAExec \\\\STAGING-ROKO-APPSERVER cmd /c "D: & cd D:\\CascadeFinancials\\PaymentusProcess\\ & PaymentusSinglePayments.cmd"
+                    PAExec \\\\STAGING-ROKO-APPSERVER cmd /c "D: & cd D:\\CascadeFinancials\\PaymentusProcess\\ & PaymentusSinglePayments.cmd %HOST_NAME% %DB_NAME% %USER% %PASSWORD%"
                 '''
             }
         }
@@ -31,7 +32,7 @@ pipeline {
         stage('Run PaymentusRecurringPayments ') { 
             steps {
                 bat '''
-                    PAExec \\\\STAGING-ROKO-APPSERVER cmd /c "D: & cd D:\\CascadeFinancials\\PaymentusProcess\\ & PaymentusRecurringPayments.cmd"
+                    PAExec \\\\STAGING-ROKO-APPSERVER cmd /c "D: & cd D:\\CascadeFinancials\\PaymentusProcess\\ & PaymentusRecurringPayments.cmd %HOST_NAME% %DB_NAME% %USER% %PASSWORD%   "
                 '''
             }
         }
