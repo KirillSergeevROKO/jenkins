@@ -34,7 +34,7 @@ pipeline {
         stage('Run PaymentusRecurringPayments ') { 
             steps {
                 bat '''
-                    PAExec \\\\PROD-ROKO-APPSERVER cmd /c "D: & cd D:\\CascadeFinancials\\PaymentusProcess\\ & PaymentusRecurringPayments.cmd %DATA_PATH% %HOST_NAME% %DB_NAME% %USER% %PASSWORD%   "
+                    PAExec \\\\PROD-ROKO-APPSERVER cmd /c "D: & cd D:\\CascadeFinancials\\PaymentusProcess\\ & PaymentusRecurringPayments.cmd %DATA_PATH% %HOST_NAME% %DB_NAME% %USER% %PASSWORD%"
                 '''
             }
         }
