@@ -52,8 +52,10 @@ filelist = [f'{informentDirectory}\\{file}' for file in config['Informent']['Fil
 #achdate = datetime.today() # - timedelta(days=1)
 #achFileMask = f'ach618.{achdate:%Y%m%d}*.txt'
 
+test_path = "\\\\staging-roko-appserver\\InformentFiles\SOURCE\\*"
+
 while True:
-    if all([os.path.isfile(f) for f in filelist]) : # and glob.glob(os.path.join(informentDirectory)) and glob.glob(os.path.join(informentDirectory_error)) :
+    if all([test_path.isfile(f) for f in filelist]) and glob.glob(os.path.join(informentDirectory)) :
         print('All files are present')
         break
     else :
