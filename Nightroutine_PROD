@@ -48,13 +48,13 @@ pipeline {
 
         }
 
-//        stage('Run Paymentus'){
-//               steps{  
+        stage('Run Paymentus'){
+               steps{  
 
-//                    build job: "../Paymentus/Paymentus_${ENV}", wait: true
-//                }
+                    build job: "../Paymentus/Paymentus_${ENV}", wait: true
+                }
 
-//        }
+        }
 
 
         stage('Reports'){
@@ -71,19 +71,30 @@ pipeline {
                     }
                 }
 
-
-
-
-//                stage('Run FirstKey'){
-//                    steps{
-//                       build job: "../REPORTS/FirstKey/Run_FirstKey_PGSQL_${ENV}", wait: true
-//                    }
-//                }
-//            }
             }
         }
 
 
+        stage('Run CIF Validation'){
+            steps{
+                build job: "../REPORTS/CIF/CIF_VALIDATION_${ENV}", wait: true
+            }
+        }
+
+        stage('Five9'){
+            steps{
+                build job: "../REPORTS/CIF/FIVE9_${ENV}", wait: true
+            }
+        }
+
+
+        stage('Run FirstKey'){
+            steps{
+                build job: "../REPORTS/FirstKey/Run_FirstKey_PGSQL_${ENV}", wait: true
+            }
+                
+        }
+        
 
     } 
 
@@ -96,10 +107,10 @@ pipeline {
                 echo "${env.IFP_MSSQL}"
                 echo "${env.IFP_PGSQL}"
                 echo "${env.IFP_VALIDATION}"
-                //echo "${env.PAYMENTUS_REPORTS}"
+                echo "${env.PAYMENTUS_REPORTS}"
                 echo "${env.CIF_REPORTS}"
                 echo "${env.DAILY_COLLECTIONS}"
-                //echo "${env.FIRSTKEY_REPORTS}"
+                echo "${env.FIRSTKEY_REPORTS}"
                 def today = new Date()
                 def yesterday = today.previous()
                 def formated_date = today.format("yyyy-MM-dd")
