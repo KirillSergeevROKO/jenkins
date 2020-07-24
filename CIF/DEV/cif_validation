@@ -16,7 +16,7 @@ pipeline {
         stage('Upload CIF') { 
             steps {
                 bat '''
-                    PAExec \\\\VM-ROKO-APPSERVER cmd /c "D: & cd D:\\CascadeFinancials\\PGSQL\\CIFValidation\\ & CIFValidation.exe"
+                    PAExec \\\\VM-ROKO-APPSERVER cmd /c "C: & cd C:\\CascadeFinancials\\PGSQL\\CIFValidation\\ & CIFValidation.exe"
                 '''
             }
         }
