@@ -42,7 +42,10 @@ accountPassword = accountPassword.decode('UTF-8')
 achdate = datetime.today() - timedelta(days=1)
 formated_date = achdate.strftime("%Y%m%d")
 informentDirectory = config['Informent']['Directory']
+informentDirectory_error = str(informentDirectory) + "\\errors"
+
 print(informentDirectory)
+print(informentDirectory_error)
 #prepend directory to file names
 filelist = [f'{informentDirectory}\\{file}' for file in config['Informent']['FileNames']]
 # add ach file to list as name changes
@@ -50,7 +53,7 @@ filelist = [f'{informentDirectory}\\{file}' for file in config['Informent']['Fil
 #achFileMask = f'ach618.{achdate:%Y%m%d}*.txt'
 
 while True:
-    if all([os.path.isfile(f) for f in filelist]) and glob.glob(os.path.join(informentDirectory)) :
+    if all([os.path.isfile(f) for f in filelist]) and glob.glob(os.path.join(informentDirectory)) or glob.glob(os.path.join(informentDirectory_error)) :
         print('All files are present')
         break
     else :
