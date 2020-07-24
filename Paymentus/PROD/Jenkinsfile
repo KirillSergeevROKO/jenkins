@@ -18,7 +18,7 @@ pipeline {
         stage('Run Selenium Python Script') { 
             steps {
                 bat '''
-                    PAExec \\\\PROD-ROKO-APPSERVER cmd /c "D: & cd D:\\CascadeFinancials\\PaymentusProcess\\ & python PaymentusProcess.py %PAY_PASSWORD%"
+                    PAExec \\\\PROD-ROKO-APPSERVER cmd /c "D: & cd D:\\CascadeFinancials\\PaymentusProcess\\ & python PaymentusProcess.py"
                 '''
             }
         }

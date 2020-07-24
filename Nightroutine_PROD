@@ -40,10 +40,18 @@ pipeline {
 
         }
 
-//        stage('IFP validation'){
-//                steps{
-//                    build job: "../IFP/Run_IFP_validation_${ENV}", wait: true
+        stage('IFP validation'){
+                steps{
+                    build job: "../IFP/Run_IFP_validation_${ENV}", wait: true
                
+                }
+
+        }
+
+//        stage('Run Paymentus'){
+//               steps{  
+
+//                    build job: "../Paymentus/Paymentus_${ENV}", wait: true
 //                }
 
 //        }
@@ -51,11 +59,20 @@ pipeline {
 
         stage('Reports'){
             parallel{
+                stage('Run DailyCollections'){
+                    steps{
+                        build job: "../REPORTS/DailyCollections/DailyCollections_${ENV}", wait: true
+                    }
+                }
+
                 stage('Run CIF'){
                     steps{
                         build job: "../REPORTS/CIF/Run_CIF_PGSQL_${ENV}", wait: true
                     }
                 }
+
+
+
 
 //                stage('Run FirstKey'){
 //                    steps{
@@ -66,84 +83,48 @@ pipeline {
             }
         }
 
-        stage('Read config file'){
-            steps('Read config file'){
-                script{
-                        load "${CONFIG_FILE}"
 
-                        echo "From Config File"
-                        echo "${env.IFP_MSSQL}"
-                        echo "${env.IFP_PGSQL}"
-                        //echo "${env.IFP_VALIDATION}"
-                        echo "${env.CIF_REPORTS}"
-                        //echo "${env.FIRSTKEY_REPORTS}"
-                        def today = new Date()
-                        def yesterday = today.previous()
-                        def formated_date = today.format("yyyy-MM-dd")
-
-                }
-            }
-        }
 
     } 
 
        post {
+        always{
+            script{
+                load "${CONFIG_FILE}"
+
+                echo "From Config File"
+                echo "${env.IFP_MSSQL}"
+                echo "${env.IFP_PGSQL}"
+                echo "${env.IFP_VALIDATION}"
+                //echo "${env.PAYMENTUS_REPORTS}"
+                echo "${env.CIF_REPORTS}"
+                echo "${env.DAILY_COLLECTIONS}"
+                //echo "${env.FIRSTKEY_REPORTS}"
+                def today = new Date()
+                def yesterday = today.previous()
+                def formated_date = today.format("yyyy-MM-dd")
+
+            }
+
+        }
+
         success {
             mail to: "${MAIL_TO}",
             subject: "Status of pipeline: ${currentBuild.fullDisplayName}",
             body: """
-                <html>
-                <p>===========================================</p>
-                <p>NightRoutin Process - <strong>${env.formated_date}</strong></p>
-                <h3><span style="background-color: #00ff00; color: #003366;">${currentBuild.result}</span></h3>
-                <table style="height: 250px; width: 365px; background-color: #000000; float: left;" border="1" cellspacing="0" cellpadding="3">
-                <thead><tr style="height: 4px; text-align: left;"><td style="width: 139.925px; height: 4px;"><span style="color: #ffffff;">IFP MsSQL</span></td>
-                <td style="width: 97.0755px; height: 4px;"><br />
-                <div><div><span style="color: #ffffff;">${env.IFP_MSSQL}</span></div>
-                </div></td></tr><tr style="height: 29.1368px; text-align: left;"> <td style="width: 139.925px; height: 29.1368px;"><span style="color: #ffffff;">IFP PgSQL</span></td>
-                <td style="width: 97.0755px; height: 29.1368px;">&nbsp;<div>
-                <div><span style="color: #ffffff;">${env.IFP_PGSQL}</span></div></div></td> </tr>
-                <tr style="height: 24px; text-align: left;"><td style="width: 139.925px; height: 24px;"><span style="color: #ffffff;">IFP Validation</span></td>
-                <td style="width: 97.0755px; height: 24px;">&nbsp;<div>
-                <div><span style="color: #ffffff;">${env.IFP_VALIDATION}</span></div></div></td></tr><tr style="height: 10px; text-align: left;">
-                <td style="width: 139.925px; height: 10px;"><span style="color: #ffffff;">CIF Reports</span></td> <td style="width: 97.0755px; height: 10px;">&nbsp;
-                <div><div><span style="color: #ffffff;">${env.CIF_REPORTS}</span></div></div></td></tr><tr style="height: 10px; text-align: left;">
-                <td style="width: 139.925px; height: 10px;"><span style="color: #ffffff;">FirstKey Reports</span></td><td style="width: 97.0755px; height: 10px;">
-                <div><div><span style="color: #ffffff;">${env.FIRSTKEY_REPORTS}</span></div></div></td></tr></thead></table><p>&nbsp;</p>
-                <p>&nbsp;</p><p>&nbsp;</p><p>The total time it took to complite the process ${currentBuild.durationString.minus(' and counting')} -</p>
-                <div><div><strong>${currentBuild.number}</strong></div><div>&nbsp;</div><div><strong>=========================================</strong></div>
-                <div>&nbsp;</div><div>You can find additional details on this link:<br /><div><div>${env.BUILD_URL}</div></div>
-                <br /><br /></div>
-                </div>
-                </html>
+                    <html>
+                    <p>&nbsp;===========================================</p><div><div><p>NightRoutin Process</p></div></div><div><div><h3><span style="background-color: #00ff00; color: #003366;">${currentBuild.result}</span></h3></div></div><div><div><table style="height: 250px; width: 365px; float: left;" border="1" cellspacing="0" cellpadding="3"><thead><tr style="height: 4px; text-align: left;"><td style="width: 139.925px; height: 4px;">IFP MsSQL</td><td style="width: 97.0755px; height: 4px;"><br /><div><div>${env.IFP_MSSQL}</div></div></td></tr><tr style="height: 29.1368px; text-align: left;"><td style="width: 139.925px; height: 29.1368px;">IFP PgSQL</td><td style="width: 97.0755px; height: 29.1368px;">&nbsp;<div><div>${env.IFP_PGSQL}</div></div></td></tr><tr style="height: 24px; text-align: left;"><td style="width: 139.925px; height: 24px;">IFP Validation</td><td style="width: 97.0755px; height: 24px;">&nbsp;<div><div>${env.IFP_VALIDATION}</div></div></td></tr><tr style="height: 10px; text-align: left;"><td style="width: 139.925px; height: 10px;">CIF Reports</td><td style="width: 97.0755px; height: 10px;">&nbsp;<div><div>${env.CIF_REPORTS}</div></div></td></tr></thead></table></div></div><div><div><p>&nbsp;</p></div></div><div><div><p>&nbsp;</p></div></div><div><div><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;The total time it took to complite the process <strong>${currentBuild.durationString.minus(' and counting')}</strong></p></div></div><div><div><div><div><strong>${currentBuild.number}</strong></div><div>&nbsp;</div><div>=========================================</div><div>&nbsp;You can find additional details on this link:<br /><div><div>${env.BUILD_URL}</div></div><br /><br /></div></div></div></div>
+                    </html>
                  """,
             mimeType: 'text/html'
         }
+
          failure {
             mail to: "${MAIL_TO}",
             subject: "FAILED in pipeline: ${currentBuild.fullDisplayName} ${currentBuild.result} ",
             body: """
                 <html>
-                <p>===========================================</p>
-                <p>NightRoutin Process - <strong>${env.formated_date}</strong></p>
-                <h3><span style="background-color: #ff0000; color: #003366;">${currentBuild.result}</span></h3>
-                <table style="height: 250px; width: 365px; background-color: #000000; float: left;" border="1" cellspacing="0" cellpadding="3">
-                <thead><tr style="height: 4px; text-align: left;"><td style="width: 139.925px; height: 4px;"><span style="color: #ffffff;">IFP MsSQL</span></td>
-                <td style="width: 97.0755px; height: 4px;"><br /><div><div><span style="color: #ffffff;">${env.IFP_MSSQL}</span></div>
-                </div></td></tr><tr style="height: 29.1368px; text-align: left;"><td style="width: 139.925px; height: 29.1368px;"><span style="color: #ffffff;">IFP PgSQL</span></td>
-                <td style="width: 97.0755px; height: 29.1368px;">&nbsp;<div><div><span style="color: #ffffff;">${env.IFP_PGSQL}</span></div>
-                </div></td></tr><tr style="height: 24px; text-align: left;"><td style="width: 139.925px; height: 24px;"><span style="color: #ffffff;">IFP Validation</span></td>
-                <td style="width: 97.0755px; height: 24px;">&nbsp;<div><div><span style="color: #ffffff;">${env.IFP_VALIDATION}</span></div>
-                </div></td></tr><tr style="height: 10px; text-align: left;"><td style="width: 139.925px; height: 10px;"><span style="color: #ffffff;">CIF Reports</span></td>
-                <td style="width: 97.0755px; height: 10px;">&nbsp;<div><div><span style="color: #ffffff;">${env.CIF_REPORTS}</span></div></div>
-                </td></tr><tr style="height: 10px; text-align: left;"><td style="width: 139.925px; height: 10px;"><span style="color: #ffffff;">FirstKey Reports</span></td>
-                <td style="width: 97.0755px; height: 10px;"><div>
-                <div><span style="color: #ffffff;">${env.FIRSTKEY_REPORTS}</span></div></div></td></tr></thead>
-                </table><p>&nbsp;</p>
-                <p>&nbsp;</p><p>The total time it took to complite the process - ${currentBuild.durationString.minus(' and counting')}</p>
-                <div><div><strong>${currentBuild.number}</strong></div>
-                <div>&nbsp;</div><div><strong>=========================================</strong></div><div>We have a some problem, please check it on this link:<br />
-                <div><div>${env.BUILD_URL}</div> </div><br /><br /></div></div>
+                <p>&nbsp;===========================================</p><div><p>NightRoutin Process - <strong>${env.formated_date}</strong></p></div><div><h3><span style="background-color: #ff0000; color: #003366;">${currentBuild.result}</span></h3></div><div><table style="height: 250px; width: 365px; float: left;" border="1" cellspacing="0" cellpadding="3"><thead><tr style="height: 4px; text-align: left;"><td style="width: 139.925px; height: 4px;"><span style="color: #000000;">IFP MsSQL</span></td><td style="width: 97.0755px; height: 4px;"><br /><div><div><span style="color: #000000;">${env.IFP_MSSQL}</span></div></div></td></tr><tr style="height: 29.1368px; text-align: left;"><td style="width: 139.925px; height: 29.1368px;"><span style="color: #000000;">IFP PgSQL</span></td><td style="width: 97.0755px; height: 29.1368px;"><span style="color: #000000;">&nbsp;</span><div><div><span style="color: #000000;">${env.IFP_PGSQL}</span></div></div></td></tr><tr style="height: 24px; text-align: left;"><td style="width: 139.925px; height: 24px;"><span style="color: #000000;">IFP Validation</span></td><td style="width: 97.0755px; height: 24px;"><span style="color: #000000;">&nbsp;</span><div><div><span style="color: #000000;">${env.IFP_VALIDATION}</span></div></div></td></tr><tr style="height: 10px; text-align: left;"><td style="width: 139.925px; height: 10px;"><span style="color: #000000;">CIF Reports</span></td><td style="width: 97.0755px; height: 10px;"><span style="color: #000000;">&nbsp;</span><div><div><span style="color: #000000;">${env.CIF_REPORTS}</span></div></div></td></tr></thead></table></div><div><p>&nbsp;</p></div><div><p>&nbsp;</p></div><div><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;The total time it took to complite the process - <strong>${currentBuild.durationString.minus(' and counting')}</strong></p></div><div><div><div><strong>${currentBuild.number}</strong></div><div>&nbsp;</div><div>=========================================</div><div>We have a some problem, please check it on this link:<br /><div><div>${env.BUILD_URL}</div></div><br /><br /></div></div></div>
                 </html>
                  """,
             mimeType: 'text/html'
