@@ -43,7 +43,7 @@ pipeline {
                     def count = new File(today_folder).listFiles()
                                   .findAll { it.name ==~ /FF.*/ }
                                   .size()
-                    if (count !=  NORMAL_FILES_COUNT){
+                    if (count !=  98){
                         println("we have a problem")
                         env.status = "<p><span style=\"background-color: #ff0000;\"><strong>FAILED</strong></span></p>"
                         env.count_files_cascade = " Current files in folder: ${count}  !!! Please do a manual check !!!"
@@ -200,7 +200,7 @@ pipeline {
                 <br />======================================<br />ROKO MSSQL</strong> <br />Errors files: ${env.error_files_mssql}<strong>&nbsp;<br /></strong>${env.count_files_mssql}<strong><br />
                 ======================================</strong></p>
                 <p><strong><br />======================================<br />ROKO PGSQL <br />Errors files: </strong>${env.error_files_pgsql}<strong>&nbsp;<br /></strong>${env.count_files_pgsql}<strong><br />
-                Errors CSV files: </strong>${env.error_csv_files_pgsql}
+                Errors CSV files: </strong>${env.error_csv_files_pgsql}<br />
                 ======================================</strong></p>
                 </html>
                  """,
@@ -217,7 +217,7 @@ pipeline {
                 <br />======================================<br />ROKO MSSQL</strong> <br />Errors files: ${env.error_files_mssql}<strong>&nbsp;<br /></strong>${env.count_files_mssql}<strong><br />
                 ======================================</strong></p>
                 <p><strong><br />======================================<br />ROKO PGSQL <br />Errors files: </strong>${env.error_files_pgsql}<strong>&nbsp;<br /></strong>${env.count_files_pgsql}<strong><br />
-                Errors CSV files: </strong>${env.error_csv_files_pgsql}
+                Errors CSV files: </strong>${env.error_csv_files_pgsql}<br />
                 ======================================</strong></p>
                 </html>
                  """,
