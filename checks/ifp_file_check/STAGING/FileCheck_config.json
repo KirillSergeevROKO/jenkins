@@ -1,6 +1,6 @@
 {
     "Informent":{
-        "Directory":"\\\\staging-roko-appserver\\InformentFiles\\SOURCE\\*",
+        "Directory":"\\\\staging-roko-appserver\\InformentFiles\\SOURCE",
         "FileNames":[
             "FFSI000A1",
 			"FFSI000A2",
