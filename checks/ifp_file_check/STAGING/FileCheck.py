@@ -56,7 +56,7 @@ filelist = [f'{informentDirectory}\\{file}' for file in config['Informent']['Fil
 
 while True:
     if all([os.path.isfile(f) for f in filelist]) and glob.glob(os.path.join(informentDirectory)) :
-        print(f)
+    
         print('All files are present')
         break
     else :
