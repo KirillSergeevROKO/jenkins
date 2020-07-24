@@ -83,7 +83,7 @@ pipeline {
 
         stage('Five9'){
             steps{
-                build job: "../REPORTS/CIF/FIVE9_${ENV}", wait: true
+                build job: "../REPORTS/Five9/FIVE9_${ENV}", wait: true
             }
         }
 
@@ -109,7 +109,9 @@ pipeline {
                 echo "${env.IFP_VALIDATION}"
                 echo "${env.PAYMENTUS_REPORTS}"
                 echo "${env.CIF_REPORTS}"
+                echo "${env.CIF_VALIDATION}"
                 echo "${env.DAILY_COLLECTIONS}"
+                echo "${env.FIVE_NINE}"
                 echo "${env.FIRSTKEY_REPORTS}"
                 def today = new Date()
                 def yesterday = today.previous()

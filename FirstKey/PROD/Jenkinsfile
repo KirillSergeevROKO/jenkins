@@ -17,7 +17,7 @@ pipeline {
                     steps {
                         bat '''
                         set PGPASSWORD=%PASSWORD%
-                        "C:\\Program Files\\PostgreSQL\\12\\bin\\psql.exe" -h %HOST_NAME% -p 5432 -d staging_servicing_core -U %USER% ^
+                        "C:\\Program Files\\PostgreSQL\\12\\bin\\psql.exe" -h %HOST_NAME% -p 5432 -d servicing_core -U %USER% ^
                         -c "SELECT firstkey.REP_237_BankruptcyDailyReport_Automation();"
                         '''
                     }
@@ -27,7 +27,7 @@ pipeline {
                     steps {
                         bat '''
                         set PGPASSWORD=%PASSWORD%
-                        "C:\\Program Files\\PostgreSQL\\12\\bin\\psql.exe" -h %HOST_NAME% -p 5432 -d staging_servicing_core -U %USER% ^
+                        "C:\\Program Files\\PostgreSQL\\12\\bin\\psql.exe" -h %HOST_NAME% -p 5432 -d servicing_core -U %USER% ^
                         -c "SELECT firstkey.Report_FirstKeyServicer_CommentsHistory();"
                         '''
                     }
@@ -37,7 +37,7 @@ pipeline {
                     steps {
                         bat '''
                         set PGPASSWORD=%PASSWORD%
-                        "C:\\Program Files\\PostgreSQL\\12\\bin\\psql.exe" -h %HOST_NAME% -p 5432 -d staging_servicing_core -U %USER% ^
+                        "C:\\Program Files\\PostgreSQL\\12\\bin\\psql.exe" -h %HOST_NAME% -p 5432 -d servicing_core -U %USER% ^
                         -c "SELECT firstkey.Report_FirstKeyServicer_CRWDaily()"
                         '''
                     }
@@ -47,7 +47,7 @@ pipeline {
                     steps {
                         bat '''
                         set PGPASSWORD=%PASSWORD%
-                        "C:\\Program Files\\PostgreSQL\\12\\bin\\psql.exe" -h %HOST_NAME% -p 5432 -d staging_servicing_core -U %USER% ^
+                        "C:\\Program Files\\PostgreSQL\\12\\bin\\psql.exe" -h %HOST_NAME% -p 5432 -d servicing_core -U %USER% ^
                         -c "SELECT firstkey.REP_246_ForeclosureDailyReport_Automation();"
                         '''
                     }
@@ -57,7 +57,7 @@ pipeline {
                     steps {
                         bat '''
                         set PGPASSWORD=%PASSWORD%
-                        "C:\\Program Files\\PostgreSQL\\12\\bin\\psql.exe" -h %HOST_NAME% -p 5432 -d staging_servicing_core -U %USER% ^
+                        "C:\\Program Files\\PostgreSQL\\12\\bin\\psql.exe" -h %HOST_NAME% -p 5432 -d servicing_core -U %USER% ^
                         -c "SELECT firstkey.Report_FirstKeyServicer_LMDaily();"
                         '''
                     }
@@ -67,7 +67,7 @@ pipeline {
                     steps {
                         bat '''
                         set PGPASSWORD=%PASSWORD%
-                        "C:\\Program Files\\PostgreSQL\\12\\bin\\psql.exe" -h %HOST_NAME% -p 5432 -d staging_servicing_core -U %USER% ^
+                        "C:\\Program Files\\PostgreSQL\\12\\bin\\psql.exe" -h %HOST_NAME% -p 5432 -d servicing_core -U %USER% ^
                         -c "SELECT firstkey.Report_FirstKeyServicer_LMPayPlans();"
                         '''
                     }
@@ -77,7 +77,7 @@ pipeline {
                     steps {
                         bat '''
                         set PGPASSWORD=%PASSWORD%
-                        "C:\\Program Files\\PostgreSQL\\12\\bin\\psql.exe" -h %HOST_NAME% -p 5432 -d staging_servicing_core -U %USER% ^
+                        "C:\\Program Files\\PostgreSQL\\12\\bin\\psql.exe" -h %HOST_NAME% -p 5432 -d servicing_core -U %USER% ^
                         -c "SELECT firstkey.Report_FirstKeyServicer_LMSInsightDaily();"
                         '''
                     }
@@ -87,7 +87,7 @@ pipeline {
                     steps {
                         bat '''
                         set PGPASSWORD=%PASSWORD%
-                        "C:\\Program Files\\PostgreSQL\\12\\bin\\psql.exe" -h %HOST_NAME% -p 5432 -d staging_servicing_core -U %USER% ^
+                        "C:\\Program Files\\PostgreSQL\\12\\bin\\psql.exe" -h %HOST_NAME% -p 5432 -d servicing_core -U %USER% ^
                         -c "SELECT firstkey.Report_FirstKeyServicer_LMSOpsDaily();"
                         '''
                     }
@@ -97,7 +97,7 @@ pipeline {
                     steps {
                         bat '''
                         set PGPASSWORD=%PASSWORD%
-                        "C:\\Program Files\\PostgreSQL\\12\\bin\\psql.exe" -h %HOST_NAME% -p 5432 -d staging_servicing_core -U %USER% ^
+                        "C:\\Program Files\\PostgreSQL\\12\\bin\\psql.exe" -h %HOST_NAME% -p 5432 -d servicing_core -U %USER% ^
                         -c "SELECT firstkey.Report_FirstKeyServicer_LossMitMilestones();"
                         '''
                     }
@@ -107,7 +107,7 @@ pipeline {
                     steps {
                         bat '''
                         set PGPASSWORD=%PASSWORD%
-                        "C:\\Program Files\\PostgreSQL\\12\\bin\\psql.exe" -h %HOST_NAME% -p 5432 -d staging_servicing_core -U %USER% ^
+                        "C:\\Program Files\\PostgreSQL\\12\\bin\\psql.exe" -h %HOST_NAME% -p 5432 -d servicing_core -U %USER% ^
                         -c "SELECT firstkey.Report_FirstKeyServicer_PaymentPlanDaily();"
                         '''
                     }
@@ -118,7 +118,7 @@ pipeline {
                     steps {
                         bat '''
                         set PGPASSWORD=%PASSWORD%
-                        "C:\\Program Files\\PostgreSQL\\12\\bin\\psql.exe" -h %HOST_NAME% -p 5432 -d staging_servicing_core -U %USER% ^
+                        "C:\\Program Files\\PostgreSQL\\12\\bin\\psql.exe" -h %HOST_NAME% -p 5432 -d servicing_core -U %USER% ^
                         -c "SELECT firstkey.Report_FirstKeyServicer_REODaily();"
                         '''
                     }
@@ -128,7 +128,7 @@ pipeline {
                     steps {
                         bat '''
                         set PGPASSWORD=%PASSWORD%
-                        "C:\\Program Files\\PostgreSQL\\12\\bin\\psql.exe" -h %HOST_NAME% -p 5432 -d staging_servicing_core -U %USER% ^
+                        "C:\\Program Files\\PostgreSQL\\12\\bin\\psql.exe" -h %HOST_NAME% -p 5432 -d servicing_core -U %USER% ^
                         -c "SELECT firstkey.Report_FirstKeyServicer_StandardDaily();"
                         '''
                     }
@@ -138,7 +138,7 @@ pipeline {
                     steps {
                         bat '''
                         set PGPASSWORD=%PASSWORD%
-                        "C:\\Program Files\\PostgreSQL\\12\\bin\\psql.exe" -h %HOST_NAME% -p 5432 -d staging_servicing_core -U %USER% ^
+                        "C:\\Program Files\\PostgreSQL\\12\\bin\\psql.exe" -h %HOST_NAME% -p 5432 -d servicing_core -U %USER% ^
                         -c "SELECT firstkey.Report_FirstKeyServicer_SupplementalDaily();"
                         '''
                     }
@@ -148,7 +148,7 @@ pipeline {
                     steps {
                         bat '''
                         set PGPASSWORD=%PASSWORD%
-                        "C:\\Program Files\\PostgreSQL\\12\\bin\\psql.exe" -h %HOST_NAME% -p 5432 -d staging_servicing_core -U %USER% ^
+                        "C:\\Program Files\\PostgreSQL\\12\\bin\\psql.exe" -h %HOST_NAME% -p 5432 -d servicing_core -U %USER% ^
                         -c "SELECT firstkey.Report_FirstKeyServicer_TransactionHistory();"
                         '''
                     }
