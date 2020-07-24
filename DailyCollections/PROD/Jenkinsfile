@@ -16,7 +16,7 @@ pipeline {
             steps {
                 bat '''
                 set PGPASSWORD=%PASSWORD%
-                "C:\\Program Files\\PostgreSQL\\12\\bin\\psql.exe" -h %HOST_NAME% -p 5432 -d staging_servicing_core -U %USER% ^
+                "C:\\Program Files\\PostgreSQL\\12\\bin\\psql.exe" -h %HOST_NAME% -p 5432 -d servicing_core -U %USER% ^
                 -c "SELECT rpt.Servicing_Collection_Daily_sp (NULL, 0);"
                 '''
                         }
