@@ -41,6 +41,7 @@ accountPassword = accountPassword.decode('UTF-8')
 
 achdate = datetime.today() - timedelta(days=1)
 formated_date = achdate.strftime("%Y%m%d")
+print("formated_date: " + str(formated_date))
 informentDirectory = config['Informent']['Directory']
 print(informentDirectory)
 #prepend directory to file names
