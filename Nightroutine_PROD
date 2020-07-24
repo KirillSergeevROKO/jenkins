@@ -1,5 +1,5 @@
 //Set variables
-def MAIL_TO = "kirill.sergeev@rokolabs.com,cascade@rokolabs.com,sarator.support@rokolabs.com"
+def MAIL_TO = "kirill.sergeev@rokolabs.com,cascade@rokolabs.com,saratov.support@rokolabs.com"
 
 pipeline {
     agent { label 'vm-roko-jenkins' }
