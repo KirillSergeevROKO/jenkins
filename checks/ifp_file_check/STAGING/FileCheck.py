@@ -41,7 +41,7 @@ accountPassword = accountPassword.decode('UTF-8')
 
 achdate = datetime.today() - timedelta(days=1)
 formated_date = achdate.strftime("%Y%m%d")
-informentDirectory = config['Informent']['Directory'] + "\\**\\"
+informentDirectory = config['Informent']['Directory']
 print(informentDirectory)
 #prepend directory to file names
 filelist = [f'{informentDirectory}\\{file}' for file in config['Informent']['FileNames']]
@@ -50,7 +50,7 @@ filelist = [f'{informentDirectory}\\{file}' for file in config['Informent']['Fil
 #achFileMask = f'ach618.{achdate:%Y%m%d}*.txt'
 
 while True:
-    if all([os.path.isfile(f) for f in filelist]) and glob.glob(os.path.join(informentDirectory, recursive=True)):
+    if all([os.path.isfile(f) for f in filelist]) and glob.glob(os.path.join('\\\\staging-roko-appserver\\InformentFiles\\SOURCE\\*\\' )):
         print('All files are present')
         break
     else :
