@@ -55,7 +55,7 @@ filelist_error = [f'{informentDirectory_error}\\{file}' for file in config['Info
 
 
 while True:
-    if all([os.path.isfile(f) for f in filelist or filelist_error ]) and glob.glob(os.path.join(informentDirectory)) :
+    if all([os.path.isfile(f) for f in filelist_error ]) and glob.glob(os.path.join(informentDirectory)) :
         print('All files are present')
         break
     else :
