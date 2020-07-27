@@ -177,6 +177,7 @@ pipeline {
                         
                     } else{
                         env.error_csv_folder = "None, all files were processed correctly"
+                        env.error_csv_files_pgsql = "Files were processed correctly "
 
                         
                     //println("csv_files_in_folder = ${env.error_csv_files_pgsql}")
@@ -208,7 +209,7 @@ pipeline {
         }
          failure {
             mail to: "${MAIL_TO}",
-            subject: "FAILED in pipeline: ${currentBuild.fullDisplayName}",
+            subject: "IFP check result",
             body: """
                 <html>
                 <p>IFP Check errors files &nbsp;<br /><br /><strong>STATUS:</strong>&nbsp; ${env.status}</p>
