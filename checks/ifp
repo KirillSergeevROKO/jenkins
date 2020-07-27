@@ -162,11 +162,9 @@ pipeline {
 
                     //Check if  CSV error folder exist and collect filenames
                     
-                    if (bat(script: "@dir /B ${csv_error_folder_path}\\Temp*", returnStdout: true)){
-                        error_folder_name_pgsql = bat(script: "@dir /B ${csv_error_folder_path}\\Temp*", returnStdout: true)
-                        csv_error_folder_full_path =  csv_error_folder_path + '"' +  error_folder_name_pgsql.trim() + '"'
-                        csv_error_folder_full_path_quotes =  csv_error_folder_path +  error_folder_name_pgsql.trim()
-                    }
+                    error_folder_name_pgsql = bat(script: "@dir /B ${csv_error_folder_path}\\Temp* 2>1", returnStdout: true)
+                    csv_error_folder_full_path =  csv_error_folder_path + '"' +  error_folder_name_pgsql.trim() + '"'
+                    csv_error_folder_full_path_quotes =  csv_error_folder_path +  error_folder_name_pgsql.trim()
 
                     println("csv_error_full_path = ${csv_error_folder_full_path}")
 
