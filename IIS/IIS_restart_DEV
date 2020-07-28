@@ -1,0 +1,52 @@
+//Set variables
+def MAIL_TO = "kirill.sergeev@rokolabs.com"
+
+
+pipeline {
+    agent { label 'vm-roko-jenkins' }
+    environment {
+        HOST_NAME = 'VM-Roko-Appserver.cascadeloans.local'
+        CONFIG_FILE = '\\\\vm-roko-jenkins\\JENKINS\\DEV_conf.groovy'
+
+
+
+    }
+
+    stages{
+        stage('Restart IIS odsservices ') { 
+            steps {
+                
+                powershell '''
+                    Invoke-Command -computername "$env:HOST_NAME" -ScriptBlock { Stop-Website serviceapi.pgsql.odsservices.cascadeloans.local}
+                    Invoke-Command -computername "$env:HOST_NAME" -ScriptBlock { Start-Website serviceapi.pgsql.odsservices.cascadeloans.local}
+                    Invoke-Command -computername "$env:HOST_NAME" -ScriptBlock { Stop-Website serviceapi.mssql.odsservices.cascadeloans.local}
+                    Invoke-Command -computername "$env:HOST_NAME" -ScriptBlock { Start-Website serviceapi.mssql.odsservices.cascadeloans.local}
+
+
+                '''
+            }
+        }
+
+        stage('Restart IIS service adminweb ') { 
+            steps {
+                powershell '''
+                    Invoke-Command -computername "$env:HOST_NAME" -ScriptBlock { Stop-Website adminweb.pgsql.odsservices.cascadeloans.local}
+                    Invoke-Command -computername "$env:HOST_NAME" -ScriptBlock { Start-Website adminweb.pgsql.odsservices.cascadeloans.local}
+                    Invoke-Command -computername "$env:HOST_NAME" -ScriptBlock { Stop-Website adminweb.mssql.odsservices.cascadeloans.local}
+                    Invoke-Command -computername "$env:HOST_NAME" -ScriptBlock { Start-Website adminweb.mssql.odsservices.cascadeloans.local}
+                '''
+            }
+        }
+
+        stage('Restart IIS service odsapi') { 
+            steps {
+                powershell '''
+                    Invoke-Command -computername "$env:HOST_NAME" -ScriptBlock { Stop-Website odsapi.pgsql.odsservices.cascadeloans.local}
+                    Invoke-Command -computername "$env:HOST_NAME" -ScriptBlock { Start-Website odsapi.pgsql.odsservices.cascadeloans.local}
+                    Invoke-Command -computername "$env:HOST_NAME" -ScriptBlock { Stop-Website odsapi.mssql.odsservices.cascadeloans.local}
+                    Invoke-Command -computername "$env:HOST_NAME" -ScriptBlock { Start-Website odsapi.mssql.odsservices.cascadeloans.local}
+                '''
+            }
+        }
+    }
+}

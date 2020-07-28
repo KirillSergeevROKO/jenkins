@@ -192,7 +192,7 @@ pipeline {
     post {
         success {
             mail to: "${MAIL_TO}",
-            subject: "IFP check result",
+            subject: "RK IFP check result",
             body: """
                 <html>
                 <p>IFP Check errors files &nbsp;<br /><br /><strong>STATUS:</strong>&nbsp; ${env.status}</p>
@@ -209,7 +209,7 @@ pipeline {
         }
          failure {
             mail to: "${MAIL_TO}",
-            subject: "IFP check result",
+            subject: "RK IFP check result",
             body: """
                 <html>
                 <p>IFP Check errors files &nbsp;<br /><br /><strong>STATUS:</strong>&nbsp; ${env.status}</p>
