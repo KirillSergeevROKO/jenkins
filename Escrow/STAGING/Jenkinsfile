@@ -1,0 +1,147 @@
+//Set variables
+def MAIL_TO = "kirill.sergeev@rokolabs.com"
+
+pipeline {
+    agent { label 'vm-roko-jenkins' }
+    environment {
+        HOST_NAME = 'Staging-Roko-Postgres'
+        USER = 'staging_user_cascade'
+        PASSWORD = credentials('srvc_STAGING_pass')
+        CONFIG_FILE = '\\\\vm-roko-jenkins\\JENKINS\\STAGING_conf.groovy'
+        DB = 'staging_servicing_core'
+        REPORT_PATH = '\\\\staging-roko-appserver\\Escrow'
+
+    }
+    stages {
+        stage('Run reports') { 
+            parallel {
+                stage("Analysis-Bankruptcy"){
+                    steps {
+                        bat '''
+                        set PGPASSWORD=%PASSWORD%
+                        "C:\\Program Files\\PostgreSQL\\12\\bin\\psql.exe" -h %HOST_NAME% -p 5432 -d %DB% -U %USER% ^
+                        -c "SELECT escrow.RPT_AnalysisBankruptcy(_Drop_File_Path := '%REPORT_PATH%\\Escrow Analysis-Bankruptcy.csv');"
+                        '''
+                    }
+                }
+
+                stage("Analysis Roll to Current"){
+                    steps {
+                        bat '''
+                        set PGPASSWORD=%PASSWORD%
+                        "C:\\Program Files\\PostgreSQL\\12\\bin\\psql.exe" -h %HOST_NAME% -p 5432 -d %DB% -U %USER% ^
+                        -c "SELECT escrow.RPT_AnalysisRollToCurrent(_Drop_File_Path := '%REPORT_PATH%\\Escrow Analysis Roll to Current.csv');"
+                        '''
+                    }
+                }
+
+                stage("Collections Daily"){
+                    steps {
+                        bat '''
+                        set PGPASSWORD=%PASSWORD%
+                        "C:\\Program Files\\PostgreSQL\\12\\bin\\psql.exe" -h %HOST_NAME% -p 5432 -d %DB% -U %USER% ^
+                        -c "SELECT escrow.RPT_CollectionsDaily(_Drop_File_Path := '%REPORT_PATH%\\Collections Daily.csv');"
+                        '''
+                    }
+                }
+
+                stage("Executive Claims"){
+                    steps {
+                        bat '''
+                        set PGPASSWORD=%PASSWORD%
+                        "C:\\Program Files\\PostgreSQL\\12\\bin\\psql.exe" -h %HOST_NAME% -p 5432 -d %DB% -U %USER% ^
+                        -c "SELECT escrow.RPT_ExecutiveClaimsReport(_Drop_File_Path := '%REPORT_PATH%\\Executive Claims Report.csv');"
+                        '''
+                    }
+                }
+
+                stage("INS Past Due Disb"){
+                    steps {
+                        bat '''
+                        set PGPASSWORD=%PASSWORD%
+                        "C:\\Program Files\\PostgreSQL\\12\\bin\\psql.exe" -h %HOST_NAME% -p 5432 -d %DB% -U %USER% ^
+                        -c "SELECT escrow.RPT_INSPastDueDisbReport(_Drop_File_Path := '%REPORT_PATH%\\INS Past Due Disb.csv');"
+                        '''
+                    }
+                }
+
+                stage("Insurance Claims"){
+                    steps {
+                        bat '''
+                        set PGPASSWORD=%PASSWORD%
+                        "C:\\Program Files\\PostgreSQL\\12\\bin\\psql.exe" -h %HOST_NAME% -p 5432 -d %DB% -U %USER% ^
+                        -c "SELECT escrow.RPT_InsuranceClaimsReport(_Drop_File_Path := '%REPORT_PATH%\\Insurance Claims Report.csv');"
+                        '''
+                    }
+                }
+
+                stage("Loans with No Insurance Line"){
+                    steps {
+                        bat '''
+                        set PGPASSWORD=%PASSWORD%
+                        "C:\\Program Files\\PostgreSQL\\12\\bin\\psql.exe" -h %HOST_NAME% -p 5432 -d %DB% -U %USER% ^
+                        -c "SELECT escrow.RPT_LoansWithNoInsuranceLineReport(_Drop_File_Path := '%REPORT_PATH%\\Loans with No Insurance Line.csv');"
+                        '''
+                    }
+                }
+
+                stage("LPI Paid to Dates to be Moved"){
+                    steps {
+                        bat '''
+                        set PGPASSWORD=%PASSWORD%
+                        "C:\\Program Files\\PostgreSQL\\12\\bin\\psql.exe" -h %HOST_NAME% -p 5432 -d %DB% -U %USER% ^
+                        -c "SELECT escrow.RPT_LPI_PaidToDatesToBeMoved(_Drop_File_Path := '%REPORT_PATH%\\LPI Paid to Dates to be Moved.csv');"
+                        '''
+                    }
+                }
+
+                stage("LPI by Investor and Type"){
+                    steps {
+                        bat '''
+                        set PGPASSWORD=%PASSWORD%
+                        "C:\\Program Files\\PostgreSQL\\12\\bin\\psql.exe" -h %HOST_NAME% -p 5432 -d %DB% -U %USER% ^
+                        -c "SELECT escrow.RPT_LPIByInvestorTypeReport(_Drop_File_Path := '%REPORT_PATH%\\LPI by Investor and Type.csv');"
+                        '''
+                    }
+                }
+
+                stage("Non-Escrowed Lines Getting Prepped"){
+                    steps {
+                        bat '''
+                        set PGPASSWORD=%PASSWORD%
+                        "C:\\Program Files\\PostgreSQL\\12\\bin\\psql.exe" -h %HOST_NAME% -p 5432 -d %DB% -U %USER% ^
+                        -c "SELECT escrow.RPT_NonEscrowedLinesGettingPrepped(_Drop_File_Path := '%REPORT_PATH%\\Non-Escrowed Lines Getting Prepped.csv');"
+                        '''
+                    }
+                }
+
+
+                stage("Tax and Insurance Disbursements"){
+                    steps {
+                        bat '''
+                        set PGPASSWORD=%PASSWORD%
+                        "C:\\Program Files\\PostgreSQL\\12\\bin\\psql.exe" -h %HOST_NAME% -p 5432 -d %DB% -U %USER% ^
+                        -c "SELECT escrow.RPT_TaxAndInsuranceDisbursementsReport(_Drop_File_Path := '%REPORT_PATH%\\Tax and Insurance Disbursements.csv');"
+                        '''
+                    }
+                }
+
+            }
+        }
+
+
+        stage('Send duration to config file'){
+            steps {
+                script{
+                    env.ESCROW_REPORTS = "${currentBuild.durationString.minus(' and counting')}"
+                }
+                bat '''
+                    echo %FIRSTKEY_REPORTS%
+                    echo env.FIRSTKEY_REPORTS="%FIRSTKEY_REPORTS%" >> %CONFIG_FILE%
+                '''
+                // 
+            }
+        }
+
+    }       
+}
