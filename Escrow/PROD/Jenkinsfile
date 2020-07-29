@@ -136,8 +136,8 @@ pipeline {
                     env.ESCROW_REPORTS = "${currentBuild.durationString.minus(' and counting')}"
                 }
                 bat '''
-                    echo %FIRSTKEY_REPORTS%
-                    echo env.FIRSTKEY_REPORTS="%FIRSTKEY_REPORTS%" >> %CONFIG_FILE%
+                    echo %ESCROW_REPORTS%
+                    echo env.ESCROW_REPORTS="%ESCROW_REPORTS%" >> %CONFIG_FILE%
                 '''
                 // 
             }
