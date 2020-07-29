@@ -57,10 +57,10 @@ pipeline {
     post {
         success {
             mail to: "${MAIL_TO}",
-            subject: "Status of pipeline: Paymentus",
+            subject: "Status of pipeline: Paymentus STAGING",
             body: """
                 <html>
-                <p><span style="color: #003366;"><strong>Paymentus</strong></span></p>
+                <p><span style="color: #003366;"><strong>Paymentus STAGING</strong></span></p>
                 <p><span style="color: #003366;">===========================================</span><br /><span style="color: #003366;"></span></p>
                 <div><span style="color: #003366;">Build number:&nbsp;<strong>${currentBuild.number}</strong></span></div>
                 <p><span style="color: #003366;">Has result:</span></p>
@@ -76,10 +76,10 @@ pipeline {
         }
          failure {
             mail to: "${MAIL_TO}",
-            subject: "Status of pipeline: Paymentus failed",
+            subject: "Status of pipeline: Paymentus failed STAGING",
             body: """
                 <html>
-                <p><span style="color: #003366;"><strong>Paymentus &nbsp;</strong></span></p>
+                <p><span style="color: #003366;"><strong>Paymentus STAGING &nbsp;</strong></span></p>
                 <p><span style="color: #003366;">===========================================</span><br /><span style="color: #003366;"></span></p>
                 <div><span style="color: #003366;">Build number:&nbsp;<strong>${currentBuild.number}</strong></span></div>
                 <p><span style="color: #003366;">Has result:</span></p>
