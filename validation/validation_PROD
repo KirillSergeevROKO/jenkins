@@ -5,6 +5,7 @@ def MAIL_TO = "kirill.sergeev@rokolabs.com"
 def today = new Date()
 def yesterday = today.previous()
 def formated_date = yesterday.format("yyyyMMdd")
+def formated_date_fk = yesterday.format("MMddyy")
 println(formated_date)
 
 pipeline {
@@ -12,6 +13,7 @@ pipeline {
     environment {
         HOST_NAME = 'Prod-Roko-Appserver'
         FORMATED_DATE = "${formated_date}"
+        FORMATED_DATE_FK = "${formated_date_fk}"
 
     }
 
@@ -30,7 +32,7 @@ pipeline {
                 stage('FirstKey File validation') { 
                     steps {
                         bat '''
-                             dir "\\\\%HOST_NAME%\\d$\\Daily Reports\\FirstkeyAutomation\\history\\*_%FORMATED_DATE%.*"
+                             dir "\\\\%HOST_NAME%\\d$\\Daily Reports\\FirstkeyAutomation\\history\\*_%FORMATED_DATE_FK%.*"
                         '''
                     }
                 }
