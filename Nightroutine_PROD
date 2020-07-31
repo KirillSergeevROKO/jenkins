@@ -134,6 +134,14 @@ pipeline {
             }
                 
         }
+
+
+        stage('Run Daily Validation'){
+            steps{
+                build job: "../validations/validation_${ENV}", wait: true
+            }
+                
+        }
         
 
     } 
