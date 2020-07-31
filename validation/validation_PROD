@@ -1,0 +1,48 @@
+//Set variables
+import java.text.*
+
+def MAIL_TO = "kirill.sergeev@rokolabs.com"
+def today = new Date()
+def yesterday = today.previous()
+def formated_date = today.format("yyyyMMdd")
+
+pipeline {
+    agent { label 'vm-roko-jenkins' }
+    environment {
+        HOST_NAME = 'Prod-Roko-Appserver'
+        FORMATED_DATE = "${formated_date}"
+
+    }
+
+    stages{
+        stage('FileValidation') {
+            parallel {
+                stage('CIF File validation') { 
+                    steps {
+                        bat '''
+                            echo $FORMATED_DATE%
+                            dir "\\\\%HOST_NAME%\\FilesToTransfer\\CIF\\history\\*-20200729*.*"
+                        '''
+                    }
+                }
+
+                stage('FirstKey File validation') { 
+                    steps {
+                        bat '''
+                             dir "\\\\%HOST_NAME%\\d$\\Daily Reports\\FirstkeyAutomation\\history\\*_072920.*"
+                        '''
+                    }
+                }
+
+                stage('Paymentus File validation') { 
+                    steps {
+                        bat '''
+                            dir "\\\\%HOST_NAME%\\d$\\FilesToTransfer\\CIF\\history\\*2020-07-29*.*"
+                        '''
+                    }
+
+                }
+            }
+        }
+    }
+}
