@@ -3,14 +3,14 @@ import java.text.*
 
 def MAIL_TO = "kirill.sergeev@rokolabs.com"
 def today = new Date()
-def yesterday = today.previous()
 def formated_date = today.format("yyyyMMdd")
+println(formated_date)
 
 pipeline {
     agent { label 'vm-roko-jenkins' }
     environment {
         HOST_NAME = 'Prod-Roko-Appserver'
-        FORMATED_DATE = "${formated_date}"
+        FORMATED_DATE = "${formated_date}""
 
     }
 
