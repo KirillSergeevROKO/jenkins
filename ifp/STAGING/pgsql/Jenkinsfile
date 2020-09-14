@@ -14,24 +14,22 @@ pipeline {
                 bat '''
                     python %cd%\\ifp\\STAGING\\pgsql\\FileCheck.py
                 '''
-///                script{
-///                    env.CHECK_FILE_END = "${currentBuild.durationString.split(" ")[0..1]}"
                 }
-                // 
+               
         }
         
-        stage('Copy file to PGSQL folder') { 
-            steps {
-                bat '''
-                    %cd%\\ifp\\STAGING\\pgsql\\copy_files_for_pos.cmd \
-                    \\\\staging-roko-appserver\\InformentFiles\\SOURCE \
-                    \\\\STAGING-ROKO-APPSErver\\InformentFiles\\DATA\\PGSQL
-                '''
+///        stage('Copy file to PGSQL folder') { 
+///            steps {
+///                bat '''
+///                    %cd%\\ifp\\STAGING\\pgsql\\copy_files_for_pos.cmd \
+///                    \\\\staging-roko-appserver\\InformentFiles\\SOURCE \
+///                    \\\\STAGING-ROKO-APPSErver\\InformentFiles\\DATA\\PGSQL
+///                '''
                 // Use additional / (slash) for use on WINDOWS slave
                 //first parameter is SOURCE folder
                 // second - is DESTINATION folder
-            }
-        }
+///            }
+///        }
         stage('Run IFP proces PGSQL ') { 
             steps {
                 bat '''
