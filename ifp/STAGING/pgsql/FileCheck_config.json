@@ -1,6 +1,6 @@
 {
     "Informent":{
-        "Directory":"\\\\STAGING-ROKO-APPSERVER\\INFORMENTFILES\\DATA",
+        "Directory":"\\\\STAGING-ROKO-APPSERVER\\INFORMENTFILES\\DATA\\PGSQL",
         "FileNames":[
             "FFSI377A",
             "FFSI380A",
