@@ -9,7 +9,7 @@ pipeline {
     }
     stages {
 	
-	/*
+	
         stage('Check files') { 
             steps {
                 bat '''
@@ -20,8 +20,8 @@ pipeline {
                 }
                 // 
         }
-      */ 
-	/*	  
+       
+	  
         stage('Copy file to PGSQL folder') { 
             steps {
                 bat '''
@@ -34,7 +34,7 @@ pipeline {
                 // second - is DESTINATION folder
             }
         }
-	*/
+	
 	
         stage('Run IFP proces PGSQL ') { 
             steps {
@@ -44,7 +44,7 @@ pipeline {
                 // 
             }
         }
-		/*
+		
         stage ("Checks") {
             steps {
                 script{
@@ -74,8 +74,8 @@ pipeline {
                 }
         
       }
-    }*/
-	/*
+    }
+	
         stage('Generate and send report') { 
             steps {
                 bat '''
@@ -84,7 +84,7 @@ pipeline {
                 '''
                 // 
             }
-        }*/
+        }
     }
     post {
         success {
