@@ -1,10 +1,15 @@
 //Set variables
-def MAIL_TO = "kirill.sergeev@rokolabs.com"
+def MAIL_TO = "diego.croitoru@rokolabs.com"
 
 
 pipeline {
     agent { label 'vm-roko-jenkins' }
+	 parameters {
+        string(name:'OverwriteImportDate', defaultValue: '19000101', description: 'Enter value here')
+    }
     stages {
+	
+	/*
         stage('Check files') { 
             steps {
                 bat '''
@@ -15,7 +20,8 @@ pipeline {
                 }
                 // 
         }
-        
+      */ 
+	/*	  
         stage('Copy file to PGSQL folder') { 
             steps {
                 bat '''
@@ -28,6 +34,8 @@ pipeline {
                 // second - is DESTINATION folder
             }
         }
+	*/
+	
         stage('Run IFP proces PGSQL ') { 
             steps {
                 bat '''
@@ -36,6 +44,7 @@ pipeline {
                 // 
             }
         }
+		/*
         stage ("Checks") {
             steps {
                 script{
@@ -65,7 +74,8 @@ pipeline {
                 }
         
       }
-    }
+    }*/
+	/*
         stage('Generate and send report') { 
             steps {
                 bat '''
@@ -74,7 +84,7 @@ pipeline {
                 '''
                 // 
             }
-        }
+        }*/
     }
     post {
         success {
