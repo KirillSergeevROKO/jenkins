@@ -36,7 +36,7 @@ with open(os.path.join(cwd, 'ifp\\DEV\\\pgsql\FileCheck_config.json')) as f:
         'CanImportStagingDatabase': 'true',
         'IsBackupRequired': 'true'
     }
-    print (payLoad)
+    print (payload)
 #    response = requests.post(url = API_ENDPOINT, data = payload)
 #    if response.text == 'true':
        # Remove all files
