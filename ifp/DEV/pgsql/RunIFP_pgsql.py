@@ -14,6 +14,7 @@ cwd = os.getcwd()
 extractFileLocation = r'\\vm-roko-appserver\CascadeFinancials\Cobol\CobolTempDirectory\PGSQL'
 DateFormat = "%Y-%m-%d"
 achdate = datetime.today() # - timedelta(days=1)
+IsManual = 'false'
 
 with open(os.path.join(cwd, 'ifp\\DEV\\\pgsql\FileCheck_config.json')) as f:
     config = json.load(f)
@@ -25,9 +26,10 @@ with open(os.path.join(cwd, 'ifp\\DEV\\\pgsql\FileCheck_config.json')) as f:
         importDate = achdate.strftime(DateFormat)
     else:
         importDate = datetime.strptime(OverwriteImportDate, DateFormat).strftime(DateFormat)
-    
+        IsManual = 'true'
+        
     payload = {
-        'IsManual': 'false',
+        'IsManual': IsManual,
         'ImportDate': importDate,
         'CanImportTransactionTables': 'true',
         'CanImportHistoryTables': 'true',
@@ -37,7 +39,7 @@ with open(os.path.join(cwd, 'ifp\\DEV\\\pgsql\FileCheck_config.json')) as f:
         'IsBackupRequired': 'true'
     }
     print (payload)
-    response = requests.post(url = API_ENDPOINT, data = payload)
+    #response = requests.post(url = API_ENDPOINT, data = payload)
     if response.text == 'true':
        # Remove all files
         files = os.listdir(extractFileLocation)
