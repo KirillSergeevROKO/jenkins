@@ -12,15 +12,24 @@ print('Running RunIFP.py...')
 #Read in configuration file
 cwd = os.getcwd()
 extractFileLocation = r'\\vm-roko-appserver\CascadeFinancials\Cobol\CobolTempDirectory\PGSQL'
-achdate = datetime.today() - timedelta(days=1)
+DateFormat = "%Y-%m-%d"
+achdate = datetime.today() # - timedelta(days=1)
+IsManual = 'false'
 
 with open(os.path.join(cwd, 'ifp\\DEV\\\pgsql\FileCheck_config.json')) as f:
     config = json.load(f)
     #call API
     API_ENDPOINT = config['ServicingApi']
-    importDate = achdate.strftime("%Y-%m-%d")
+    OverwriteImportDate =  os.getenv("OverwriteImportDate")
+    
+    if OverwriteImportDate == "1900-01-01":
+        importDate = achdate.strftime(DateFormat)
+    else:
+        importDate = datetime.strptime(OverwriteImportDate, DateFormat).strftime(DateFormat)
+        IsManual = 'true'
+        
     payload = {
-        'IsManual': 'false',
+        'IsManual': IsManual,
         'ImportDate': importDate,
         'CanImportTransactionTables': 'true',
         'CanImportHistoryTables': 'true',
@@ -29,12 +38,13 @@ with open(os.path.join(cwd, 'ifp\\DEV\\\pgsql\FileCheck_config.json')) as f:
         'CanImportStagingDatabase': 'true',
         'IsBackupRequired': 'true'
     }
+    
     response = requests.post(url = API_ENDPOINT, data = payload)
     if response.text == 'true':
-       # Remove all files
+        # Remove all files
         files = os.listdir(extractFileLocation)
-#        for file in files:
-#           if (file.startswith("FF")):
-#                os.remove(os.path.join(extractFileLocation, file))
+        for file in files:
+            if (file.startswith("FF")):
+                os.remove(os.path.join(extractFileLocation, file))
     else:
         sys.exit(13)
