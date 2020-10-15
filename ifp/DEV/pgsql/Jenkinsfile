@@ -1,5 +1,5 @@
 //Set variables
-def MAIL_TO = "diego.croitoru@rokolabs.com"
+def MAIL_TO = "kirill.sergeev@rokolabs.com"
 
 
 pipeline {
