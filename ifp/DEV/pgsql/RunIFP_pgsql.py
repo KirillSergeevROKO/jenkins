@@ -28,6 +28,8 @@ with open(os.path.join(cwd, 'ifp\\DEV\\\pgsql\FileCheck_config.json')) as f:
         importDate = datetime.strptime(OverwriteImportDate, DateFormat).strftime(DateFormat)
         IsManual = 'true'
         
+    print (OverwriteImportDate)
+        
     payload = {
         'IsManual': IsManual,
         'ImportDate': importDate,
