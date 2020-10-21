@@ -15,6 +15,7 @@ extractFileLocation = r'\\vm-roko-appserver\CascadeFinancials\Cobol\CobolTempDir
 DateFormat = "%Y-%m-%d"
 achdate = datetime.today() # - timedelta(days=1)
 IsManual = 'false'
+achdate = "2020-05-06"
 
 importDate = achdate.strftime(DateFormat)
 
