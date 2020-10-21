@@ -23,13 +23,13 @@ with open(os.path.join(cwd, 'ifp\\DEV\\\pgsql\FileCheck_config.json')) as f:
     #call API
     API_ENDPOINT = config['ServicingApi']
     
-#    OverwriteImportDate =  os.getenv("OverwriteImportDate")
-#    print (OverwriteImportDate)
+    OverwriteImportDate =  os.getenv("OverwriteImportDate")
+    print (OverwriteImportDate)
     
-#    if OverwriteImportDate == "1900-01-01": # or OverwriteImportDate is None:
-#        importDate = achdate.strftime(DateFormat)
-#    else:
-#        importDate = datetime.strptime(OverwriteImportDate, DateFormat).strftime(DateFormat)
+    if OverwriteImportDate == "1900-01-01" or OverwriteImportDate is None:
+        importDate = achdate.strftime(DateFormat)
+    else:
+        importDate = datetime.strptime(OverwriteImportDate, DateFormat).strftime(DateFormat)
                 
     payload = {
         'IsManual': IsManual,
