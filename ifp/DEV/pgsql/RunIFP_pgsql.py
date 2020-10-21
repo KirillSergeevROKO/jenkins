@@ -23,7 +23,6 @@ with open(os.path.join(cwd, 'ifp\\DEV\\\pgsql\FileCheck_config.json')) as f:
     #call API
     API_ENDPOINT = config['ServicingApi']
     
-    print (OverwriteImportDate)
     OverwriteImportDate =  os.getenv("OverwriteImportDate")
     print (OverwriteImportDate)
     
