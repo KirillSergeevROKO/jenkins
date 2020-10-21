@@ -4,9 +4,9 @@ def MAIL_TO = "kirill.sergeev@rokolabs.com"
 
 pipeline {
     agent { label 'vm-roko-jenkins' }
-	 parameters {
-       string(name:'OverwriteImportDate', defaultValue: '1900-01-01', description: 'Enter reloading date. Format yyyy-mm-dd')
-  }
+//	 parameters {
+ //      string(name:'OverwriteImportDate', defaultValue: '1900-01-01', description: 'Enter reloading date. Format yyyy-mm-dd')
+//  }
     stages {
 	
 	
